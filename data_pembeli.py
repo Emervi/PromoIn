@@ -8,3 +8,5 @@ pembeli = {
 
 for key, data in pembeli.items():
     print(f"{key}: {data}")
+
+

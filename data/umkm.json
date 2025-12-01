@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "name": "Ronaldo",
+        "age": 20
+    },
+    {
+        "id": 2,
+        "name": "Messi",
+        "age": 22
+    },
+    {
+        "id": 3,
+        "name": "Neymar",
+        "age": 19
+    }
+]

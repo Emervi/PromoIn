@@ -1,17 +1,38 @@
 [
     {
-        "id": 1,
-        "name": "Ronaldo",
-        "age": 20
+        "id": 4,
+        "nama": "Mamat",
+        "email": "mamat@gmail.com",
+        "password": "udin"
     },
     {
-        "id": 2,
-        "name": "Messi",
-        "age": 22
+        "id": 5,
+        "nama": "Asep",
+        "email": "asep@gmail.com",
+        "password": "oksadoka"
     },
     {
-        "id": 3,
-        "name": "Neymar",
-        "age": 19
+        "id": 6,
+        "nama": "Mamat",
+        "email": "Udin",
+        "password": "kockaoa"
+    },
+    {
+        "id": 7,
+        "nama": "Jajang",
+        "email": "jajang@gmail.com",
+        "password": "21345687"
+    },
+    {
+        "id": 8,
+        "nama": "tes",
+        "email": "tes@gmail.com",
+        "password": "21"
+    },
+    {
+        "id": 9,
+        "nama": "Langgi",
+        "email": "langgi@gmail.com",
+        "password": "12345678"
     }
 ]

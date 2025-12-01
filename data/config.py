@@ -1,1 +1,0 @@
-DATA_UMKM = "data/umkm.json"

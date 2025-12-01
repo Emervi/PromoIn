@@ -1,8 +1,8 @@
-import json
+from modules.umkm.lowongan import dashboard_umkm
 
-from crud.umkm_crud import load_umkm
+umkm_login = {
+    "id": "U001",
+    "nama": "Bakso Pak Jaya"
+}
 
-umkms = load_umkm()
-
-for data in umkms:
-    print(data)
+dashboard_umkm(umkm_login)

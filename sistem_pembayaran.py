@@ -1,1 +1,0 @@
-print("Sistem Pembayaran dengan Payment Gateaway")

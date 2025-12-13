@@ -1,18 +1,16 @@
-[]
-
 import json
 import os
 
-LOWONGAN_FILE = "data/umkm/lowongan.json"
+from data.config import DATA_LOWONGAN
 
 def load_lowongan():
-    if not os.path.exists(LOWONGAN_FILE):
+    if not os.path.exists(DATA_LOWONGAN):
         return []
-    with open(LOWONGAN_FILE, "r") as f:
+    with open(DATA_LOWONGAN, "r") as f:
         return json.load(f)
 
 def save_lowongan(data):
-    with open(LOWONGAN_FILE, "w") as f:
+    with open(DATA_LOWONGAN, "w") as f:
         json.dump(data, f, indent=4)
 
 

@@ -1,16 +1,15 @@
-from modules.autentikasi.autentikasi import autentikasi_umkm
+from modules.autentikasi.autentikasi import autentikasi_umkm, autentikasi_fv
 from modules.umkm.umkm import data_umkm
+from modules.food_vlogger.food_vlogger import data_fv
 
 while True:
-
-    # debug untuk melihat data umkm
-    # umkms = data_umkm()
-    # print(umkms)
     
     print("\n========== BERANDA ==========")
     print("Silakan memilih peran yang sesuai dengan anda.")
     print("1. UMKM")
     print("2. Food Vlogger")
+    print("3. Daftar UMKM")
+    print("4. Daftar Food Vlogger")
     print("0. Keluar Sistem")
     
     pilihan_user = int(input("> "))
@@ -20,12 +19,20 @@ while True:
         if autentikasi_umkm() == "kill system":
             break
     
-    # ISI UNTUK AUTENTIKASI FOOD VLOGGER (FV)
     elif pilihan_user == 2:
-        pass
+        
+        if autentikasi_fv() == "kill system":
+            break
     
     elif pilihan_user == 3:
-        pass
+        umkms = data_umkm()
+        for umkm in umkms:
+            print(umkm)
+
+    elif pilihan_user == 4:
+        fvs = data_fv()
+        for fv in fvs:
+            print(fv)
     
     else:
         break

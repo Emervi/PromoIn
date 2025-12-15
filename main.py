@@ -4,7 +4,7 @@ from modules.food_vlogger.food_vlogger import data_fv
 
 while True:
     
-    print("\n========== BERANDA ==========")
+    print("\n========== BERANDA PROMOIN ==========")
     print("Silakan memilih peran yang sesuai dengan anda.")
     print("1. UMKM")
     print("2. Food Vlogger")

@@ -1,5 +1,5 @@
 import data.session
-from modules.umkm.lowongan.lowongan import buat_lowongan, lihat_lowongan
+from modules.umkm.lowongan import buat_lowongan, lihat_lowongan
 
 def beranda_umkm():
     while True:

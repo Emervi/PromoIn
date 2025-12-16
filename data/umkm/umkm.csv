@@ -1,4 +1,4 @@
-id, nama, email, password
+umkm_id, nama, email, password
 1,Mamat,mamat@gmail.com,admin123
 2,Udin,udin@gmail.com,admin123
 3,Asep,asep@gmail.com,admin123
@@ -6,4 +6,4 @@ id, nama, email, password
 5,Vito,vito@gmail.com,admin123
 6,Vito,kocak@gmailc.om,admin123
 7,Komat,kom@gmail.com,admin123
-8,Langga food,langgafood@gmail.com,langgafood123
+8,Langga,langga@gmail.com,langga123

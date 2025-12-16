@@ -9,8 +9,8 @@ while True:
     print("Silakan memilih peran yang sesuai dengan anda.")
     print("1. UMKM")
     print("2. Food Vlogger")
-    print("3. Daftar UMKM")
-    print("4. Daftar Food Vlogger")
+    print("3. Daftar UMKM (DEBUG)")
+    print("4. Daftar Food Vlogger (DEBUG)")
     print("0. Keluar Sistem")
     
     pilihan_user = int(input("> "))

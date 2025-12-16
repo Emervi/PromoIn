@@ -181,6 +181,7 @@ def login_umkm():
             
             if input_email == umkm[2] and input_password == umkm[3]:
                 
+                data.session.USER_LOGIN = umkm
                 input("\nTekan ENTER untuk lanjut ke halaman beranda...")
                 return True
         
@@ -362,6 +363,7 @@ def login_fv():
             
             if input_email == fv[2] and input_password == fv[3]:
                 
+                data.session.USER_LOGIN = fv
                 input("\nTekan ENTER untuk lanjut ke halaman beranda...")
                 return True
             

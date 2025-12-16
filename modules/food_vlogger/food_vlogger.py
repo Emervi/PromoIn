@@ -14,8 +14,8 @@ def data_fv():
     if not os.path.exists(DATA_FOOD_VLOGGER):
         return []
     
-    with open(DATA_FOOD_VLOGGER, mode="r", newline='') as f:
-        reader = csv.reader(f)
+    with open(DATA_FOOD_VLOGGER, mode="r", newline='') as file:
+        reader = csv.reader(file)
         for baris in reader:
             data.append(baris)
             
@@ -23,6 +23,6 @@ def data_fv():
 
 # procedure untuk menyimpan data ke dalam file data Food Vlogger
 def simpan_fv(data_user):
-    with open(DATA_FOOD_VLOGGER, mode="a", newline='') as f:
-        writer = csv.writer(f)
+    with open(DATA_FOOD_VLOGGER, mode="a", newline='') as file:
+        writer = csv.writer(file)
         writer.writerow(data_user)

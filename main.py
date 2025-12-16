@@ -1,9 +1,10 @@
 from modules.autentikasi.autentikasi import autentikasi_umkm, autentikasi_fv
 from modules.umkm.umkm import data_umkm
 from modules.food_vlogger.food_vlogger import data_fv
+from modules.utils import clear_screen
 
 while True:
-    
+    clear_screen()
     print("\n========== BERANDA ==========")
     print("Silakan memilih peran yang sesuai dengan anda.")
     print("1. UMKM")

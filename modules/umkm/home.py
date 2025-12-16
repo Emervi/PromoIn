@@ -1,8 +1,11 @@
-import data.session
 from modules.umkm.lowongan import buat_lowongan, lihat_lowongan
+from modules.utils import clear_screen
+import data.session
 
 def beranda_umkm():
+    
     while True:
+        clear_screen()
         print("\n====== BERANDA UMKM ======")
         print("0. Logout")
         print("1. Buat Lowongan")

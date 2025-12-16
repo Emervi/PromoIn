@@ -3,7 +3,7 @@ from modules.umkm.lowongan.lowongan import buat_lowongan, lihat_lowongan
 
 def beranda_umkm():
     while True:
-        print("\n===== BERANDA UMKM =====")
+        print("\n====== BERANDA UMKM ======")
         print("0. Logout")
         print("1. Buat Lowongan")
         print("2. Lihat Lowongan")

@@ -1,6 +1,7 @@
 import csv
 import os
 from data.config import DATA_LOWONGAN
+from modules.utils import clear_screen
 
 def buat_lowongan():
     print("\n====== BUAT LOWONGAN ======")

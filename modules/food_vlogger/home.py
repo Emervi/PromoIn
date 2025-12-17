@@ -10,9 +10,10 @@ def beranda_fv():
         print("1. Lihat lowongan")
         print("Selamat datang, masih kosong cihuy!!")
         pilihan_user = int(input("> "))
-        
+        #diambil atau belum diambil 
         if pilihan_user == 0:
             break
 
         elif pilihan_user == 1:
             lihat_lowongan()
+        

@@ -1,90 +1,173 @@
-import json
+import csv
 import os
-
+from modules.utils import clear_screen, apakah_int
 from data.config import DATA_LOWONGAN
+import data.session
 
-def load_lowongan():
+def data_lowongan():
+    data = []
+    
     if not os.path.exists(DATA_LOWONGAN):
         return []
-    with open(DATA_LOWONGAN, "r") as f:
-        return json.load(f)
+    
+    with open(DATA_LOWONGAN, mode="r", newline='') as file:
+        reader = csv.reader(file)
+        for baris in reader:
+            data.append(baris)
+    
+    return data
 
-def save_lowongan(data):
-    with open(DATA_LOWONGAN, "w") as f:
-        json.dump(data, f, indent=4)
+def simpan_lowongan(data_baru):
+    with open(DATA_LOWONGAN, mode="a", newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(data_baru)
 
-
-# Dashboard UMKM
-def dashboard_umkm(user):
-    """
-    user = data UMKM hasil login dari temanmu
-    contoh:
-    user = { "id": "U001", "nama": "Bakso Jago" }
-    """
+def buat_lowongan():
+    
+    clear_screen()
+    print("\n====== BUAT LOWONGAN ======")
+    
+    lowongans = data_lowongan()
+    
+    # generate id baru untuk data yang baru
+    if apakah_int(lowongans[-1][0]):
+        lowongan_id = int(lowongans[-1][0]) + 1
+    else:
+        lowongan_id = 1
+        
+    umkm_id = data.session.USER_LOGIN[0]
+    status_lowongan = "belum diambil"
+    
     while True:
-        print("\n=== DASHBOARD UMKM ===")
-        print(f"Login sebagai: {user['nama']}")
-        print("1. Buat Lowongan Promosi")
-        print("2. Lihat Status Lowongan")
-        print("3. Logout")
+        nama_produk = input("Nama Produk: ").strip()
+        
+        if not nama_produk:
+            print("❌ Nama Produk tidak boleh kosong ❌")
+            continue
+        break
+    
+    while True:
+        deskripsi_promosi = input("Deskripsi: ").strip()
+        
+        if not deskripsi_promosi:
+            print("❌ Deskripsi tidak boleh kosong ❌")
+            continue
+        break
+    
+    while True:
+        budget = input("Budget: ").strip()
+        
+        if not budget:
+            print("❌ Budget tidak boleh kosong ❌")
+            continue
+        
+        if not apakah_int(budget):
+            print("❌ Budget bukan angka ❌")
+            continue
+        break
+    
+    while True:
+        syarat_followers = input("Syarat Followers: ").strip()
+        
+        if not syarat_followers:
+            print("❌ Syarat Followers tidak boleh kosong ❌")
+            continue
+        
+        if not apakah_int(syarat_followers):
+            print("❌ Syarat Followers bukan angka ❌")
+            continue
+        break
+    
+    data_baru = [
+        lowongan_id,
+        umkm_id,
+        nama_produk,
+        deskripsi_promosi,
+        budget,
+        syarat_followers,
+        status_lowongan
+    ]
+    
+    simpan_lowongan(data_baru)
+    # Cek apakah file sudah ada
+    # file_exists = os.path.isfile(DATA_LOWONGAN)
 
-        pilih = input("Pilih menu: ")
+    # Pastikan folder data ada
+    # os.makedirs(os.path.dirname(DATA_LOWONGAN), exist_ok=True)
 
-        if pilih == "1":
-            buat_lowongan(user)
-        elif pilih == "2":
-            lihat_status(user)
-        elif pilih == "3":
-            break
-        else:
-            print("Pilihan tidak valid!")
+    # Buka file CSV
+    # with open(DATA_LOWONGAN, mode="a", newline="") as file:
+    #     fieldnames = [
+    #         "lowowngan_id",
+    #         "umkm_id",
+    #         "nama_produk",
+    #         "deskripsi_promosi",
+    #         "budget",
+    #         "syarat_followers",
+    #         "status_lowongan"
+    #     ]
 
+    #     writer = csv.DictWriter(file, fieldnames=fieldnames)
 
-# Buat Lowongan Promosi
-def buat_lowongan(user):
-    print("\n=== BUAT LOWONGAN PROMOSI ===")
+    #     if not file_exists:
+    #         writer.writeheader()
 
-    nama_produk = input("Nama produk                 : ")
-    deskripsi = input("Deskripsi promosi           : ")
-    budget = input("Budget yang ditawarkan      : ")
-    deadline = input("Deadline promosi (YYYY-MM-DD) : ")
-    followers = input("Syarat minimal followers    : ")
+    #     writer.writerow({
+    #         "lowongan_id": lowongan_id,
+    #         "umkm_id": umkm_id,
+    #         "nama_produk": nama_produk,
+    #         "deskripsi_promosi": deskripsi_promosi,
+    #         "budget": budget,
+    #         "syarat_followers": syarat_followers,
+    #         "status_lowongan": status_lowongan
+    #     })
 
-    data = load_lowongan()
-
-    id_baru = f"L{len(data)+1:03}"
-
-    data.append({
-        "id": id_baru,
-        "umkm_id": user["id"], 
-        "nama_produk": nama_produk,
-        "deskripsi": deskripsi,
-        "budget": budget,
-        "deadline": deadline,
-        "syarat_followers": followers,
-        "status": "belum diambil"
-    })
-
-    save_lowongan(data)
-
-    print("\nLowongan berhasil dibuat!")
+    print("\n✅ Lowongan berhasil disimpan ✅")
+    input("Tekan ENTER untuk kembali ke beranda...")
 
 
-# Lihat Status Lowongan
-def lihat_status(user):
-    print("\n=== STATUS LOWONGAN ===")
+def daftar_lowongan():
+    
+    clear_screen()
+    print("\n====== DAFTAR LOWONGAN ======")
 
-    data = load_lowongan()
+    lowongans = data_lowongan()
+    
+    if len(lowongans) == 1:
+        print("Belum ada lowongan")
+        
+    else:
+        for i in range(len(lowongans)):
+            
+            if i == 0: continue
+            
+            print(f"\nLowongan #{lowongans[i][0]}")
+            print(f"Nama Produk       : {lowongans[i][2]}")
+            print(f"Deskripsi         : {lowongans[i][3]}")
+            print(f"Budget            : Rp {lowongans[i][4]}")
+            print(f"Syarat Followers  : {lowongans[i][5]}")
+            print(f"Status            : {lowongans[i][6]}")
+            
+        
+    # if not os.path.isfile(file_path):
+    #     print("Belum ada lowongan.")
+    #     input("Tekan ENTER untuk kembali...")
+    #     return
 
-    ada = False
-    for d in data:
-        if d["umkm_id"] == user["id"]:
-            ada = True
-            print(f"\nID: {d['id']}")
-            print(f"Produk : {d['nama_produk']}")
-            print(f"Budget : {d['budget']}")
-            print(f"Deadline: {d['deadline']}")
-            print(f"Status : {d['status']}")
+    # with open(DATA_LOWONGAN, mode="r", encoding="utf-8") as file:
+    #     reader = csv.DictReader(file)
 
-    if not ada:
-        print("Belum ada lowongan dari UMKM ini.")
+    #     data = list(reader)
+
+    #     if not data:
+    #         print("Belum ada lowongan.")
+    #     else:
+    #         for i, row in enumerate(data, start=1):
+    #             print(f"\nLowongan #{i}")
+    #             print(f"Nama Produk       : {row['nama_produk']}")
+    #             print(f"Deskripsi         : {row['deskripsi']}")
+    #             print(f"Budget            : {row['budget']}")
+    #             print(f"Syarat Followers  : {row['syarat_followers']}")
+    #             print(f"Status            : {row['status_lowongan']}")
+
+    input("\nTekan ENTER untuk kembali...")

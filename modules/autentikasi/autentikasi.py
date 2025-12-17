@@ -17,7 +17,7 @@ def autentikasi_umkm():
         print("2. Login UMKM")
         print("9. Kembali")
         print("0. Keluar Sistem")
-        pilihan_user = int(input("Masukan pilihan anda: "))
+        pilihan_user = int(input("> "))
         
         if pilihan_user == 1:
             akun_umkm = register_umkm()
@@ -42,7 +42,7 @@ def autentikasi_umkm():
             return "kill system"
         
         else:
-            print("Pilihan tidak ditemukan.")
+            print("❌ Pilihan tidak valid ❌")
 
 
 
@@ -199,7 +199,7 @@ def autentikasi_fv():
         print("2. Login Food Vlogger")
         print("9. Kembali")
         print("0. Keluar Sistem")
-        pilihan_user = int(input("Masukan pilihan anda: "))
+        pilihan_user = int(input("> "))
         
         if pilihan_user == 1:
             akun_fv = register_fv()
@@ -224,7 +224,7 @@ def autentikasi_fv():
             return "kill system"
         
         else:
-            print("Pilihan tidak ditemukan.")
+            print("❌ Pilihan tidak valid ❌")
 
 
 
@@ -362,7 +362,7 @@ def login_fv():
         for fv in fvs:
             
             if input_email == fv[2] and input_password == fv[3]:
-                
+                print("✅ Login Berhasil ✅")
                 data.session.USER_LOGIN = fv
                 input("\nTekan ENTER untuk lanjut ke halaman beranda...")
                 return True

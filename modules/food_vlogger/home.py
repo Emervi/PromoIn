@@ -6,8 +6,8 @@ def beranda_fv():
     while True:
         clear_screen()
         print("\n===== BERANDA FOOD VLOGGER =====")
-        print("0. Logout")
         print("1. Lihat lowongan")
+        print("0. Logout")
         print("Selamat datang, masih kosong cihuy!!")
         pilihan_user = int(input("> "))
         #diambil atau belum diambil 

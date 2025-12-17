@@ -14,8 +14,8 @@ def data_umkm():
     if not os.path.exists(DATA_UMKM):
         return []
     
-    with open(DATA_UMKM, mode="r", newline='') as f:
-        reader = csv.reader(f)
+    with open(DATA_UMKM, mode="r", newline='') as file:
+        reader = csv.reader(file)
         for baris in reader:
             data.append(baris)
             
@@ -23,6 +23,6 @@ def data_umkm():
 
 # procedure untuk menyimpan data ke dalam file data UMKM
 def simpan_umkm(data_user):
-    with open(DATA_UMKM, mode="a", newline='') as f:
-        writer = csv.writer(f)
+    with open(DATA_UMKM, mode="a", newline='') as file:
+        writer = csv.writer(file)
         writer.writerow(data_user)

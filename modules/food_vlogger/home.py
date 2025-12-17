@@ -1,32 +1,18 @@
+from modules.food_vlogger.lowongan import lihat_lowongan
+from modules.utils import clear_screen
+
 def beranda_fv():
+    
     while True:
-        print("\n===== DASHBOARD FOOD VLOGGER =====")
-        print("1. Home")
-        print("2. Konten")
-        print("3. Daftar Lowongan")
-        print("4. Settings")
+        clear_screen()
+        print("\n===== BERANDA FOOD VLOGGER =====")
         print("0. Logout")
+        print("1. Lihat lowongan")
         print("Selamat datang, masih kosong cihuy!!")
         pilihan_user = int(input("> "))
         #diambil atau belum diambil 
         if pilihan_user == 0:
             break
-        elif pilihan_user == 1:
-            print("--Home--")
-            break
-    
-        elif pilihan_user == 2:
-            print("--Konten--")
-            break
-    
-        elif pilihan_user == 3:
-            print("--Daftar Lowongan--")
-            break
-    
-        elif pilihan_user == 4:
-            print("--Settings--")
-            break
 
-        else:
-            print("Error!")
-            break
+        elif pilihan_user == 1:
+            lihat_lowongan()

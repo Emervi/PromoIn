@@ -4,13 +4,8 @@ from modules.food_vlogger.food_vlogger import data_fv
 from modules.utils import clear_screen
 
 while True:
-<<<<<<< HEAD
-    
-    print("\n========== BERANDA PROMOIN ==========")
-=======
     clear_screen()
     print("\n========== BERANDA ==========")
->>>>>>> f879f28c84095eca0cc9249f9925f638ad101ded
     print("Silakan memilih peran yang sesuai dengan anda.")
     print("1. UMKM")
     print("2. Food Vlogger")

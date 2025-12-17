@@ -16,3 +16,4 @@ def beranda_fv():
 
         elif pilihan_user == 1:
             lihat_lowongan()
+        

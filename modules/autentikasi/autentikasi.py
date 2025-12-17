@@ -144,7 +144,7 @@ def login_umkm():
         
         # menampilkan pemberitahuan jika email atau password salah
         if data_salah:
-            print("❌ Email atau password salah, silakan masukan ulang ❌")
+            print("❌ Email atau password salah, silakan masukkan ulang ❌")
             data_salah = False        
         
         # meminta input email
@@ -285,12 +285,14 @@ def register_fv():
             print("❌ Panjang password kurang dari 8 karakter ❌")
             continue
         
-        konfirmasi_password = input("Konfirmasi Password: ").strip()
+        while True:
+            konfirmasi_password = input("Konfirmasi Password: ").strip()
 
         # mengecek password dengan konfirmasi password
-        if input_password != konfirmasi_password:
-            print("❌ Konfirmasi password tidak cocok ❌")
-            continue
+            if input_password != konfirmasi_password:
+                print("❌ Konfirmasi password tidak cocok ❌")
+            else:
+                break
         break
     
     # generate id baru untuk data yang baru

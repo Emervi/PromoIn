@@ -22,6 +22,30 @@ def simpan_lowongan(data_baru):
         writer = csv.writer(file)
         writer.writerow(data_baru)
 
+def daftar_lowongan():
+    
+    clear_screen()
+    print("\n====== DAFTAR LOWONGAN ======")
+
+    lowongans = data_lowongan()
+    
+    if len(lowongans) == 1:
+        print("Belum ada lowongan")
+        
+    else:
+        for i in range(len(lowongans)):
+            
+            if i == 0: continue
+            
+            print(f"\nLowongan #{lowongans[i][0]}")
+            print(f"Nama Produk       : {lowongans[i][2]}")
+            print(f"Deskripsi         : {lowongans[i][3]}")
+            print(f"Budget            : Rp {lowongans[i][4]}")
+            print(f"Syarat Followers  : {lowongans[i][5]}")
+            print(f"Status            : {lowongans[i][6]}")
+                    
+    input("\nTekan ENTER untuk kembali...")
+
 def buat_lowongan():
     
     clear_screen()
@@ -89,85 +113,6 @@ def buat_lowongan():
     ]
     
     simpan_lowongan(data_baru)
-    # Cek apakah file sudah ada
-    # file_exists = os.path.isfile(DATA_LOWONGAN)
-
-    # Pastikan folder data ada
-    # os.makedirs(os.path.dirname(DATA_LOWONGAN), exist_ok=True)
-
-    # Buka file CSV
-    # with open(DATA_LOWONGAN, mode="a", newline="") as file:
-    #     fieldnames = [
-    #         "lowowngan_id",
-    #         "umkm_id",
-    #         "nama_produk",
-    #         "deskripsi_promosi",
-    #         "budget",
-    #         "syarat_followers",
-    #         "status_lowongan"
-    #     ]
-
-    #     writer = csv.DictWriter(file, fieldnames=fieldnames)
-
-    #     if not file_exists:
-    #         writer.writeheader()
-
-    #     writer.writerow({
-    #         "lowongan_id": lowongan_id,
-    #         "umkm_id": umkm_id,
-    #         "nama_produk": nama_produk,
-    #         "deskripsi_promosi": deskripsi_promosi,
-    #         "budget": budget,
-    #         "syarat_followers": syarat_followers,
-    #         "status_lowongan": status_lowongan
-    #     })
 
     print("\n✅ Lowongan berhasil disimpan ✅")
     input("Tekan ENTER untuk kembali ke beranda...")
-
-
-def daftar_lowongan():
-    
-    clear_screen()
-    print("\n====== DAFTAR LOWONGAN ======")
-
-    lowongans = data_lowongan()
-    
-    if len(lowongans) == 1:
-        print("Belum ada lowongan")
-        
-    else:
-        for i in range(len(lowongans)):
-            
-            if i == 0: continue
-            
-            print(f"\nLowongan #{lowongans[i][0]}")
-            print(f"Nama Produk       : {lowongans[i][2]}")
-            print(f"Deskripsi         : {lowongans[i][3]}")
-            print(f"Budget            : Rp {lowongans[i][4]}")
-            print(f"Syarat Followers  : {lowongans[i][5]}")
-            print(f"Status            : {lowongans[i][6]}")
-            
-        
-    # if not os.path.isfile(file_path):
-    #     print("Belum ada lowongan.")
-    #     input("Tekan ENTER untuk kembali...")
-    #     return
-
-    # with open(DATA_LOWONGAN, mode="r", encoding="utf-8") as file:
-    #     reader = csv.DictReader(file)
-
-    #     data = list(reader)
-
-    #     if not data:
-    #         print("Belum ada lowongan.")
-    #     else:
-    #         for i, row in enumerate(data, start=1):
-    #             print(f"\nLowongan #{i}")
-    #             print(f"Nama Produk       : {row['nama_produk']}")
-    #             print(f"Deskripsi         : {row['deskripsi']}")
-    #             print(f"Budget            : {row['budget']}")
-    #             print(f"Syarat Followers  : {row['syarat_followers']}")
-    #             print(f"Status            : {row['status_lowongan']}")
-
-    input("\nTekan ENTER untuk kembali...")

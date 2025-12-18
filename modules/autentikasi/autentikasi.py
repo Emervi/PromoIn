@@ -182,6 +182,8 @@ def login_umkm():
             if input_email == umkm[2] and input_password == umkm[3]:
                 
                 data.session.USER_LOGIN = umkm
+                
+                print("\n✅ Login Berhasil ✅")
                 input("\nTekan ENTER untuk lanjut ke halaman beranda...")
                 return True
         
@@ -306,7 +308,7 @@ def register_fv():
     simpan_fv(data_baru)
     data.session.USER_LOGIN = data_baru
     
-    print("✅ Akun Berhasil Dibuat ✅")
+    print("\n✅ Akun Berhasil Dibuat ✅")
     input("\nTekan ENTER untuk lanjut ke halaman beranda...")
     
     return True
@@ -362,8 +364,10 @@ def login_fv():
         for fv in fvs:
             
             if input_email == fv[2] and input_password == fv[3]:
-                print("✅ Login Berhasil ✅")
+                
                 data.session.USER_LOGIN = fv
+                
+                print("\n✅ Login Berhasil ✅")
                 input("\nTekan ENTER untuk lanjut ke halaman beranda...")
                 return True
             

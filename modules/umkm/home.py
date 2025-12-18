@@ -1,4 +1,4 @@
-from modules.umkm.lowongan import buat_lowongan, daftar_lowongan
+from modules.umkm.lowongan import buat_lowongan, daftar_lowongan, data_lowongan
 from modules.utils import clear_screen
 import data.session
 
@@ -10,8 +10,8 @@ def beranda_umkm():
         print("1. Buat Lowongan")
         print("2. Lihat Lowongan")
         print("3. Cek Akun (DEBUG)")
+        print("4. Cek Lowongan (DEBUG)")
         print("0. Logout")
-        print("Selamat datang, masih kosong cihuy!!")
         pilihan_user = int(input("> "))
         
         if pilihan_user == 1:
@@ -22,7 +22,21 @@ def beranda_umkm():
         
         elif pilihan_user == 3:
             print(data.session.USER_LOGIN)
-            input("COK")
+            input("ENTER")
+            
+        elif pilihan_user == 4:
+            lowongans = data_lowongan()
+            
+            lowongan_kosong = []
+            
+            for low in lowongans:
+                if low[6] == "belum diambil":
+                    print(low)
+                    # lowongan_kosong.append(low)
+                # print(low)
+                # print(low[6])
+                # print(lowongan_kosong)
+            input("ENTER")
         
         elif pilihan_user == 0:
             break    

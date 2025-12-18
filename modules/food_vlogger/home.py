@@ -8,6 +8,7 @@ def beranda_fv():
         clear_screen()
         print("\n===== BERANDA FOOD VLOGGER =====")
         print("1. Lihat lowongan")
+        print("3. Lowongan Selesai ✅")
         print("0. Logout")
         pilihan_user = int(input("> "))
         #diambil atau belum diambil 
@@ -17,3 +18,5 @@ def beranda_fv():
         
         elif pilihan_user == 0:
             break
+        elif pilihan_user == 3:
+            lowongan_selesai()

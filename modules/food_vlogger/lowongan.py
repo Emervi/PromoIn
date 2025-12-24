@@ -1,39 +1,54 @@
 import csv
 import os
+from modules.utils import clear_screen
 from data.config import DATA_LOWONGAN
 
-def lihat_lowongan():
-    print("\n====== DAFTAR LOWONGAN ======")
-
-    file_path = DATA_LOWONGAN
-
-    if not os.path.isfile(file_path):
-        print("Belum ada lowongan.")
-        input("Tekan ENTER untuk kembali...")
-        return
-
-    with open(file_path, mode="r", encoding="utf-8") as file:
-        reader = csv.DictReader(file)
-
-        data = list(reader)
-
-        if not data:
-            print("Belum ada lowongan.")
-        else:
-            for i, row in enumerate(data, start=1):
-                print(f"\nLowongan #{i}")
-                print(f"Nama Produk       : {row['nama_produk']}")
-                print(f"Deskripsi         : {row['deskripsi_promosi']}")
-                print(f"Budget            : {row['budget']}")
-                print(f"Syarat Followers  : {row['syarat_followers']}")
-                print(f"Status            : {row['status_lowongan']}")
+def data_lowongan():
+    data = []
     
-    pilihan = input("\nPilih nomor lowongan (ENTER untuk kembali): ")
+    if not os.path.exists(DATA_LOWONGAN):
+        return []
+    
+    with open(DATA_LOWONGAN, mode="r", newline='') as file:
+        reader = csv.reader(file)
+        for baris in reader:
+            data.append(baris)
+    
+    return data
 
+def simpan_lowongan(data_baru):
+    with open(DATA_LOWONGAN, mode="a", newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(data_baru)
+
+def daftar_lowongan():
+    
+    clear_screen()
+    print("\n====== DAFTAR LOWONGAN ======")
+    
+    lowongans = data_lowongan()
+    
+    if len(lowongans) == 1:
+        print("Belum ada lowongan")
+        
+    else:
+        for i in range(len(lowongans)):
+            
+            if i == 0: continue
+            
+            if lowongans[i][6] == "belum diambil":
+                print(f"\nLowongan #{lowongans[i][0]}")
+                print(f"Nama Produk       : {lowongans[i][2]}")
+                print(f"Deskripsi         : {lowongans[i][3]}")
+                print(f"Budget            : Rp {lowongans[i][4]}")
+                print(f"Syarat Followers  : {lowongans[i][5]}")
+
+    pilihan = input("\nMasukan nomor lowongan yang ingin dilamar (Tekan ENTER untuk kembali): ").strip()
+    
     if pilihan == "":
-        return 
-
-    milih_lowongan(int(pilihan))
+        return
+    else:
+        milih_lowongan(int(pilihan))
 
 def milih_lowongan(pilihan):
     file_path = DATA_LOWONGAN

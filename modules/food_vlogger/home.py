@@ -1,4 +1,4 @@
-from modules.food_vlogger.lowongan import lihat_lowongan
+from modules.food_vlogger.lowongan import daftar_lowongan
 from modules.food_vlogger.lowongan_berlangsung import lowongan_berlangsung
 from modules.utils import clear_screen
 
@@ -17,7 +17,7 @@ def beranda_fv():
             break
 
         elif pilihan_user == 1:
-            lihat_lowongan()
+            daftar_lowongan()
 
         elif pilihan_user == 2:
             lowongan_berlangsung()

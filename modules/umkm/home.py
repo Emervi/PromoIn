@@ -22,7 +22,6 @@ def beranda_umkm():
         
         elif pilihan_user == 3:
             print(data.session.USER_LOGIN)
-            input("COK")
         
         elif pilihan_user == 0:
             break    

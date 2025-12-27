@@ -28,7 +28,7 @@ def lihat_lowongan():
                 print(f"Syarat Followers  : {row['syarat_followers']}")
                 print(f"Status            : {row['status_lowongan']}")
     
-    pilihan = input("\nPilih nomor lowongan (ENTER untuk kembali): ")
+    pilihan = input("\nPilih nomor lowongan yang ingin diambil (ENTER untuk kembali): ")
 
     if pilihan == "":
         return 

@@ -45,6 +45,32 @@ def daftar_lowongan():
 
     pilihan = input("\nMasukan nomor lowongan yang ingin dilamar (Tekan ENTER untuk kembali): ").strip()
     
+
+    file_path = DATA_LOWONGAN
+
+    if not os.path.isfile(file_path):
+        print("Belum ada lowongan.")
+        input("Tekan ENTER untuk kembali...")
+        return
+
+    with open(file_path, mode="r", encoding="utf-8") as file:
+        reader = csv.DictReader(file)
+
+        data = list(reader)
+
+        if not data:
+            print("Belum ada lowongan.")
+        else:
+            for i, row in enumerate(data, start=1):
+                print(f"\nLowongan #{i}")
+                print(f"Nama Produk       : {row['nama_produk']}")
+                print(f"Deskripsi         : {row['deskripsi_promosi']}")
+                print(f"Budget            : {row['budget']}")
+                print(f"Syarat Followers  : {row['syarat_followers']}")
+                print(f"Status            : {row['status_lowongan']}")
+    
+    pilihan = input("\nPilih nomor lowongan yang ingin diambil (ENTER untuk kembali): ")
+
     if pilihan == "":
         return
     else:

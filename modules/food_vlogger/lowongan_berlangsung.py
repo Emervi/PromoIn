@@ -4,6 +4,7 @@ from modules.utils import clear_screen
 from data.config import DATA_LOWONGAN
 
 def lowongan_berlangsung():
+    clear_screen()
     print("\n====== Lowongan Berlangsung ======")
 
     if not os.path.exists(DATA_LOWONGAN):

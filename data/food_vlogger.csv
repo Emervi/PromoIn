@@ -4,3 +4,10 @@ vlogger_id,nama,email,password,jumlah_followers,platform,status_verifikasi
 3,Langga ganteng,langgaganteng@gmail.com,langga123
 4,Qwe,qwe@gmail.com,admin1234
 5,Wawan,wawan@gmail.com,Wawan123
+<<<<<<< HEAD
+6,Vitofood,vitofood@gmail.com,vitofood123
+=======
+6,Apo,apo@gmail.com,admin123
+7,Po,po@gmail.com,admin123
+8,Pos,pos@gmail.com,admin123
+>>>>>>> c468d912b55615815d539efee418df2b06ec3420

@@ -11,15 +11,22 @@ def data_lowongan():
         return []
     
     with open(DATA_LOWONGAN, mode="r", newline='') as file:
-        reader = csv.reader(file)
+        reader = csv.DictReader(file)
         for baris in reader:
             data.append(baris)
     
     return data
 
 def simpan_lowongan(data_baru):
+    file_ada = os.path.exists(DATA_LOWONGAN)
+        
     with open(DATA_LOWONGAN, mode="a", newline='') as file:
-        writer = csv.writer(file)
+        nama_kolom = data_baru.keys()
+        writer = csv.DictWriter(file, fieldnames=nama_kolom)
+        
+        if not file_ada:
+            writer.writeheader()
+            
         writer.writerow(data_baru)
 
 def daftar_lowongan():
@@ -37,12 +44,12 @@ def daftar_lowongan():
             
             if i == 0: continue
             
-            print(f"\nLowongan #{lowongans[i][0]}")
-            print(f"Nama Produk       : {lowongans[i][2]}")
-            print(f"Deskripsi         : {lowongans[i][3]}")
-            print(f"Budget            : Rp {lowongans[i][4]}")
-            print(f"Syarat Followers  : {lowongans[i][5]}")
-            print(f"Status            : {lowongans[i][6]}")
+            print(f"\nLowongan #{lowongans[i]["lowongan_id"]}")
+            print(f"Nama Produk       : {lowongans[i]["nama_produk"]}")
+            print(f"Deskripsi         : {lowongans[i]["deskripsi_promosi"]}")
+            print(f"Budget            : Rp {lowongans[i]["budget"]}")
+            print(f"Syarat Followers  : {lowongans[i]["syarat_followers"]}")
+            print(f"Status            : {lowongans[i]["status_lowongan"]}")
                     
     input("\nTekan ENTER untuk kembali...")
 
@@ -54,12 +61,12 @@ def buat_lowongan():
     lowongans = data_lowongan()
     
     # generate id baru untuk data yang baru
-    if apakah_int(lowongans[-1][0]):
-        lowongan_id = int(lowongans[-1][0]) + 1
+    if apakah_int(lowongans[-1]["lowongan_id"]):
+        lowongan_id = int(lowongans[-1]["lowongan_id"]) + 1
     else:
         lowongan_id = 1
         
-    umkm_id = data.session.USER_LOGIN[0]
+    umkm_id = data.session.USER_LOGIN["umkm_id"]
     status_lowongan = "belum diambil"
     
     while True:
@@ -102,15 +109,15 @@ def buat_lowongan():
             continue
         break
     
-    data_baru = [
-        lowongan_id,
-        umkm_id,
-        nama_produk,
-        deskripsi_promosi,
-        budget,
-        syarat_followers,
-        status_lowongan
-    ]
+    data_baru = {
+        "lowongan_id": lowongan_id,
+        "umkm_id": umkm_id,
+        "nama_produk": nama_produk,
+        "deskripsi_promosi": deskripsi_promosi,
+        "budget": budget,
+        "syarat_followers": syarat_followers,
+        "status_lowongan": status_lowongan
+    }
     
     simpan_lowongan(data_baru)
 

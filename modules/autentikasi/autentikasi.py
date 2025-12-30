@@ -57,7 +57,7 @@ def register_umkm():
     
     # mengambil semua email umkm dan masukan ke dalam email_umkms
     for umkm in umkms:
-        email_umkms.append(umkm[2])
+        email_umkms.append(umkm["email"])
         
     # meminta input nama
     while True:
@@ -112,13 +112,18 @@ def register_umkm():
         break
     
     # generate id baru untuk data yang baru
-    if apakah_int(umkms[-1][0]):
-        id_baru = int(umkms[-1][0]) + 1
+    if apakah_int(umkms[-1]["umkm_id"]):
+        id_baru = int(umkms[-1]["umkm_id"]) + 1
     else:
         id_baru = 1
                                 
     # memuat data akun
-    data_baru = [id_baru, input_nama, input_email, input_password]
+    data_baru = {
+        "umkm_id": id_baru,
+        "nama": input_nama,
+        "email": input_email,
+        "password": input_password
+    }
     
     # menyimpan data akun
     simpan_umkm(data_baru)
@@ -179,7 +184,7 @@ def login_umkm():
         
         for umkm in umkms:
             
-            if input_email == umkm[2] and input_password == umkm[3]:
+            if input_email == umkm["email"] and input_password == umkm["password"]:
                 
                 data.session.USER_LOGIN = umkm
                 

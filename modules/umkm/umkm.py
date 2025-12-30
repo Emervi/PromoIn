@@ -15,14 +15,21 @@ def data_umkm():
         return []
     
     with open(DATA_UMKM, mode="r", newline='') as file:
-        reader = csv.reader(file)
+        reader = csv.DictReader(file)
         for baris in reader:
             data.append(baris)
             
     return data
 
 # procedure untuk menyimpan data ke dalam file data UMKM
-def simpan_umkm(data_user):
+def simpan_umkm(data_baru):
+    file_ada = os.path.exists(DATA_UMKM)
+        
     with open(DATA_UMKM, mode="a", newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow(data_user)
+        nama_kolom = data_baru.keys()
+        writer = csv.DictWriter(file, fieldnames=nama_kolom)
+        
+        if not file_ada:
+            writer.writeheader()
+            
+        writer.writerow(data_baru)

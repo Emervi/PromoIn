@@ -1,5 +1,8 @@
 lowongan_id,umkm_id,nama_produk,deskripsi_promosi,budget,syarat_followers,status_lowongan
-1,1,Bakso Mamat,Gurih,10000,100,diambil
+1,1,Bakso Mamat,Gurih,10000,100,belum diambil
 2,1,Mie Ayamz,Maniez,90000,10,diambil
-3,15,WanCoffee & Food,Kopi susu buat anak kuliah,8000,1000,diambil
-4,8,Cilung amntap,beuhh enak,1000000,2000000,diambil
+3,15,WanCoffee & Food,Kopi susu buat anak kuliah,8000,1000,belum diambil
+4,8,Cilung amntap,beuhh enak,1000000,2000000,belum diambil
+5,8,baso uhuy,mantafff,10000000,500000,diambil
+6,5,Nasi Goreng,Sedap dan mantapp,1000000,100000,diambil
+7,8,es krim,lezatos,100000,200000,diambil

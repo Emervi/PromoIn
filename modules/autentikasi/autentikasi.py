@@ -4,8 +4,39 @@ from modules.food_vlogger.food_vlogger import data_fv, simpan_fv
 from modules.food_vlogger.home import beranda_fv
 from modules.utils import clear_screen, apakah_int
 import data.session
+import msvcrt
 
+def input_password(prompt="Password: "):
+    print(prompt, end="", flush=True)
+    password = ""
+    while True:
+        ch = msvcrt.getch()
 
+        # Enter ditekan
+        if ch in {b"\r", b"\n"}:
+            print()
+            break
+        
+        # Backspace ditekan
+        elif ch == b"\x08":
+            if len(password) > 0:
+                password = password[:-1]
+                print("\b \b", end="", flush=True)
+            continue
+        # Karakter biasa
+        elif ch in {b"\x00", b"\xe0"}:
+            msvcrt.getch()  # Lewati karakter berikutnya
+            continue
+
+        try:
+            char = ch.decode()
+        except:
+            continue
+            
+        password += char
+        print("*", end="", flush=True)
+        
+    return password
 
 # ======================================== UMKM ========================================
 def autentikasi_umkm():
@@ -166,25 +197,25 @@ def login_umkm():
                 print("❌ Format email salah ❌")
                 continue            
             break
-        
+    
         # meminta input password
         while True:
-            input_password = input("Password: ").strip()
+            input_password_user = input_password("Password: ").strip()
             
             # mengecek jika password kosong
-            if not input_password:
+            if not input_password_user:
                 print("❌ Password tidak boleh kosong ❌")
                 continue
             
             # mengecek panjang password
-            if len(input_password) < 8:
+            if len(input_password_user) < 8:
                 print("❌ Panjang password kurang dari 8 karakter ❌")
                 continue
             break
         
-        for umkm in umkms:
             
-            if input_email == umkm["email"] and input_password == umkm["password"]:
+        for umkm in umkms:
+            if input_email == umkm["email"] and input_password_user == umkm     ["password"]:
                 
                 data.session.USER_LOGIN = umkm
                 

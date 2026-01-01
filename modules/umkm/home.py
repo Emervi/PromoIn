@@ -13,6 +13,8 @@ def beranda_umkm():
         print("4. Kolaborasi")
         print("5. Cek Akun (DEBUG)")
         print("6. Cek Lowongan (DEBUG)")
+        print("8. Cek Akun (DEBUG)")
+        print("9. Cek Lowongan (DEBUG)")
         print("0. Logout")
         pilihan_user = int(input("> "))
         

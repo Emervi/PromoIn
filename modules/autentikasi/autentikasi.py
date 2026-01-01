@@ -33,7 +33,7 @@ def autentikasi_umkm():
             if akun_umkm:
                 beranda_umkm()
             else:
-                login_umkm()
+                autentikasi_umkm()
                 
         elif pilihan_user == 9:
             break
@@ -66,6 +66,10 @@ def register_umkm():
         # mengecek jika nama kosong
         if not input_nama:
             print("❌ Nama tidak boleh kosong ❌")
+            continue
+        
+        if '@' in input_nama or '.' in input_nama:
+            print("❌ Format nama keliru ❌")
             continue
         break
     
@@ -112,10 +116,10 @@ def register_umkm():
         break
     
     # generate id baru untuk data yang baru
-    if apakah_int(umkms[-1]["umkm_id"]):
-        id_baru = int(umkms[-1]["umkm_id"]) + 1
-    else:
+    if len(umkms) == 0:
         id_baru = 1
+    else:
+        id_baru = int(umkms[-1]["umkm_id"]) + 1        
                                 
     # memuat data akun
     data_baru = {
@@ -138,20 +142,13 @@ def register_umkm():
 
 def login_umkm():
     
-    data_salah = None
-    
     while True:
         clear_screen()
         print("\n===== LOGIN UMKM =====")
         
         # mengambil data umkm yang ada pada file umkm.csv
         umkms = data_umkm()
-        
-        # menampilkan pemberitahuan jika email atau password salah
-        if data_salah:
-            print("❌ Email atau password salah, silakan masukan ulang ❌")
-            data_salah = False        
-        
+                
         # meminta input email
         while True:
             input_email = input("Email: ").lower().strip()
@@ -192,7 +189,17 @@ def login_umkm():
                 input("\nTekan ENTER untuk lanjut ke halaman beranda...")
                 return True
         
-        data_salah = True
+        # ketika email atau password yang dimasukan user salah
+        print("\n❌ Email atau password salah, silakan masukan ulang ❌")
+        
+        print("\n1. Lanjut mengisi form login")
+        print("2. Kembali ke halaman Login & Register UMKM")
+        
+        lanjut_isi = int(input("> "))
+        if lanjut_isi == 1:
+            pass
+        elif lanjut_isi == 2:
+            return False
 
 
 
@@ -222,7 +229,7 @@ def autentikasi_fv():
             if akun_fv:
                 beranda_fv()
             else:
-                login_fv()
+                autentikasi_fv()
                 
         elif pilihan_user == 9:
             break
@@ -255,6 +262,10 @@ def register_fv():
         # mengecek jika nama kosong
         if not input_nama:
             print("❌ Nama tidak boleh kosong ❌")
+            continue
+        
+        if '@' in input_nama or '.' in input_nama:
+            print("❌ Format nama keliru ❌")
             continue
         break
     
@@ -322,20 +333,13 @@ def register_fv():
 
 def login_fv():
     
-    data_salah = None
-    
     while True:
         clear_screen()
         print("\n===== LOGIN FOOD VLOGGER =====")
         
         # mengambil data food vlogger yang ada pada file foof_vlogger.csv
         fvs = data_fv()
-        
-        # menampilkan pemberitahuan jika email atau password salah
-        if data_salah:
-            print("❌ Email atau password salah, silakan masukan ulang ❌")
-            data_salah = False
-        
+                
         # meminta input email
         while True:
             input_email = input("Email: ").lower().strip()
@@ -375,5 +379,15 @@ def login_fv():
                 print("\n✅ Login Berhasil ✅")
                 input("\nTekan ENTER untuk lanjut ke halaman beranda...")
                 return True
-            
-        data_salah = True
+        
+        # ketika email atau password yang dimasukan user salah
+        print("\n❌ Email atau password salah, silakan masukan ulang ❌")
+        
+        print("\n1. Lanjut mengisi form login")
+        print("2. Kembali ke halaman Login & Register Food Vlogger")
+        
+        lanjut_isi = int(input("> "))
+        if lanjut_isi == 1:
+            pass
+        elif lanjut_isi == 2:
+            return False

@@ -4,6 +4,7 @@ from modules.food_vlogger.food_vlogger import data_fv, simpan_fv
 from modules.food_vlogger.home import beranda_fv
 from modules.utils import clear_screen, apakah_int
 import data.session
+from modules.utils import input_password
 
 
 
@@ -166,22 +167,19 @@ def login_umkm():
         
         # meminta input password
         while True:
-            input_password = input("Password: ").strip()
-            
-            # mengecek jika password kosong
-            if not input_password:
+            input_password_user = input_password("Password: ").strip()
+
+            if not input_password_user:
                 print("❌ Password tidak boleh kosong ❌")
                 continue
-            
-            # mengecek panjang password
-            if len(input_password) < 8:
+            if len(input_password_user) < 8:
                 print("❌ Panjang password kurang dari 8 karakter ❌")
                 continue
             break
         
         for umkm in umkms:
             
-            if input_email == umkm["email"] and input_password == umkm["password"]:
+            if input_email == umkm["email"] and input_password_user == umkm["password"]:
                 
                 data.session.USER_LOGIN = umkm
                 

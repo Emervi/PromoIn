@@ -10,3 +10,8 @@ vlogger_id,nama,email,password,jumlah_followers,platform,status_verifikasi
 8,Pos,pos@gmail.com,admin123
 7,Po,po@gmail.com,admin123
 8,Pos,pos@gmail.com,admin123
+9,Jilan,jilan@gmail.com,jilan123
+10,Cilok,cilok@gmail.com,<function input_password at 0x00000212056EC360>
+11,Mie,mie@.,<function input_password at 0x000002472AB2C360>
+12,P,p@.,12345678
+13,L,l@.,12345678

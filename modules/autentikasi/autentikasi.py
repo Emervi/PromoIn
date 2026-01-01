@@ -96,22 +96,22 @@ def register_umkm():
     
     # meminta input password
     while True:
-        input_password = input("Password: ").strip()
+        input_password_user = input_password("Password: ").strip()
         
         # mengecek jika password kosong
-        if not input_password:
+        if not input_password_user:
             print("❌ Password tidak boleh kosong ❌")
             continue
         
         # mengecek panjang password
-        if len(input_password) < 8:
+        if len(input_password_user) < 8:
             print("❌ Panjang password kurang dari 8 karakter ❌")
             continue
         
-        konfirmasi_password = input("Konfirmasi Password: ").strip()
+        konfirmasi_password = input_password("Konfirmasi Password: ").strip()
 
         # mengecek password dengan konfirmasi password
-        if input_password != konfirmasi_password:
+        if input_password_user != konfirmasi_password:
             print("❌ Konfirmasi password tidak cocok ❌")
             continue
         break
@@ -127,7 +127,7 @@ def register_umkm():
         "umkm_id": id_baru,
         "nama": input_nama,
         "email": input_email,
-        "password": input_password
+        "password": input_password_user
     }
     
     # menyimpan data akun

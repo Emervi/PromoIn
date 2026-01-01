@@ -15,3 +15,4 @@ vlogger_id,nama,email,password,jumlah_followers,platform,status_verifikasi
 11,Mie,mie@.,<function input_password at 0x000002472AB2C360>
 12,P,p@.,12345678
 13,L,l@.,12345678
+14,Bakso,bakso@.,bakso123

@@ -9,8 +9,9 @@ def beranda_umkm():
         print("\n====== BERANDA UMKM ======")
         print("1. Buat Lowongan")
         print("2. Lihat Lowongan")
-        print("3. Cek Akun (DEBUG)")
-        print("4. Cek Lowongan (DEBUG)")
+        print("3. Lamaran Masuk")
+        print("4. Cek Akun (DEBUG)")
+        print("5. Cek Lowongan (DEBUG)")
         print("0. Logout")
         pilihan_user = int(input("> "))
         
@@ -20,11 +21,11 @@ def beranda_umkm():
         elif pilihan_user == 2:
             daftar_lowongan()
         
-        elif pilihan_user == 3:
+        elif pilihan_user == 4:
             print(data.session.USER_LOGIN)
             input("ENTER")
             
-        elif pilihan_user == 4:
+        elif pilihan_user == 5:
             lowongans = data_lowongan()
             
             lowongan_kosong = []

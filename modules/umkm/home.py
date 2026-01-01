@@ -9,8 +9,8 @@ def beranda_umkm():
         print("\n====== BERANDA UMKM ======")
         print("1. Buat Lowongan")
         print("2. Lihat Lowongan")
-        print("3. Cek Akun (DEBUG)")
-        print("4. Cek Lowongan (DEBUG)")
+        print("8. Cek Akun (DEBUG)")
+        print("9. Cek Lowongan (DEBUG)")
         print("0. Logout")
         pilihan_user = int(input("> "))
         

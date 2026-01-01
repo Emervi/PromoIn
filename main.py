@@ -28,8 +28,11 @@ while True:
     
     elif pilihan_user == 3:
         umkms = data_umkm()
+        print("Panjang data UMKM: ", len(umkms))
         for umkm in umkms:
             print(umkm)
+        input("ENTER")
+        break
 
     elif pilihan_user == 4:
         fvs = data_fv()

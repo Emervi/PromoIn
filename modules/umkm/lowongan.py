@@ -5,17 +5,12 @@ from data.config import DATA_LOWONGAN
 import data.session
 
 def data_lowongan():
-    data = []
-    
     if not os.path.exists(DATA_LOWONGAN):
         return []
     
     with open(DATA_LOWONGAN, mode="r", newline='') as file:
         reader = csv.DictReader(file)
-        for baris in reader:
-            data.append(baris)
-    
-    return data
+        return list(reader)
 
 def simpan_lowongan(data_baru):
     file_ada = os.path.exists(DATA_LOWONGAN)

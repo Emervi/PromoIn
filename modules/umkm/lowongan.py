@@ -25,28 +25,33 @@ def simpan_lowongan(data_baru):
         writer.writerow(data_baru)
 
 def daftar_lowongan():
-    
     clear_screen()
-    print("\n====== DAFTAR LOWONGAN ======")
+    print("\n====== DAFTAR LOWONGAN SAYA ======")
 
     lowongans = data_lowongan()
-    
-    if len(lowongans) == 1:
-        print("Belum ada lowongan")
-        
-    else:
-        for i in range(len(lowongans)):
-            
-            if i == 0: continue
-            
-            print(f"\nLowongan #{lowongans[i]["lowongan_id"]}")
-            print(f"Nama Produk       : {lowongans[i]["nama_produk"]}")
-            print(f"Deskripsi         : {lowongans[i]["deskripsi_promosi"]}")
-            print(f"Budget            : Rp {lowongans[i]["budget"]}")
-            print(f"Syarat Followers  : {lowongans[i]["syarat_followers"]}")
-            print(f"Status            : {lowongans[i]["status_lowongan"]}")
-                    
+    umkm_id_login = data.session.USER_LOGIN.get("umkm_id")
+
+    if not umkm_id_login:
+        print("Silakan login terlebih dahulu.")
+        input("\nTekan ENTER untuk kembali...")
+        return
+
+    ada = False
+    for i in range(1, len(lowongans)):
+        if lowongans[i]["umkm_id"] == umkm_id_login:
+            print(f"\nLowongan #{lowongans[i]['lowongan_id']}")
+            print(f"Nama Produk       : {lowongans[i]['nama_produk']}")
+            print(f"Deskripsi         : {lowongans[i]['deskripsi_promosi']}")
+            print(f"Budget            : Rp {lowongans[i]['budget']}")
+            print(f"Syarat Followers  : {lowongans[i]['syarat_followers']}")
+            print(f"Status            : {lowongans[i]['status_lowongan']}")
+            ada = True
+
+    if not ada:
+        print("\nKamu belum memiliki lowongan.")
+
     input("\nTekan ENTER untuk kembali...")
+
 
 def buat_lowongan():
     

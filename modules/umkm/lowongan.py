@@ -91,26 +91,26 @@ def buat_lowongan():
         break
     
     while True:
-        budget = input("Budget: ").strip()
+        budget = input("Anggaran Promosi: ").strip()
         
         if not budget:
-            print("❌ Budget tidak boleh kosong ❌")
+            print("❌ Anggaran tidak boleh kosong ❌")
             continue
         
         if not apakah_int(budget):
-            print("❌ Budget bukan angka ❌")
+            print("❌ Anggaran bukan angka ❌")
             continue
         break
     
     while True:
-        syarat_followers = input("Syarat Followers: ").strip()
+        syarat_followers = input("Minimal Followers: ").strip()
         
         if not syarat_followers:
-            print("❌ Syarat Followers tidak boleh kosong ❌")
+            print("❌ Minimal Followers tidak boleh kosong ❌")
             continue
         
         if not apakah_int(syarat_followers):
-            print("❌ Syarat Followers bukan angka ❌")
+            print("❌ Minimal Followers bukan angka ❌")
             continue
         break
     
@@ -128,3 +128,27 @@ def buat_lowongan():
 
     print("\n✅ Lowongan berhasil disimpan ✅")
     input("Tekan ENTER untuk kembali ke beranda...")
+
+
+def lamaran_masuk():
+    print("Food Vlogger: Lazzuardi Langga Duta Wijaya")
+    print("Melamar untuk: Batagor")
+    print("")
+    print("saya tertarik")
+    print("Diajukan pada 01/01/2026, 14.43")
+    print("")
+    print("Setujui Lamaran? jika setuju input id yang sesuai")
+
+    input("\nTekan ENTER untuk kembali...")
+
+
+def kolaborasi(): 
+    print("Batagor")
+    print("Dengan Lazzuardi Langga Duta Wijaya")
+    print("Anggaran: Rp. 600.000")
+    print("Status Pembayaran: Menunggu")
+    print("Hubungi No. dibawah untuk info lebih lanjut: 0895378060487")
+    print("Menunggu Bukti")
+
+    input("\nTekan ENTER untuk kembali...")
+

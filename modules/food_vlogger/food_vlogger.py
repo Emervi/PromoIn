@@ -9,20 +9,23 @@ from data.config import DATA_FOOD_VLOGGER
 
 # function untuk mengambil data Food Vlogger
 def data_fv():
-    data = []
-    
     if not os.path.exists(DATA_FOOD_VLOGGER):
         return []
     
     with open(DATA_FOOD_VLOGGER, mode="r", newline='') as file:
-        reader = csv.reader(file)
-        for baris in reader:
-            data.append(baris)
-            
-    return data
+        reader = csv.DictReader(file)
+        return list(reader)
+
 
 # procedure untuk menyimpan data ke dalam file data Food Vlogger
-def simpan_fv(data_user):
+def simpan_fv(data_baru):
+    file_ada = os.path.exists(DATA_FOOD_VLOGGER)
+        
     with open(DATA_FOOD_VLOGGER, mode="a", newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow(data_user)
+        nama_kolom = data_baru.keys()
+        writer = csv.DictWriter(file, fieldnames=nama_kolom)
+        
+        if not file_ada:
+            writer.writeheader()
+            
+        writer.writerow(data_baru)

@@ -59,7 +59,22 @@ def register_umkm():
     # mengambil semua email umkm dan masukan ke dalam email_umkms
     for umkm in umkms:
         email_umkms.append(umkm["email"])
+    
+    # meminta input nama usaha
+    while True:
+        input_nama_usaha = input("Nama Usaha: ").capitalize().strip()
         
+        # mengecek jika nama usaha kosong
+        if not input_nama_usaha:
+            print("❌ Nama usaha tidak boleh kosong ❌")
+            continue
+        
+        # mengecek format nama usaha
+        if '@' in input_nama_usaha or '.' in input_nama_usaha:
+            print("❌ Format nama usaha keliru ❌")
+            continue
+        break
+    
     # meminta input nama
     while True:
         input_nama = input("Nama: ").capitalize().strip()
@@ -69,6 +84,7 @@ def register_umkm():
             print("❌ Nama tidak boleh kosong ❌")
             continue
         
+        # mengecek format nama
         if '@' in input_nama or '.' in input_nama:
             print("❌ Format nama keliru ❌")
             continue
@@ -127,7 +143,11 @@ def register_umkm():
         "umkm_id": id_baru,
         "nama": input_nama,
         "email": input_email,
-        "password": input_password_user
+        "password": input_password_user,
+        "alamat": "-",
+        "lokasi": "-",
+        "nama_usaha": input_nama_usaha,
+        "deskripsi_usaha": "-"
     }
     
     # menyimpan data akun
@@ -190,15 +210,18 @@ def login_umkm():
         # ketika email atau password yang dimasukan user salah
         print("\n❌ Email atau password salah, silakan masukan ulang ❌")
         
-        print("\n1. Lanjut mengisi form login")
-        print("2. Kembali ke halaman Login & Register UMKM")
+        print("\n1. Kembali ke halaman Login & Register UMKM")
+        print("*. Tekan ENTER untuk lanjut mengisi form login")
         
-        lanjut_isi = int(input("> "))
-        if lanjut_isi == 1:
+        lanjut_isi = input("> ")
+        
+        if apakah_int(lanjut_isi):
+            lanjut_isi = int(lanjut_isi)
+            
+            if lanjut_isi == 1:
+                return False
+        else:
             pass
-        elif lanjut_isi == 2:
-            return False
-
 
 
 # ======================================== FOOD VLOGGER (FV) ========================================

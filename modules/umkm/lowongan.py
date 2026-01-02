@@ -61,16 +61,16 @@ def buat_lowongan():
     lowongans = data_lowongan()
     
     # generate id baru untuk data yang baru
-    if apakah_int(lowongans[-1]["lowongan_id"]):
-        lowongan_id = int(lowongans[-1]["lowongan_id"]) + 1
-    else:
+    if len(lowongans) == 0:
         lowongan_id = 1
+    else:
+        lowongan_id = int(lowongans[-1]["lowongan_id"]) + 1        
         
     umkm_id = data.session.USER_LOGIN["umkm_id"]
     status_lowongan = "belum diambil"
     
     while True:
-        nama_produk = input("Nama Produk: ").strip()
+        nama_produk = input("Nama Produk: ").capitalize().strip()
         
         if not nama_produk:
             print("❌ Nama Produk tidak boleh kosong ❌")
@@ -78,51 +78,124 @@ def buat_lowongan():
         break
     
     while True:
-        deskripsi_promosi = input("Deskripsi: ").strip()
+        kategori = input("Kategori: ").capitalize().strip()
         
-        if not deskripsi_promosi:
+        if not kategori:
+            print("❌ Kategori tidak boleh kosong ❌")
+            continue
+        break
+    
+    while True:
+        deskripsi = input("Deskripsi: ").strip()
+        
+        if not deskripsi:
             print("❌ Deskripsi tidak boleh kosong ❌")
             continue
         break
     
     while True:
+        # budget = int(input("Anggaran Promosi: "))
         budget = input("Anggaran Promosi: ").strip()
         
         if not budget:
-            print("❌ Anggaran tidak boleh kosong ❌")
+            print("❌ Anggaran Promosi tidak boleh kosong ❌")
             continue
         
         if not apakah_int(budget):
-            print("❌ Anggaran bukan angka ❌")
+            print("❌ Anggaran Promosi bukan angka ❌")
             continue
+        
+        budget = int(budget)
+        
+        if budget < 25000:
+            print("❌ Anggaran Promosi minimal Rp 25.000 ❌")
+            continue
+        
         break
     
     while True:
-        syarat_followers = input("Minimal Followers: ").strip()
+        minimal_followers = input("Minimal Followers: ").strip()
         
-        if not syarat_followers:
+        if not minimal_followers:
             print("❌ Minimal Followers tidak boleh kosong ❌")
             continue
         
-        if not apakah_int(syarat_followers):
+        if not apakah_int(minimal_followers):
             print("❌ Minimal Followers bukan angka ❌")
             continue
+        
+        minimal_followers = int(minimal_followers)
+        
+        if minimal_followers < 1000:
+            print("❌ Minimal Followers paling sedikitnya 1000 ❌")
+            continue
+        
         break
     
-    data_baru = {
-        "lowongan_id": lowongan_id,
-        "umkm_id": umkm_id,
-        "nama_produk": nama_produk,
-        "deskripsi_promosi": deskripsi_promosi,
-        "budget": budget,
-        "syarat_followers": syarat_followers,
-        "status_lowongan": status_lowongan
-    }
+    while True:
+        batas_waktu_lowongan = input("Lama Lowongan Tayang (Hari): ").strip()
+        
+        if not batas_waktu_lowongan:
+            print("❌ Lama Lowongan Tayang tidak boleh kosong ❌")
+            continue
+        
+        if not apakah_int(batas_waktu_lowongan):
+            print("❌ Lama Lowongan Tayang bukan angka ❌")
+            continue
+        
+        batas_waktu_lowongan = int(batas_waktu_lowongan)
+        
+        if batas_waktu_lowongan <= 0 or batas_waktu_lowongan > 30:
+            print("❌ Lama Lowongan Tayang tidak boleh lebih dari 30 hari ❌")
+            continue
+        
+        break
     
-    simpan_lowongan(data_baru)
+    while True:
+        batas_waktu_pengerjaan = input("Lama Waktu Pengerjaan (Hari): ").strip()
+        
+        if not batas_waktu_pengerjaan:
+            print("❌ Lama Waktu Pengerjaan tidak boleh kosong ❌")
+            continue
+        
+        if not apakah_int(batas_waktu_pengerjaan):
+            print("❌ Lama Waktu Pengerjaan bukan angka ❌")
+            continue
+        
+        batas_waktu_pengerjaan = int(batas_waktu_pengerjaan)
+        
+        if batas_waktu_pengerjaan <= 0 or batas_waktu_pengerjaan > 30:
+            print("❌ Lama Waktu Pengerjaan tidak boleh lebih dari 30 hari ❌")
+            continue
+        
+        break
+    
+    print("Apakah data lowongan yang dimasukan sudah benar?")
+    print("1. Ya")
+    print("2. Buat ulang lowongan")
+    konfirmasi = int(input("> "))
+    
+    if konfirmasi == 1:
+        data_baru = {
+            "lowongan_id": lowongan_id,
+            "umkm_id": umkm_id,
+            "nama_produk": nama_produk,
+            "deskripsi": deskripsi,
+            "budget": budget,
+            "minimal_followers": minimal_followers,
+            "status_lowongan": status_lowongan,
+            "kategori": kategori,
+            "batas_waktu_lowongan": batas_waktu_lowongan,
+            "batas_waktu_pengerjaan": batas_waktu_pengerjaan,
+        }
+        
+        simpan_lowongan(data_baru)
 
-    print("\n✅ Lowongan berhasil disimpan ✅")
-    input("Tekan ENTER untuk kembali ke beranda...")
+        print("\n✅ Lowongan berhasil disimpan ✅")
+        input("Tekan ENTER untuk kembali ke beranda...")
+        
+    elif konfirmasi == 2:
+        pass
 
 
 def lamaran_masuk():

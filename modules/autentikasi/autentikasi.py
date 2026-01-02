@@ -4,6 +4,7 @@ from modules.food_vlogger.food_vlogger import data_fv, simpan_fv
 from modules.food_vlogger.home import beranda_fv
 from modules.utils import clear_screen, apakah_int
 import data.session
+from modules.utils import input_password
 
 
 
@@ -111,22 +112,22 @@ def register_umkm():
     
     # meminta input password
     while True:
-        input_password = input("Password: ").strip()
+        input_password_user = input_password("Password: ").strip()
         
         # mengecek jika password kosong
-        if not input_password:
+        if not input_password_user:
             print("❌ Password tidak boleh kosong ❌")
             continue
         
         # mengecek panjang password
-        if len(input_password) < 8:
+        if len(input_password_user) < 8:
             print("❌ Panjang password kurang dari 8 karakter ❌")
             continue
         
-        konfirmasi_password = input("Konfirmasi Password: ").strip()
+        konfirmasi_password = input_password("Konfirmasi Password: ").strip()
 
         # mengecek password dengan konfirmasi password
-        if input_password != konfirmasi_password:
+        if input_password_user != konfirmasi_password:
             print("❌ Konfirmasi password tidak cocok ❌")
             continue
         break
@@ -142,7 +143,7 @@ def register_umkm():
         "umkm_id": id_baru,
         "nama": input_nama,
         "email": input_email,
-        "password": input_password,
+        "password": input_password_user,
         "alamat": "-",
         "lokasi": "-",
         "nama_usaha": input_nama_usaha,
@@ -186,22 +187,19 @@ def login_umkm():
         
         # meminta input password
         while True:
-            input_password = input("Password: ").strip()
-            
-            # mengecek jika password kosong
-            if not input_password:
+            input_password_user = input_password("Password: ").strip()
+
+            if not input_password_user:
                 print("❌ Password tidak boleh kosong ❌")
                 continue
-            
-            # mengecek panjang password
-            if len(input_password) < 8:
+            if len(input_password_user) < 8:
                 print("❌ Panjang password kurang dari 8 karakter ❌")
                 continue
             break
         
         for umkm in umkms:
             
-            if input_email == umkm["email"] and input_password == umkm["password"]:
+            if input_email == umkm["email"] and input_password_user == umkm["password"]:
                 
                 data.session.USER_LOGIN = umkm
                 
@@ -276,7 +274,7 @@ def register_fv():
     
     # mengambil semua email food vlogger dan masukan ke dalam email_fvs
     for fv in fvs:
-        email_fvs.append(fv[2])
+        email_fvs.append(fv["email"])
         
     # meminta input nama
     while True:
@@ -311,37 +309,42 @@ def register_fv():
             print("❌ Email sudah terdaftar ❌")
             continue
         break
-    
+        
     # meminta input password
     while True:
-        input_password = input("Password: ").strip()
-        
+        input_password_user = input_password().strip()
+
         # mengecek jika password kosong
-        if not input_password:
+        if not input_password_user:
             print("❌ Password tidak boleh kosong ❌")
             continue
         
         # mengecek panjang password
-        if len(input_password) < 8:
+        if len(input_password_user) < 8:
             print("❌ Panjang password kurang dari 8 karakter ❌")
             continue
-        
-        konfirmasi_password = input("Konfirmasi Password: ").strip()
+    
+        konfirmasi_password = input_password("Konfirmasi Password: ").strip()
 
         # mengecek password dengan konfirmasi password
-        if input_password != konfirmasi_password:
+        if input_password_user != konfirmasi_password:
             print("❌ Konfirmasi password tidak cocok ❌")
             continue
         break
     
     # generate id baru untuk data yang baru
-    if apakah_int(fvs[-1][0]):
-        id_baru = int(fvs[-1][0]) + 1
-    else:
+    if len(fvs) == 0:
         id_baru = 1
-                                
+    else:
+        id_baru = int(fvs[-1]["vlogger_id"]) + 1
+                                 
     # memuat data akun
-    data_baru = [id_baru, input_nama, input_email, input_password]
+    data_baru = {
+        "vlogger_id": id_baru,
+        "nama": input_nama,
+        "email": input_email,
+        "password": input_password_user
+    }
     
     # menyimpan data akun
     simpan_fv(data_baru)
@@ -351,6 +354,8 @@ def register_fv():
     input("\nTekan ENTER untuk lanjut ke halaman beranda...")
     
     return True
+
+    
 
 
 
@@ -380,22 +385,22 @@ def login_fv():
         
         # meminta input password
         while True:
-            input_password = input("Password: ").strip()
-            
+            input_password_user = input_password("Password: ").strip()
+
             # mengecek jika password kosong
-            if not input_password:
+            if not input_password_user:
                 print("❌ Password tidak boleh kosong ❌")
                 continue
             
             # mengecek panjang password
-            if len(input_password) < 8:
+            if len(input_password_user) < 8:
                 print("❌ Panjang password kurang dari 8 karakter ❌")
                 continue
             break
                 
         for fv in fvs:
             
-            if input_email == fv[2] and input_password == fv[3]:
+            if input_email == fv["email"] and input_password_user == fv["password"]:
                 
                 data.session.USER_LOGIN = fv
                 

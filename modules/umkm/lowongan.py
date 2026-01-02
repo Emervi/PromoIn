@@ -29,7 +29,7 @@ def daftar_lowongan():
     print("\n====== DAFTAR LOWONGAN SAYA ======")
 
     lowongans = data_lowongan()
-    umkm_id_login = data.session.USER_LOGIN.get("umkm_id")
+    umkm_id_login = data.session.USER_LOGIN["umkm_id"]
 
     if not umkm_id_login:
         print("Silakan login terlebih dahulu.")
@@ -37,14 +37,23 @@ def daftar_lowongan():
         return
 
     ada = False
-    for i in range(1, len(lowongans)):
+    for i in range(0, len(lowongans)):
         if lowongans[i]["umkm_id"] == umkm_id_login:
+            
+            # mengubah data yang diterima menjadi integer
+            int_budget = int(lowongans[i]['budget'])
+            int_minimal_followers = int(lowongans[i]['minimal_followers'])
+            
+            # melakukan format angka menjadi ribuan
+            formatted_budget = f"{int_budget:,}".replace(",", ".")
+            formatted_min_followers = f"{int_minimal_followers:,}".replace(",", ".")
+            
             print(f"\nLowongan #{lowongans[i]['lowongan_id']}")
             print(f"Nama Produk       : {lowongans[i]['nama_produk']}")
-            print(f"Deskripsi         : {lowongans[i]['deskripsi_promosi']}")
-            print(f"Budget            : Rp {lowongans[i]['budget']}")
-            print(f"Syarat Followers  : {lowongans[i]['syarat_followers']}")
-            print(f"Status            : {lowongans[i]['status_lowongan']}")
+            print(f"Deskripsi         : {lowongans[i]['deskripsi']}")
+            print(f"Budget            : Rp {formatted_budget}")
+            print(f"Minimal Followers  : {formatted_min_followers} Followers")
+            print(f"Status            : {lowongans[i]['status_lowongan']} {"✅" if lowongans[i]['status_lowongan'] == "diambil" else "❌"}")
             ada = True
 
     if not ada:
@@ -152,14 +161,14 @@ def buat_lowongan():
         break
     
     while True:
-        batas_waktu_pengerjaan = input("Lama Waktu Pengerjaan (Hari): ").strip()
+        batas_waktu_pengerjaan = input("Lama Batas Waktu Pengerjaan (Hari): ").strip()
         
         if not batas_waktu_pengerjaan:
-            print("❌ Lama Waktu Pengerjaan tidak boleh kosong ❌")
+            print("❌ Lama Batas Waktu Pengerjaan tidak boleh kosong ❌")
             continue
         
         if not apakah_int(batas_waktu_pengerjaan):
-            print("❌ Lama Waktu Pengerjaan bukan angka ❌")
+            print("❌ Lama Batas Waktu Pengerjaan bukan angka ❌")
             continue
         
         batas_waktu_pengerjaan = int(batas_waktu_pengerjaan)

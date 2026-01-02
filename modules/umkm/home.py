@@ -4,12 +4,16 @@ import data.session
 
 def beranda_umkm():
     
+    nama_pemilik = data.session.USER_LOGIN["nama"]
+    nama_usaha = data.session.USER_LOGIN["nama_usaha"]
+    
     while True:
         clear_screen()
         print("\n====== BERANDA UMKM ======")
+        print(f"Selamat datang {nama_pemilik}, pemilik {nama_usaha}")
         print("1. Buat Lowongan")
-        print("2. Lihat Lowongan")
-        print("3. Lamaran Masuk")
+        print("2. Lihat Lowongan Saya (jumlah_lowongan)")
+        print("3. Lamaran Masuk (jumlah_lamaran)")
         print("4. Kolaborasi")
         print("5. Cek Akun (DEBUG)")
         print("6. Cek Lowongan (DEBUG)")

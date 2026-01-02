@@ -1,6 +1,5 @@
 umkm_id,nama,email,password,alamat,lokasi,nama_usaha,deskripsi_usaha
-1,Umkm,umkm@gmail.com,admin123
+1,Umkm,umkm@gmail.com,admin123,-,-,Toko UMKM,-
 2,Geprek rahmat,Ujang,ujang@gmail.com,admin123
 3,Usep,usep@gmail.com,admin123,-,-,Talago biru,-
-2,Jilan,jilan@gmail.com,jilan123
-3,Arfa,@..,arfa1234
+4,Rizal pedro,tukot@gmail.com,admin123,-,-,Tujuh koto,-

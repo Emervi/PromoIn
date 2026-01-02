@@ -411,11 +411,15 @@ def login_fv():
         # ketika email atau password yang dimasukan user salah
         print("\n❌ Email atau password salah, silakan masukan ulang ❌")
         
-        print("\n1. Lanjut mengisi form login")
-        print("2. Kembali ke halaman Login & Register Food Vlogger")
+        print("\n1. Kembali ke halaman Login & Register UMKM")
+        print("*. Tekan ENTER untuk lanjut mengisi form login")
         
-        lanjut_isi = int(input("> "))
-        if lanjut_isi == 1:
+        lanjut_isi = input("> ")
+        
+        if apakah_int(lanjut_isi):
+            lanjut_isi = int(lanjut_isi)
+            
+            if lanjut_isi == 1:
+                return False
+        else:
             pass
-        elif lanjut_isi == 2:
-            return False

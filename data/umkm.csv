@@ -1,2 +1,4 @@
-umkm_id,nama,email,password,alamat,telepon,status_verifikasi
+umkm_id,nama,email,password,alamat,lokasi,nama_usaha,deskripsi_usaha
 1,Umkm,umkm@gmail.com,admin123
+2,Geprek rahmat,Ujang,ujang@gmail.com,admin123
+3,Usep,usep@gmail.com,admin123,-,-,Talago biru,-

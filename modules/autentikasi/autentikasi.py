@@ -2,10 +2,8 @@ from modules.umkm.umkm import data_umkm, simpan_umkm
 from modules.umkm.home import beranda_umkm
 from modules.food_vlogger.food_vlogger import data_fv, simpan_fv
 from modules.food_vlogger.home import beranda_fv
-from modules.utils import clear_screen, apakah_int
+from modules.utils import clear_screen, apakah_int, input_password, format_email
 import data.session
-from modules.utils import input_password
-from modules.utils import format_email
 
 
 

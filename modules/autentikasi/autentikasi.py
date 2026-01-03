@@ -175,9 +175,8 @@ def login_umkm():
                 continue
             
             # mengecek format email
-            if '@' not in input_email or '.' not in input_email:
-                print("❌ Format email salah ❌")
-                continue            
+            if format_email(input_email) == False:
+                continue         
             break
         
         # meminta input password
@@ -367,8 +366,7 @@ def login_fv():
                 continue
             
             # mengecek format email
-            if '@' not in input_email or '.' not in input_email:
-                print("❌ Format email salah ❌")
+            if format_email(input_email) == False:
                 continue            
             break
         

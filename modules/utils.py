@@ -29,3 +29,24 @@ def input_password(prompt="Password: "):
         if ch in {b"\x00", b"\xe0"}:  # Tombol fungsi → abaikan
             msvcrt.getch(); continue
         pw += ch.decode(); print("*", end="", flush=True)
+
+def validasi_email(email):
+    bagian = email.split('@')
+    
+    for karakter in email:
+        if not (karakter.isalnum() or karakter in '.@'):
+            return False
+    
+    if not email or email.count('@') != 1:
+        return False
+
+    if len(bagian[0]) == 0 or len(bagian[1]) == 0:
+        return False
+    
+    if '.' not in bagian[1]:
+        return False
+    
+    if bagian[1].startswith('.') or bagian[1].endswith('.'):
+        return False
+    
+    return True

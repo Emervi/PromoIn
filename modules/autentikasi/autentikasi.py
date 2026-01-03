@@ -281,6 +281,14 @@ def register_fv():
             print("❌ Format email salah ❌")
             continue
         
+        if input_email.count('@') != 1 or input_email.count('.') < 1:
+            print("❌ Format email salah ❌")
+            continue
+        
+        if input_email.index('@') > input_email.index('.'):
+            print("❌ Format email salah ❌")
+            continue
+        
         # mengecek jika email sudah terdaftar
         if input_email in email_fvs:
             print("❌ Email sudah terdaftar ❌")

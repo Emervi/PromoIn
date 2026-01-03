@@ -4,15 +4,17 @@ import data.session
 
 def beranda_umkm():
     
+    nama_pemilik = data.session.USER_LOGIN["nama"]
+    nama_usaha = data.session.USER_LOGIN["nama_usaha"]
+    
     while True:
         clear_screen()
         print("\n====== BERANDA UMKM ======")
+        print(f"Selamat datang {nama_pemilik}!, pemilik {nama_usaha}")
         print("1. Buat Lowongan")
-        print("2. Lihat Lowongan")
-        print("3. Lamaran Masuk")
+        print("2. Lihat Lowongan Saya (jumlah_lowongan)")
+        print("3. Lamaran Masuk (jumlah_lamaran)")
         print("4. Kolaborasi")
-        print("5. Cek Akun (DEBUG)")
-        print("6. Cek Lowongan (DEBUG)")
         print("8. Cek Akun (DEBUG)")
         print("9. Cek Lowongan (DEBUG)")
         print("0. Logout")
@@ -30,17 +32,17 @@ def beranda_umkm():
         elif pilihan_user == 4:
             kolaborasi()
         
-        elif pilihan_user == 5:
+        elif pilihan_user == 8:
             print(data.session.USER_LOGIN)
             input("ENTER")
             
-        elif pilihan_user == 6:
+        elif pilihan_user == 9:
             lowongans = data_lowongan()
             
             lowongan_kosong = []
             
             for low in lowongans:
-                if low[6] == "belum diambil":
+                if low["status_lowongan"] == "belum diambil":
                     print(low)
                     # lowongan_kosong.append(low)
                 # print(low)

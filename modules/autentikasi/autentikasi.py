@@ -5,6 +5,7 @@ from modules.food_vlogger.home import beranda_fv
 from modules.utils import clear_screen, apakah_int
 import data.session
 from modules.utils import input_password
+from modules.utils import format_email
 
 
 
@@ -94,14 +95,8 @@ def register_umkm():
     while True:
         input_email = input("Email: ").lower().strip()
         
-        # mengecek jika email kosong
-        if not input_email:
-            print("❌ Email tidak boleh kosong ❌")
-            continue
-        
         # mengecek format email
-        if '@' not in input_email or '.' not in input_email:
-            print("❌ Format email salah ❌")
+        if format_email(input_email) == False:
             continue
         
         # mengecek jika email sudah terdaftar
@@ -294,22 +289,8 @@ def register_fv():
     while True:
         input_email = input("Email: ").lower().strip()
         
-        # mengecek jika email kosong
-        if not input_email:
-            print("❌ Email tidak boleh kosong ❌")
-            continue
-        
         # mengecek format email
-        if '@' not in input_email or '.' not in input_email:
-            print("❌ Format email salah ❌")
-            continue
-        
-        if input_email.count('@') != 1 or input_email.count('.') < 1:
-            print("❌ Format email salah ❌")
-            continue
-        
-        if input_email.index('@') > input_email.index('.'):
-            print("❌ Format email salah ❌")
+        if format_email(input_email) == False:
             continue
         
         # mengecek jika email sudah terdaftar

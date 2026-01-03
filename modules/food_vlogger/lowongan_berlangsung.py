@@ -3,7 +3,6 @@ import os
 from modules.utils import clear_screen
 from data.config import DATA_LOWONGAN
 from data.config import DATA_FOOD_VLOGGER
-
 import data.session
 
 def data_vlogger():
@@ -45,13 +44,14 @@ def lowongan_berlangsung():
         input("\nTekan ENTER untuk kembali...")
         return
     
-    for i in range(0, len(food_vlogger)):
-        id_di_csv = str(food_vlogger[i].get("vlogger_id", "")).strip()
-
+    ada = False 
     for item in status:
-        if item["status_lowongan"] == "diambil" and id_di_csv == vlogger_id_login:
+        vlogger_id_item = str(item.get("vlogger_id", "")).strip()
+        if item["status_lowongan"] == "diambil" and vlogger_id_item == vlogger_id_login:
             print(f"Lowongan {item['nama_produk']} sedang berlangsung")
-        else:
-            print("Belum memilih lowongan")
+            ada = True
+            
+    if not ada:
+        print("Belum memilih lowongan")
 
     input("Tekan ENTER untuk kembali...")

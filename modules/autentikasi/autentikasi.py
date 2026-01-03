@@ -2,9 +2,8 @@ from modules.umkm.umkm import data_umkm, simpan_umkm
 from modules.umkm.home import beranda_umkm
 from modules.food_vlogger.food_vlogger import data_fv, simpan_fv
 from modules.food_vlogger.home import beranda_fv
-from modules.utils import clear_screen, apakah_int
+from modules.utils import clear_screen, apakah_int, input_password, format_email
 import data.session
-from modules.utils import input_password
 
 
 
@@ -98,14 +97,8 @@ def register_umkm():
     while True:
         input_email = input("Email: ").lower().strip()
         
-        # mengecek jika email kosong
-        if not input_email:
-            print("❌ Email tidak boleh kosong ❌")
-            continue
-        
         # mengecek format email
-        if '@' not in input_email or '.' not in input_email:
-            print("❌ Format email salah ❌")
+        if format_email(input_email) == False:
             continue
         
         # mengecek jika email sudah terdaftar
@@ -184,9 +177,8 @@ def login_umkm():
                 continue
             
             # mengecek format email
-            if '@' not in input_email or '.' not in input_email:
-                print("❌ Format email salah ❌")
-                continue            
+            if format_email(input_email) == False:
+                continue         
             break
         
         # meminta input password
@@ -298,14 +290,8 @@ def register_fv():
     while True:
         input_email = input("Email: ").lower().strip()
         
-        # mengecek jika email kosong
-        if not input_email:
-            print("❌ Email tidak boleh kosong ❌")
-            continue
-        
         # mengecek format email
-        if '@' not in input_email or '.' not in input_email:
-            print("❌ Format email salah ❌")
+        if format_email(input_email) == False:
             continue
         
         # mengecek jika email sudah terdaftar
@@ -382,8 +368,7 @@ def login_fv():
                 continue
             
             # mengecek format email
-            if '@' not in input_email or '.' not in input_email:
-                print("❌ Format email salah ❌")
+            if format_email(input_email) == False:
                 continue            
             break
         

@@ -2,7 +2,7 @@ from modules.umkm.umkm import data_umkm, simpan_umkm
 from modules.umkm.home import beranda_umkm
 from modules.food_vlogger.food_vlogger import data_fv, simpan_fv
 from modules.food_vlogger.home import beranda_fv
-from modules.utils import clear_screen, apakah_int
+from modules.utils import clear_screen, apakah_int, input_password, format_email
 import data.session
 
 
@@ -33,7 +33,7 @@ def autentikasi_umkm():
             if akun_umkm:
                 beranda_umkm()
             else:
-                login_umkm()
+                autentikasi_umkm()
                 
         elif pilihan_user == 9:
             break
@@ -57,8 +57,23 @@ def register_umkm():
     
     # mengambil semua email umkm dan masukan ke dalam email_umkms
     for umkm in umkms:
-        email_umkms.append(umkm[2])
+        email_umkms.append(umkm["email"])
+    
+    # meminta input nama usaha
+    while True:
+        input_nama_usaha = input("Nama Usaha: ").capitalize().strip()
         
+        # mengecek jika nama usaha kosong
+        if not input_nama_usaha:
+            print("❌ Nama usaha tidak boleh kosong ❌")
+            continue
+        
+        # mengecek format nama usaha
+        if '@' in input_nama_usaha or '.' in input_nama_usaha:
+            print("❌ Format nama usaha keliru ❌")
+            continue
+        break
+    
     # meminta input nama
     while True:
         input_nama = input("Nama: ").capitalize().strip()
@@ -67,20 +82,23 @@ def register_umkm():
         if not input_nama:
             print("❌ Nama tidak boleh kosong ❌")
             continue
+        
+        # mengecek jika nama hanya mengandung huruf dan angka
+        if not input_nama.replace(" ", "").isalnum():
+            print("❌ Nama hanya boleh mengandung huruf dan angka ❌")
+            continue
+
+        if '@' in input_nama or '.' in input_nama:
+            print("❌ Format nama keliru ❌")
+            continue
         break
     
     # meminta input email
     while True:
         input_email = input("Email: ").lower().strip()
         
-        # mengecek jika email kosong
-        if not input_email:
-            print("❌ Email tidak boleh kosong ❌")
-            continue
-        
         # mengecek format email
-        if '@' not in input_email or '.' not in input_email:
-            print("❌ Format email salah ❌")
+        if format_email(input_email) == False:
             continue
         
         # mengecek jika email sudah terdaftar
@@ -91,34 +109,43 @@ def register_umkm():
     
     # meminta input password
     while True:
-        input_password = input("Password: ").strip()
+        input_password_user = input_password("Password: ").strip()
         
         # mengecek jika password kosong
-        if not input_password:
+        if not input_password_user:
             print("❌ Password tidak boleh kosong ❌")
             continue
         
         # mengecek panjang password
-        if len(input_password) < 8:
+        if len(input_password_user) < 8:
             print("❌ Panjang password kurang dari 8 karakter ❌")
             continue
         
-        konfirmasi_password = input("Konfirmasi Password: ").strip()
+        konfirmasi_password = input_password("Konfirmasi Password: ").strip()
 
         # mengecek password dengan konfirmasi password
-        if input_password != konfirmasi_password:
+        if input_password_user != konfirmasi_password:
             print("❌ Konfirmasi password tidak cocok ❌")
             continue
         break
     
     # generate id baru untuk data yang baru
-    if apakah_int(umkms[-1][0]):
-        id_baru = int(umkms[-1][0]) + 1
-    else:
+    if len(umkms) == 0:
         id_baru = 1
+    else:
+        id_baru = int(umkms[-1]["umkm_id"]) + 1        
                                 
     # memuat data akun
-    data_baru = [id_baru, input_nama, input_email, input_password]
+    data_baru = {
+        "umkm_id": id_baru,
+        "nama": input_nama,
+        "email": input_email,
+        "password": input_password_user,
+        "alamat": "-",
+        "lokasi": "-",
+        "nama_usaha": input_nama_usaha,
+        "deskripsi_usaha": "-"
+    }
     
     # menyimpan data akun
     simpan_umkm(data_baru)
@@ -133,20 +160,13 @@ def register_umkm():
 
 def login_umkm():
     
-    data_salah = None
-    
     while True:
         clear_screen()
         print("\n===== LOGIN UMKM =====")
         
         # mengambil data umkm yang ada pada file umkm.csv
         umkms = data_umkm()
-        
-        # menampilkan pemberitahuan jika email atau password salah
-        if data_salah:
-            print("❌ Email atau password salah, silakan masukan ulang ❌")
-            data_salah = False        
-        
+                
         # meminta input email
         while True:
             input_email = input("Email: ").lower().strip()
@@ -157,29 +177,25 @@ def login_umkm():
                 continue
             
             # mengecek format email
-            if '@' not in input_email or '.' not in input_email:
-                print("❌ Format email salah ❌")
-                continue            
+            if format_email(input_email) == False:
+                continue         
             break
         
         # meminta input password
         while True:
-            input_password = input("Password: ").strip()
-            
-            # mengecek jika password kosong
-            if not input_password:
+            input_password_user = input_password("Password: ").strip()
+
+            if not input_password_user:
                 print("❌ Password tidak boleh kosong ❌")
                 continue
-            
-            # mengecek panjang password
-            if len(input_password) < 8:
+            if len(input_password_user) < 8:
                 print("❌ Panjang password kurang dari 8 karakter ❌")
                 continue
             break
         
         for umkm in umkms:
             
-            if input_email == umkm[2] and input_password == umkm[3]:
+            if input_email == umkm["email"] and input_password_user == umkm["password"]:
                 
                 data.session.USER_LOGIN = umkm
                 
@@ -187,8 +203,21 @@ def login_umkm():
                 input("\nTekan ENTER untuk lanjut ke halaman beranda...")
                 return True
         
-        data_salah = True
-
+        # ketika email atau password yang dimasukan user salah
+        print("\n❌ Email atau password salah, silakan masukan ulang ❌")
+        
+        print("\n1. Kembali ke halaman Login & Register UMKM")
+        print("*. Tekan ENTER untuk lanjut mengisi form login")
+        
+        lanjut_isi = input("> ")
+        
+        if apakah_int(lanjut_isi):
+            lanjut_isi = int(lanjut_isi)
+            
+            if lanjut_isi == 1:
+                return False
+        else:
+            pass
 
 
 # ======================================== FOOD VLOGGER (FV) ========================================
@@ -217,7 +246,7 @@ def autentikasi_fv():
             if akun_fv:
                 beranda_fv()
             else:
-                login_fv()
+                autentikasi_fv()
                 
         elif pilihan_user == 9:
             break
@@ -241,7 +270,7 @@ def register_fv():
     
     # mengambil semua email food vlogger dan masukan ke dalam email_fvs
     for fv in fvs:
-        email_fvs.append(fv[2])
+        email_fvs.append(fv["email"])
         
     # meminta input nama
     while True:
@@ -251,20 +280,18 @@ def register_fv():
         if not input_nama:
             print("❌ Nama tidak boleh kosong ❌")
             continue
+        
+        if '@' in input_nama or '.' in input_nama:
+            print("❌ Format nama keliru ❌")
+            continue
         break
     
     # meminta input email
     while True:
         input_email = input("Email: ").lower().strip()
         
-        # mengecek jika email kosong
-        if not input_email:
-            print("❌ Email tidak boleh kosong ❌")
-            continue
-        
         # mengecek format email
-        if '@' not in input_email or '.' not in input_email:
-            print("❌ Format email salah ❌")
+        if format_email(input_email) == False:
             continue
         
         # mengecek jika email sudah terdaftar
@@ -272,37 +299,42 @@ def register_fv():
             print("❌ Email sudah terdaftar ❌")
             continue
         break
-    
+        
     # meminta input password
     while True:
-        input_password = input("Password: ").strip()
-        
+        input_password_user = input_password().strip()
+
         # mengecek jika password kosong
-        if not input_password:
+        if not input_password_user:
             print("❌ Password tidak boleh kosong ❌")
             continue
         
         # mengecek panjang password
-        if len(input_password) < 8:
+        if len(input_password_user) < 8:
             print("❌ Panjang password kurang dari 8 karakter ❌")
             continue
-        
-        konfirmasi_password = input("Konfirmasi Password: ").strip()
+    
+        konfirmasi_password = input_password("Konfirmasi Password: ").strip()
 
         # mengecek password dengan konfirmasi password
-        if input_password != konfirmasi_password:
+        if input_password_user != konfirmasi_password:
             print("❌ Konfirmasi password tidak cocok ❌")
             continue
         break
     
     # generate id baru untuk data yang baru
-    if apakah_int(fvs[-1][0]):
-        id_baru = int(fvs[-1][0]) + 1
-    else:
+    if len(fvs) == 0:
         id_baru = 1
-                                
+    else:
+        id_baru = int(fvs[-1]["vlogger_id"]) + 1
+                                 
     # memuat data akun
-    data_baru = [id_baru, input_nama, input_email, input_password]
+    data_baru = {
+        "vlogger_id": id_baru,
+        "nama": input_nama,
+        "email": input_email,
+        "password": input_password_user
+    }
     
     # menyimpan data akun
     simpan_fv(data_baru)
@@ -313,11 +345,11 @@ def register_fv():
     
     return True
 
+    
+
 
 
 def login_fv():
-    
-    data_salah = None
     
     while True:
         clear_screen()
@@ -325,12 +357,7 @@ def login_fv():
         
         # mengambil data food vlogger yang ada pada file foof_vlogger.csv
         fvs = data_fv()
-        
-        # menampilkan pemberitahuan jika email atau password salah
-        if data_salah:
-            print("❌ Email atau password salah, silakan masukan ulang ❌")
-            data_salah = False
-        
+                
         # meminta input email
         while True:
             input_email = input("Email: ").lower().strip()
@@ -341,34 +368,47 @@ def login_fv():
                 continue
             
             # mengecek format email
-            if '@' not in input_email or '.' not in input_email:
-                print("❌ Format email salah ❌")
+            if format_email(input_email) == False:
                 continue            
             break
         
         # meminta input password
         while True:
-            input_password = input("Password: ").strip()
-            
+            input_password_user = input_password("Password: ").strip()
+
             # mengecek jika password kosong
-            if not input_password:
+            if not input_password_user:
                 print("❌ Password tidak boleh kosong ❌")
                 continue
             
             # mengecek panjang password
-            if len(input_password) < 8:
+            if len(input_password_user) < 8:
                 print("❌ Panjang password kurang dari 8 karakter ❌")
                 continue
             break
                 
         for fv in fvs:
             
-            if input_email == fv[2] and input_password == fv[3]:
+            if input_email == fv["email"] and input_password_user == fv["password"]:
                 
                 data.session.USER_LOGIN = fv
                 
                 print("\n✅ Login Berhasil ✅")
                 input("\nTekan ENTER untuk lanjut ke halaman beranda...")
                 return True
+        
+        # ketika email atau password yang dimasukan user salah
+        print("\n❌ Email atau password salah, silakan masukan ulang ❌")
+        
+        print("\n1. Kembali ke halaman Login & Register UMKM")
+        print("*. Tekan ENTER untuk lanjut mengisi form login")
+        
+        lanjut_isi = input("> ")
+        
+        if apakah_int(lanjut_isi):
+            lanjut_isi = int(lanjut_isi)
             
-        data_salah = True
+            if lanjut_isi == 1:
+                return False
+        else:
+            pass

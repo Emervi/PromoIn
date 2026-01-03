@@ -30,23 +30,47 @@ def input_password(prompt="Password: "):
             msvcrt.getch(); continue
         pw += ch.decode(); print("*", end="", flush=True)
 
-def validasi_email(email):
+def format_email(email):
+    # membagi email menjadi dua bagian, dipisahkan dengan '@'
     bagian = email.split('@')
     
+    # mengecek format tidak kosong
+    if not email:
+        print("❌ Email tidak boleh kosong ❌")
+        return False
+    
+    # mengecek karakter pada email agar hanya mengandung alfabet, angka, titik, dan '@'
     for karakter in email:
         if not (karakter.isalnum() or karakter in '.@'):
+            print("❌ Karakter hanya boleh berupa alfabet (a-z), angka (0-9), dan titik (.) ❌")
             return False
     
-    if not email or email.count('@') != 1:
+    # mengecek hanya ada satu '@'
+    if email.count('@') != 1:
+        print("❌ Format email salah ❌")
         return False
 
+    # mengecek bagian sebelum dan sesudah '@' tidak kosong
     if len(bagian[0]) == 0 or len(bagian[1]) == 0:
+        print("❌ Format email salah ❌")
         return False
     
-    if '.' not in bagian[1]:
+    # mengecek hanya ada satu titik pada bagian domain email (bagian setelah '@')
+    if bagian[1].count('.') != 1:
+        print("❌ Format email salah ❌") 
         return False
     
+    # mengecek bagian domain email tidak diawali dan diakhiri dengan titik
     if bagian[1].startswith('.') or bagian[1].endswith('.'):
+        print("❌ Format email salah ❌")
         return False
     
-    return True
+    # mengecek bagian sebelum domain email berawalan karakter ASCII atau angka
+    if not (bagian[0][0].isalnum()):
+        print("❌ Maaf, Karakter awal alamat email harus berupa alfabet (a-z) atau angka (0-9) ❌")
+        return False
+    
+    # mengecek bagian sebelum domain email berakhiran karakter ASCII atau angka
+    if not (bagian[0][-1].isalnum()):
+        print("❌ Maaf, Karakter akhir alamat email harus berupa alfabet (a-z) atau angka (0-9) ❌")
+        return False

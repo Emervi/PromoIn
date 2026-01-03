@@ -69,6 +69,11 @@ def register_umkm():
             print("❌ Nama tidak boleh kosong ❌")
             continue
         
+        # mengecek jika nama hanya mengandung huruf dan angka
+        if not input_nama.replace(" ", "").isalnum():
+            print("❌ Nama hanya boleh mengandung huruf dan angka ❌")
+            continue
+
         if '@' in input_nama or '.' in input_nama:
             print("❌ Format nama keliru ❌")
             continue

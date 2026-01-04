@@ -1,3 +1,3 @@
-lowongan_id,umkm_id,nama_produk,deskripsi,budget,minimal_followers,status_lowongan,kategori,batas_waktu_lowongan,batas_waktu_pengerjaan,vlogger_id
-1,1,Matha,enak,50000,1000,diambil,Minuman,7,4,1
-2,1,Gula aren,pait,40000,1000,diambil,Minuman,8,4,2
+lowongan_id,umkm_id,nama_produk,deskripsi,budget,minimal_followers,status_lowongan,kategori,batas_waktu_lowongan,batas_waktu_pengerjaan
+1,1,Mathca desert,pahit,50000,1000,diambil,Camilan,7,4
+2,1,Kurma desert,halal,50000,1000,diambil,Camilan,7,4

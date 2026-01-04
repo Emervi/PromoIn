@@ -3,6 +3,7 @@ import os
 from modules.utils import clear_screen
 from data.config import DATA_LOWONGAN
 from modules.umkm.umkm import data_umkm
+import data.session
 
 
 def data_lowongan():
@@ -108,8 +109,24 @@ def milih_lowongan(pilihan):
         print("Lowongan sudah diambil.")
         input("Tekan ENTER untuk kembali...")
         return
+    
+     # ambil session user yang login
+    user_session = data.session.USER_LOGIN
+
+    if not user_session:
+        print("❌ Anda belum login!")
+        input("Tekan ENTER untuk kembali...")
+        return
+
+    vlogger_id_login = str(user_session.get("vlogger_id", "")).strip()
+
+    if not vlogger_id_login:
+        print("⚠ Tidak ditemukan ID vlogger.")
+        input("Tekan ENTER untuk kembali...")
+        return
 
     lowongans[index]["status_lowongan"] = "diambil"
+    lowongans[index]["vlogger_id"] = vlogger_id_login
 
     with open(DATA_LOWONGAN, mode="w", encoding="utf-8", newline="") as file:
         fieldnames = lowongans[0].keys()

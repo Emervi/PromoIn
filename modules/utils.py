@@ -42,7 +42,7 @@ def format_email(email):
     # mengecek karakter pada email agar hanya mengandung alfabet, angka, titik, dan '@'
     for karakter in email:
         if not (karakter.isalnum() or karakter in '.@'):
-            print("❌ Karakter hanya boleh berupa alfabet (a-z), angka (0-9), dan titik (.) ❌")
+            print("❌ Karakter hanya boleh berupa alfabet (a-z), angka (0-9), titik (.), dan @ ❌")
             return False
     
     # mengecek hanya ada satu '@'

@@ -29,7 +29,15 @@ def daftar_lowongan():
     print("\n====== DAFTAR LOWONGAN SAYA ======")
 
     lowongans = data_lowongan()
-    umkm_id_login = data.session.USER_LOGIN["umkm_id"]
+    
+
+    user_session = data.session.USER_LOGIN
+    if not user_session:
+        print("❌ Anda belum login!")
+        input("\nTekan ENTER untuk kembali...")
+        return
+
+    umkm_id_login = str(user_session.get("umkm_id", "")).strip()
 
     if not umkm_id_login:
         print("Silakan login terlebih dahulu.")
@@ -38,26 +46,38 @@ def daftar_lowongan():
 
     ada = False
     for i in range(0, len(lowongans)):
-        if lowongans[i]["umkm_id"] == umkm_id_login:
-            
-            # mengubah data yang diterima menjadi integer
-            int_budget = int(lowongans[i]['budget'])
-            int_minimal_followers = int(lowongans[i]['minimal_followers'])
-            
-            # melakukan format angka menjadi ribuan
-            formatted_budget = f"{int_budget:,}".replace(",", ".")
-            formatted_min_followers = f"{int_minimal_followers:,}".replace(",", ".")
-            
-            print(f"\nLowongan #{lowongans[i]['lowongan_id']}")
-            print(f"Nama Produk       : {lowongans[i]['nama_produk']}")
-            print(f"Deskripsi         : {lowongans[i]['deskripsi']}")
-            print(f"Budget            : Rp {formatted_budget}")
-            print(f"Minimal Followers  : {formatted_min_followers} Followers")
-            print(f"Status            : {lowongans[i]['status_lowongan']} {"✅" if lowongans[i]['status_lowongan'] == "diambil" else "❌"}")
-            ada = True
+        id_di_csv = str(lowongans[i].get("umkm_id", "")).strip()
+        
+        if id_di_csv == umkm_id_login:
+            try:
+                # Mengubah data yang diterima menjadi integer
+                int_budget = int(lowongans[i]['budget'])
+                key_followers = 'minimal_followers' if 'minimal_followers' in lowongans[i] else 'syarat_followers'
+                int_minimal_followers = int(lowongans[i][key_followers])
+                
+                # Melakukan format angka menjadi ribuan
+                formatted_budget = f"{int_budget:,}".replace(",", ".")
+                formatted_min_followers = f"{int_minimal_followers:,}".replace(",", ".")
+                
+                print(f"\nLowongan #{lowongans[i]['lowongan_id']}")
+                print(f"Nama Produk       : {lowongans[i]['nama_produk']}")
+
+                desc_key = 'deskripsi' if 'deskripsi' in lowongans[i] else 'deskripsi_promosi'
+                print(f"Deskripsi         : {lowongans[i][desc_key]}")
+                print(f"Budget            : Rp {formatted_budget}")
+                print(f"Minimal Followers : {formatted_min_followers} Followers")
+                
+                status_low = lowongans[i]['status_lowongan']
+                emoji = "✅" if status_low == "diambil" else "❌"
+                print(f"Status            : {status_low} {emoji}")
+                
+                ada = True
+            except (ValueError, KeyError) as e:
+                continue
 
     if not ada:
         print("\nKamu belum memiliki lowongan.")
+        print(f"(ID Anda: {umkm_id_login}, Data diperiksa: {len(lowongans)} baris)")
 
     input("\nTekan ENTER untuk kembali...")
 

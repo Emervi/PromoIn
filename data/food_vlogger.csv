@@ -1,18 +1,4 @@
 vlogger_id,nama,email,password,jumlah_followers,platform,status_verifikasi
-1,Fv,fv@gmail.com,admin123
-2,Mamat,mamat@gmail.com,admin123
-3,Langga ganteng,langgaganteng@gmail.com,langga123
-4,Qwe,qwe@gmail.com,admin1234
-5,Wawan,wawan@gmail.com,Wawan123
-6,Vitofood,vitofood@gmail.com,vitofood123
-6,Apo,apo@gmail.com,admin123
-7,Po,po@gmail.com,admin123
-8,Pos,pos@gmail.com,admin123
-7,Po,po@gmail.com,admin123
-8,Pos,pos@gmail.com,admin123
-9,Jilan,jilan@gmail.com,jilan123
-10,Cilok,cilok@gmail.com,<function input_password at 0x00000212056EC360>
-11,Mie,mie@.,<function input_password at 0x000002472AB2C360>
-12,P,p@.,12345678
-13,L,l@.,12345678
-14,Bakso,bakso@.,bakso123
+
+1,Dhiya,dhiya@gmail.com,dhiya123
+2,Arfa,arfa@gmail.com,arfa12345

@@ -68,6 +68,11 @@ def register_umkm():
             print("❌ Nama usaha tidak boleh kosong ❌")
             continue
         
+        # mengecek jika nama hanya mengandung huruf dan angka
+        if not input_nama_usaha.replace(" ", "").isalnum():
+            print("❌ Nama hanya boleh mengandung huruf dan angka ❌")
+            continue
+        
         # mengecek format nama usaha
         if '@' in input_nama_usaha or '.' in input_nama_usaha:
             print("❌ Format nama usaha keliru ❌")
@@ -279,6 +284,11 @@ def register_fv():
         # mengecek jika nama kosong
         if not input_nama:
             print("❌ Nama tidak boleh kosong ❌")
+            continue
+        
+        # mengecek jika nama hanya mengandung huruf dan angka
+        if not input_nama.replace(" ", "").isalnum():
+            print("❌ Nama hanya boleh mengandung huruf dan angka ❌")
             continue
         
         if '@' in input_nama or '.' in input_nama:

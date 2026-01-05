@@ -1,4 +1,4 @@
-from modules.food_vlogger.lowongan import daftar_lowongan
+from modules.food_vlogger.lowongan import daftar_lowongan, kolaborasi
 from modules.food_vlogger.lowongan_berlangsung import lowongan_berlangsung
 from modules.utils import clear_screen
 import data.session
@@ -14,6 +14,7 @@ def beranda_fv():
         print(f"Selamat datang {nama_fv}!")
         print("1. Lihat lowongan🏪")
         print("2. Lowongan Berlangsung🛎️")
+        print("3. Kolaboarasi")
         print("0. Logout")
         print("Selamat datang, masih kosong cihuy!!")
         pilihan_user = int(input("> "))
@@ -24,6 +25,9 @@ def beranda_fv():
 
         elif pilihan_user == 2:
             lowongan_berlangsung()
+        
+        elif pilihan_user == 3:
+            kolaborasi()
         
         elif pilihan_user == 0:
             break

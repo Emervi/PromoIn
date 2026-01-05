@@ -1,5 +1,6 @@
 import csv
 import os
+from data.config import DATA_LOWONGAN, DATA_FOOD_VLOGGER, DATA_LAMARAN, DATA_UMKM
 from modules.utils import clear_screen
 from data.config import DATA_LOWONGAN
 from modules.umkm.umkm import data_umkm
@@ -163,8 +164,98 @@ def milih_lowongan(pilihan):
 
     simpan_lamaran(data_baru)
 
-    print("Lowongan berhasil diambil!")
+    print("Lowongan berhasil diambil, Tunggu persetujuan dari UMKM!")
     input("Tekan ENTER untuk kembali...")
+
+
+def kolaborasi():
+    vlogger_id = data.session.USER_LOGIN['vlogger_id']
+
+    lowongan_list = {}
+    vlogger_list = {}
+    umkm_list = {}
+    kolaborasi = []
+
+    # === LOWONGAN ===
+    with open(DATA_LOWONGAN, newline='', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            lowongan_list[row['lowongan_id']] = row
+
+    # === FOOD VLOGGER ===
+    with open(DATA_FOOD_VLOGGER, newline='', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            vlogger_list[row['vlogger_id']] = row['nama']
+
+    # === UMKM ===
+    with open(DATA_UMKM, newline='', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            umkm_list[row['umkm_id']] = row['nama_usaha']
+
+    # === LAMARAN ===
+    with open(DATA_LAMARAN, newline='', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        fieldnames = reader.fieldnames
+        all_rows = list(reader)
+
+    if 'status_bukti' not in fieldnames:
+        fieldnames.append('status_bukti')
+
+    if 'link_bukti' not in fieldnames:
+        fieldnames.append('link_bukti')
+
+    for row in all_rows:
+        if row['status'] == 'Disetujui' and row['vlogger_id'] == str(vlogger_id):
+            kolaborasi.append(row)
+
+    print("\n===== KOLABORASI SAYA =====")
+
+    if not kolaborasi:
+        print("Belum ada kolaborasi, silakan tunggu persetujuan dari UMKM!")
+        input("\nENTER untuk kembali...")
+        return
+
+    for item in kolaborasi:
+        lowongan = lowongan_list[item['lowongan_id']]
+        umkm_nama = umkm_list.get(lowongan['umkm_id'], '-')
+        status_bukti = item.get('status_bukti', '')
+
+        print(f"""
+Produk       : {lowongan['nama_produk']}
+UMKM         : {umkm_nama}
+Anggaran     : Rp{lowongan['budget']}
+Deadline     : {lowongan['batas_waktu_pengerjaan']} hari
+""")
+
+        if status_bukti == 'Menunggu Persetujuan':
+            print("Status Bukti : Menunggu Persetujuan")
+        elif status_bukti == 'Disetujui':
+            print("Status Bukti : Disetujui")
+        else:
+            print("[1] Upload Bukti")
+            print("[0] Lewati")
+
+            pilihan = input("> ")
+            if pilihan == '1':
+                link = input("Masukkan link bukti promosi: ").strip()
+                if link:
+                    item['link_bukti'] = link
+                    item['status_bukti'] = 'Menunggu Persetujuan'
+                    print("Bukti berhasil diupload ✅, menunggu persetujuan dari UMKM.")
+
+    # === SIMPAN CSV ===
+    with open(DATA_LAMARAN, 'w', newline='', encoding='utf-8') as file:
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(all_rows)
+
+    input("\nENTER untuk kembali...")
+
+
+
+
     
     
 

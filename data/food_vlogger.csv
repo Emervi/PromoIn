@@ -1,5 +1,6 @@
 vlogger_id,nama,email,password,jumlah_followers,platform,status_verifikasi
 
-1,Dhiya,dhiya@gmail.com,dhiya123
-2,Arfa,arfa@gmail.com,arfa12345
-3,Langga vlogger,langgavlogger@gmail.com,vlogger123
+
+1,Langga vlogger,langgavlogger@gmail.com,langga123
+2,Arfa vlogger,arfavlogger@gmail.com,arfa12345
+3,Dzakwan vlogger,dzakwanvlogger@gmail.com,dzakwan123

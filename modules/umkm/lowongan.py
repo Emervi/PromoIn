@@ -1,7 +1,7 @@
 import csv
 import os
 from modules.utils import clear_screen, apakah_int
-from data.config import DATA_LOWONGAN
+from data.config import DATA_LOWONGAN, DATA_FOOD_VLOGGER, DATA_LAMARAN
 import data.session
 
 def data_lowongan():
@@ -248,14 +248,81 @@ def buat_lowongan():
             pass
 
 def lamaran_masuk():
-    print("Food Vlogger: Lazzuardi Langga Duta Wijaya")
-    print("Melamar untuk: Batagor")
-    print("")
-    print("saya tertarik")
-    print("Diajukan pada 01/01/2026, 14.43")
-    print("")
-    print("Setujui Lamaran? jika setuju input id yang sesuai")
+    umkm_id = data.session.USER_LOGIN['umkm_id']
 
+    lowongan_umkm = {}
+    vlogger_list = {}
+    lamaran_rows = []
+
+    # === LOWONGAN ===
+    with open(DATA_LOWONGAN, newline='', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            if row['umkm_id'] == str(umkm_id):
+                lowongan_umkm[row['lowongan_id']] = row
+
+    # === VLOGGER ===
+    with open(DATA_FOOD_VLOGGER, newline='', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            vlogger_list[row['vlogger_id']] = row
+
+    # === LAMARAN ===
+    with open(DATA_LAMARAN, newline='', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        fieldnames = reader.fieldnames
+
+        for row in reader:
+            if row['lowongan_id'] in lowongan_umkm:
+                lamaran_rows.append(row)
+
+    print("\n===== LAMARAN MASUK =====")
+
+    if not lamaran_rows:
+        print("Belum ada lamaran masuk.")
+        input("\nTekan ENTER untuk kembali...")
+        return
+
+    for lamaran in lamaran_rows:
+        lowongan = lowongan_umkm[lamaran['lowongan_id']]
+        vlogger = vlogger_list.get(lamaran['vlogger_id'], {})
+
+        print(f"""
+Lamaran ID : {lamaran['lamaran_id']}
+Vlogger    : {vlogger.get('nama', '-')}
+Produk     : {lowongan['nama_produk']}
+Tanggal    : {lamaran['tanggal_lamar']}
+Status     : {lamaran['status']}
+------------------------------
+""")
+
+    lamaran_id = input("Masukkan ID Lamaran untuk disetujui (ENTER untuk batal): ").strip()
+
+    if not lamaran_id:
+        return
+
+    ditemukan = False
+
+    for row in lamaran_rows:
+        if row['lamaran_id'] == lamaran_id:
+            if row['status'] != 'Pending':
+                print("Lamaran ini sudah diproses.")
+                return
+            row['status'] = 'Disetujui'
+            ditemukan = True
+            break
+
+    if not ditemukan:
+        print("Lamaran ID tidak ditemukan.")
+        return
+
+    # === SIMPAN ULANG CSV ===
+    with open(DATA_LAMARAN, 'w', newline='', encoding='utf-8') as file:
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(lamaran_rows)
+
+    print("Lamaran berhasil disetujui ✅")
     input("\nTekan ENTER untuk kembali...")
 
 

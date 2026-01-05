@@ -326,13 +326,85 @@ Status     : {lamaran['status']}
     input("\nTekan ENTER untuk kembali...")
 
 
-def kolaborasi(): 
-    print("Batagor")
-    print("Dengan Lazzuardi Langga Duta Wijaya")
-    print("Anggaran: Rp. 600.000")
-    print("Status Pembayaran: Menunggu")
-    print("Hubungi No. dibawah untuk info lebih lanjut: 0895378060487")
-    print("Menunggu Bukti")
 
-    input("\nTekan ENTER untuk kembali...")
+def kolaborasi():
+    umkm_id = data.session.USER_LOGIN['umkm_id']
+
+    lowongan_umkm = {}
+    vlogger_list = {}
+    kolaborasi = []
+
+    # === LOWONGAN UMKM ===
+    with open(DATA_LOWONGAN, newline='', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            if row['umkm_id'] == str(umkm_id):
+                lowongan_umkm[row['lowongan_id']] = row
+
+    # === FOOD VLOGGER ===
+    with open(DATA_FOOD_VLOGGER, newline='', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            vlogger_list[row['vlogger_id']] = row['nama']
+
+    # === LAMARAN ===
+    with open(DATA_LAMARAN, newline='', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        fieldnames = reader.fieldnames
+        all_rows = list(reader)
+
+    for row in all_rows:
+        if (
+            row['status'] == 'Disetujui' and
+            row['lowongan_id'] in lowongan_umkm
+        ):
+            kolaborasi.append(row)
+
+    print("\n===== KOLABORASI UMKM =====")
+
+    if not kolaborasi:
+        print("Belum ada kolaborasi.")
+        input("\nENTER untuk kembali...")
+        return
+
+    for item in kolaborasi:
+        lowongan = lowongan_umkm[item['lowongan_id']]
+        nama_vlogger = vlogger_list.get(item['vlogger_id'], '-')
+        status_bukti = item.get('status_bukti', '')
+
+        print(f"""
+Produk   : {lowongan['nama_produk']}
+Vlogger  : {nama_vlogger}
+Anggaran : Rp{lowongan['budget']}
+Deadline : {lowongan['batas_waktu_pengerjaan']} hari
+""")
+
+        if not item.get('link_bukti'):
+            print("Status Bukti : Menunggu Bukti Promosi")
+
+        elif status_bukti == 'Menunggu Persetujuan':
+            print("[1] Lihat Bukti")
+            print("[0] Lewati")
+
+            pilih = input("> ")
+            if pilih == '1':
+                print(f"Link Bukti: {item['link_bukti']}")
+                print("[1] Setujui Bukti")
+                print("[0] Batal")
+
+                konfirmasi = input("> ")
+                if konfirmasi == '1':
+                    item['status_bukti'] = 'Disetujui'
+                    print("Bukti berhasil disetujui ✅")
+
+        else:
+            print("Status Bukti : Sudah Disetujui")
+
+    # === SIMPAN CSV ===
+    with open(DATA_LAMARAN, 'w', newline='', encoding='utf-8') as file:
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(all_rows)
+
+    input("\nENTER untuk kembali...")
 

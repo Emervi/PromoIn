@@ -13,6 +13,7 @@ while True:
     print("3. Daftar UMKM (DEBUG)")
     print("4. Daftar Food Vlogger (DEBUG)")
     print("5. Daftar Lowongan (DEBUG)")
+    print("6. Fitur Bayar FV (DEBUG)")
     print("0. Keluar Sistem")
     
     pilihan_user = int(input("> "))

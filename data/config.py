@@ -1,8 +1,12 @@
-DATA_UMKM = "data/umkm.csv"
-DATA_LOWONGAN = "data/lowongan.csv"
+DATA_ADMIN = "data/admin.csv"
+DATA_AKUN_SOSMED = "data/akun_sosmed.csv"
+DATA_BUKTI_PROMOSI = "data/bukti_promosi.csv"
 DATA_FOOD_VLOGGER = "data/food_vlogger.csv"
-DATA_PELAMAR = "data/pelamar.csv"
-
+DATA_LAMARAN = "data/lamaran.csv"
+DATA_LOWONGAN = "data/lowongan.csv"
+DATA_PEMBAYARAN = "data/pembayaran.csv"
+DATA_PLATFORM = "data/platform.csv"
+DATA_UMKM = "data/umkm.csv"
 
 """
 Status lowongan:

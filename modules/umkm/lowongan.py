@@ -124,7 +124,6 @@ def buat_lowongan():
             break
         
         while True:
-            # budget = int(input("Anggaran Promosi: "))
             budget = input("Anggaran Promosi: ").strip()
             
             if not budget:

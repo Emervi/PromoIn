@@ -8,13 +8,13 @@ while True:
     clear_screen()
     print("\n========== BERANDA ==========")
     print("Silakan memilih peran yang sesuai dengan anda.")
-    print("1. UMKM")
-    print("2. Food Vlogger")
-    print("3. Daftar UMKM (DEBUG)")
-    print("4. Daftar Food Vlogger (DEBUG)")
-    print("5. Daftar Lowongan (DEBUG)")
-    print("6. Fitur Bayar FV (DEBUG)")
-    print("0. Keluar Sistem")
+    print("[1] 🏪 UMKM")
+    print("[2] 📸 Food Vlogger")
+    print("[3] Daftar UMKM (DEBUG)")
+    print("[4] Daftar Food Vlogger (DEBUG)")
+    print("[5] Daftar Lowongan (DEBUG)")
+    print("[6] Fitur Bayar FV (DEBUG)")
+    print("[0] Keluar Sistem")
     
     pilihan_user = int(input("> "))
     
@@ -62,7 +62,7 @@ while True:
                 if umkm_id in umkm_ids.keys():
                     nama_usaha = umkm_ids[umkm_id]
                 else:
-                    nama_usaha = "kosong COK"
+                    nama_usaha = "kosong atau dihapus"
                     
                 print(f"Nama Usaha: {nama_usaha}")
                 

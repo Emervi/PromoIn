@@ -13,10 +13,10 @@ def autentikasi_umkm():
     while True:
         clear_screen()
         print("\n===== LOGIN & REGISTER UMKM =====")
-        print("1. Register UMKM")
-        print("2. Login UMKM")
-        print("9. Kembali")
-        print("0. Keluar Sistem")
+        print("[1] Register UMKM")
+        print("[2] Login UMKM")
+        print("[9] Kembali")
+        print("[0] Keluar Sistem")
         pilihan_user = int(input("> "))
         
         if pilihan_user == 1:
@@ -209,9 +209,9 @@ def login_umkm():
                 return True
         
         # ketika email atau password yang dimasukan user salah
-        print("\n❌ Email atau password salah, silakan masukan ulang ❌")
+        print("\n❌ Email atau password salah, silahkan masukkan ulang ❌")
         
-        print("\n1. Kembali ke halaman Login & Register UMKM")
+        print("\n[1] Kembali ke halaman Login & Register UMKM")
         print("*. Tekan ENTER untuk lanjut mengisi form login")
         
         lanjut_isi = input("> ")
@@ -231,10 +231,10 @@ def autentikasi_fv():
     while True:
         clear_screen()
         print("\n===== LOGIN & REGISTER FOOD VLOGGER =====")
-        print("1. Register Food Vlogger")
-        print("2. Login Food Vlogger")
-        print("9. Kembali")
-        print("0. Keluar Sistem")
+        print("[1] Register Food Vlogger")
+        print("[2] Login Food Vlogger")
+        print("[9] Kembali")
+        print("[0] Keluar Sistem")
         pilihan_user = int(input("> "))
         
         if pilihan_user == 1:
@@ -408,9 +408,9 @@ def login_fv():
                 return True
         
         # ketika email atau password yang dimasukan user salah
-        print("\n❌ Email atau password salah, silakan masukan ulang ❌")
+        print("\n❌ Email atau password salah, silahkan masukkan ulang ❌")
         
-        print("\n1. Kembali ke halaman Login & Register UMKM")
+        print("\n[1] Kembali ke halaman Login & Register UMKM")
         print("*. Tekan ENTER untuk lanjut mengisi form login")
         
         lanjut_isi = input("> ")

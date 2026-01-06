@@ -34,14 +34,14 @@ def daftar_lowongan():
     user_session = data.session.USER_LOGIN
     if not user_session:
         print("❌ Anda belum login!")
-        input("\nTekan ENTER untuk kembali...")
+        input("\nTekan ENTER untuk kembali ↩")
         return
 
     umkm_id_login = str(user_session.get("umkm_id", "")).strip()
 
     if not umkm_id_login:
         print("Silakan login terlebih dahulu.")
-        input("\nTekan ENTER untuk kembali...")
+        input("\nTekan ENTER untuk kembali ↩")
         return
 
     ada = False
@@ -79,7 +79,7 @@ def daftar_lowongan():
         print("\nKamu belum memiliki lowongan.")
         print(f"(ID Anda: {umkm_id_login}, Data diperiksa: {len(lowongans)} baris)")
 
-    input("\nTekan ENTER untuk kembali...")
+    input("\nTekan ENTER untuk kembali ↩")
 
 
 def buat_lowongan():
@@ -124,7 +124,7 @@ def buat_lowongan():
             break
         
         while True:
-            budget = input("Anggaran Promosi: ").strip()
+            budget = input("Anggaran Promosi (dalam Rupiah): ").strip()
             
             if not budget:
                 print("❌ Anggaran Promosi tidak boleh kosong ❌")
@@ -201,8 +201,8 @@ def buat_lowongan():
         
         while True:
             print("Apakah data lowongan yang dimasukan sudah benar?")
-            print("1. Ya")
-            print("2. Buat ulang lowongan")
+            print("[1] Ya")
+            print("[2] Buat ulang lowongan")
             konfirmasi = input("> ").strip()
             
             if not konfirmasi:
@@ -280,7 +280,7 @@ def lamaran_masuk():
 
     if not lamaran_rows:
         print("Belum ada lamaran masuk.")
-        input("\nTekan ENTER untuk kembali...")
+        input("\nTekan ENTER untuk kembali ↩")
         return
 
     for lamaran in lamaran_rows:
@@ -313,7 +313,7 @@ Status     : {lamaran['status']}
             break
 
     if not ditemukan:
-        print("Lamaran ID tidak ditemukan.")
+        print("Lamaran ID tidak ditemukan ❌")
         return
 
     # === SIMPAN ULANG CSV ===
@@ -323,7 +323,7 @@ Status     : {lamaran['status']}
         writer.writerows(lamaran_rows)
 
     print("Lamaran berhasil disetujui ✅")
-    input("\nTekan ENTER untuk kembali...")
+    input("\nTekan ENTER untuk kembali ↩")
 
 
 
@@ -364,7 +364,7 @@ def kolaborasi():
 
     if not kolaborasi:
         print("Belum ada kolaborasi.")
-        input("\nENTER untuk kembali...")
+        input("\nENTER untuk kembali ↩")
         return
 
     for item in kolaborasi:
@@ -375,7 +375,7 @@ def kolaborasi():
         print(f"""
 Produk   : {lowongan['nama_produk']}
 Vlogger  : {nama_vlogger}
-Anggaran : Rp{lowongan['budget']}
+Anggaran : Rp {lowongan['budget']}
 Deadline : {lowongan['batas_waktu_pengerjaan']} hari
 """)
 
@@ -398,7 +398,7 @@ Deadline : {lowongan['batas_waktu_pengerjaan']} hari
                     print("Bukti berhasil disetujui ✅")
 
         else:
-            print("Status Bukti : Sudah Disetujui")
+            print("Status Bukti : Sudah disetujui")
 
     # === SIMPAN CSV ===
     with open(DATA_LAMARAN, 'w', newline='', encoding='utf-8') as file:
@@ -406,5 +406,5 @@ Deadline : {lowongan['batas_waktu_pengerjaan']} hari
         writer.writeheader()
         writer.writerows(all_rows)
 
-    input("\nENTER untuk kembali...")
+    input("\nENTER untuk kembali ↩")
 

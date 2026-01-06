@@ -13,10 +13,10 @@ def autentikasi_umkm():
     while True:
         clear_screen()
         print("\n===== LOGIN & REGISTER UMKM =====")
-        print("1. Register UMKM")
-        print("2. Login UMKM")
-        print("9. Kembali")
-        print("0. Keluar Sistem")
+        print("[1] Register UMKM")
+        print("[2] Login UMKM")
+        print("[9] Kembali")
+        print("[0] Keluar Sistem")
         pilihan_user = int(input("> "))
         
         if pilihan_user == 1:
@@ -231,10 +231,10 @@ def autentikasi_fv():
     while True:
         clear_screen()
         print("\n===== LOGIN & REGISTER FOOD VLOGGER =====")
-        print("1. Register Food Vlogger")
-        print("2. Login Food Vlogger")
-        print("9. Kembali")
-        print("0. Keluar Sistem")
+        print("[1] Register Food Vlogger")
+        print("[2] Login Food Vlogger")
+        print("[9] Kembali")
+        print("[0] Keluar Sistem")
         pilihan_user = int(input("> "))
         
         if pilihan_user == 1:

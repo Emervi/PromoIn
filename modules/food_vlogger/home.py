@@ -12,13 +12,11 @@ def beranda_fv():
         clear_screen()
         print("\n===== BERANDA FOOD VLOGGER =====")
         print(f"Selamat datang {nama_fv}!")
-        print("1. Lihat lowongan🏪")
-        print("2. Lowongan Berlangsung🛎️")
-        print("3. Kolaboarasi")
-        print("0. Logout")
-        print("Selamat datang, masih kosong cihuy!!")
+        print("[1] 📢 Lihat lowongan ")
+        print("[2] 🕛 Lowongan Berlangsung ")
+        print("[3] 🤝 Kolaborasi ")
+        print("[0] Logout")
         pilihan_user = int(input("> "))
-        #diambil atau belum diambil 
         
         if pilihan_user == 1:
             daftar_lowongan()

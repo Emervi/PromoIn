@@ -9,7 +9,7 @@ def lowongan_berlangsung():
     print("\n====== Lowongan Berlangsung ======")
 
     if not os.path.exists(DATA_LAMARAN) or not os.path.exists(DATA_LOWONGAN):
-        print("Data tidak ditemukan.")
+        print("❌ Data tidak ditemukan.")
         input("Tekan ENTER untuk kembali...")
         return
 
@@ -46,6 +46,6 @@ def lowongan_berlangsung():
             ada = True
             
     if not ada:
-        print("Belum memilih lowongan")
+        print("❌ Anda belum memilih lowongan.")
 
     input("\nTekan ENTER untuk kembali...")

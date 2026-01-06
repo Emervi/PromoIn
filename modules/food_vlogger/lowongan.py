@@ -77,12 +77,12 @@ def daftar_lowongan():
             print(f"📃 Deskripsi                     : {lowongans[i]['deskripsi']}")
             print(f"💲 Budget                        : Rp {formatted_budget}")
             print(f"🤝 Minimal Followers             : {formatted_min_followers} Followers")
-            print(f"⏰ Lama Batas Waktu Pengerjaan   : {lowongans[i]['batas_waktu_pengerjaan']} Hari")
+            print(f"⏳ Lama Batas Waktu Pengerjaan   : {lowongans[i]['batas_waktu_pengerjaan']} Hari")
             ada = True
 
     # jika tidak ada lowongan maka ini akan dijalankan
     if not ada:
-        print("\nTidak ada lowongan tersedia.")
+        print("\n❌ Tidak ada lowongan tersedia.")
         input("\nTekan ENTER untuk kembali...")
         return
 
@@ -92,7 +92,7 @@ def daftar_lowongan():
         return
 
     if not pilihan.isdigit():
-        print("Input harus berupa angka.")
+        print("❌ Input harus berupa angka.")
         input("Tekan ENTER untuk kembali...")
         return
 
@@ -106,7 +106,7 @@ def milih_lowongan(pilihan):
     id_lowongan_asli = lowongans[index]["lowongan_id"].strip()
 
     if index < 0 or index >= len(lowongans):
-        print("Nomor lowongan tidak valid.")
+        print("❌ Nomor lowongan tidak valid.")
         input("Tekan ENTER untuk kembali...")
         return
 
@@ -144,7 +144,7 @@ def milih_lowongan(pilihan):
     vlogger_id_login = str(user_session.get("vlogger_id", "")).strip()
     
     if not vlogger_id_login:
-        print("⚠ Tidak ditemukan ID vlogger.")
+        print("❌ Tidak ditemukan ID vlogger.")
         input("Tekan ENTER untuk kembali...")
         return
     
@@ -164,7 +164,7 @@ def milih_lowongan(pilihan):
 
     simpan_lamaran(data_baru)
 
-    print("Lowongan berhasil diambil, Tunggu persetujuan dari UMKM!")
+    print("✅ Lowongan berhasil diambil, Tunggu persetujuan dari UMKM!")
     input("Tekan ENTER untuk kembali...")
 
 
@@ -210,6 +210,7 @@ def kolaborasi():
         if row['status'] == 'Disetujui' and row['vlogger_id'] == str(vlogger_id):
             kolaborasi.append(row)
 
+    clear_screen()
     print("\n===== KOLABORASI SAYA =====")
 
     if not kolaborasi:
@@ -223,16 +224,16 @@ def kolaborasi():
         status_bukti = item.get('status_bukti', '')
 
         print(f"""
-Produk       : {lowongan['nama_produk']}
-UMKM         : {umkm_nama}
-Anggaran     : Rp{lowongan['budget']}
-Deadline     : {lowongan['batas_waktu_pengerjaan']} hari
+😋 Produk       : {lowongan['nama_produk']}
+🍴 UMKM         : {umkm_nama}
+💲 Anggaran     : Rp{lowongan['budget']}
+⏳ Deadline     : {lowongan['batas_waktu_pengerjaan']} hari
 """)
 
         if status_bukti == 'Menunggu Persetujuan':
-            print("Status Bukti : Menunggu Persetujuan")
+            print("Status Bukti : Menunggu Persetujuan 🕛")
         elif status_bukti == 'Disetujui':
-            print("Status Bukti : Disetujui")
+            print("Status Bukti : Disetujui ✅")
         else:
             print("[1] Upload Bukti")
             print("[0] Lewati")
@@ -243,7 +244,7 @@ Deadline     : {lowongan['batas_waktu_pengerjaan']} hari
                 if link:
                     item['link_bukti'] = link
                     item['status_bukti'] = 'Menunggu Persetujuan'
-                    print("Bukti berhasil diupload ✅, menunggu persetujuan dari UMKM.")
+                    print("Bukti berhasil diupload ✅, menunggu persetujuan dari UMKM 🕛.")
 
     # === SIMPAN CSV ===
     with open(DATA_LAMARAN, 'w', newline='', encoding='utf-8') as file:

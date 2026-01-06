@@ -209,9 +209,9 @@ def login_umkm():
                 return True
         
         # ketika email atau password yang dimasukan user salah
-        print("\n❌ Email atau password salah, silakan masukan ulang ❌")
+        print("\n❌ Email atau password salah, silahkan masukkan ulang ❌")
         
-        print("\n1. Kembali ke halaman Login & Register UMKM")
+        print("\n[1] Kembali ke halaman Login & Register UMKM")
         print("*. Tekan ENTER untuk lanjut mengisi form login")
         
         lanjut_isi = input("> ")
@@ -408,9 +408,9 @@ def login_fv():
                 return True
         
         # ketika email atau password yang dimasukan user salah
-        print("\n❌ Email atau password salah, silakan masukan ulang ❌")
+        print("\n❌ Email atau password salah, silahkan masukkan ulang ❌")
         
-        print("\n1. Kembali ke halaman Login & Register UMKM")
+        print("\n[1] Kembali ke halaman Login & Register UMKM")
         print("*. Tekan ENTER untuk lanjut mengisi form login")
         
         lanjut_isi = input("> ")

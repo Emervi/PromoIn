@@ -13,56 +13,24 @@ while True:
     print("Silakan memilih peran yang sesuai dengan anda.")
     print("[1] 🏪 UMKM")
     print("[2] 📸 Food Vlogger")
-    print("[3] DEBUG")
     print("[0] Keluar Sistem")
     
-    pilihan_user = int(input("> "))
+    pilihan_user = (input("> "))
     
-    if pilihan_user == 1:
-        
+    if pilihan_user == "1":
         if autentikasi_umkm() == "kill system":
             break
     
-    elif pilihan_user == 2:
-        
+    if pilihan_user == "2":
         if autentikasi_fv() == "kill system":
             break
-    
-    elif pilihan_user == 3:
         
-        while True:
-            pilihan = input("> ").strip().split()
-            
-            print(pilihan, len(pilihan))
-            
-            if not pilihan:
-                print("KOSONG COK")
-            
-            elif not pilihan[0].isalpha():
-                print("kata pertama hanya boleh huruf")
-                
-            elif len(pilihan) == 1:
-                print("id tidak ada cok")
-            
-            elif not pilihan[1].isdigit():
-                print("id bukan huruf")
-            
-            elif len(pilihan) > 2:
-                print("kepanjangan cok")
-                
-            elif pilihan[0] == 'bukti':
-                print(f"INI BUKTINYA untuk id {pilihan[1]}")
-                
-            elif pilihan[0] == 'bayar':
-                print(f"BAYAR COK untuk id {pilihan[1]}")
-                
-            elif pilihan[0] == 'a':
-                break
-            
-            else:
-                print("UNKNOWN")
-                
-    else:
+    if pilihan_user == "0":
+        print("Terima Kasih Telah Menggunakan Aplikasi PromoIn! 🥰😘😍")
         break
+    
+    if pilihan_user not in ("0", "1", "2"):
+        print("❌ Pilihan tidak valid ❌")
+        continue
 
 

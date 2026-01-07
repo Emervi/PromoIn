@@ -70,12 +70,22 @@ def register_umkm():
         
         # mengecek jika nama hanya mengandung huruf dan angka
         if not input_nama_usaha.replace(" ", "").isalnum():
-            print("❌ Nama hanya boleh mengandung huruf dan angka ❌")
+            print("❌ Nama usaha hanya terdiri dari huruf dan angka ❌")
             continue
         
         # mengecek format nama usaha
         if '@' in input_nama_usaha or '.' in input_nama_usaha:
-            print("❌ Format nama usaha keliru ❌")
+            print("❌ Format nama usaha salah ❌")
+            continue
+
+        # mengecek jika nama usaha tidak lebih dari 30 karakter
+        if len(input_nama_usaha) > 30:
+            print("❌ Nama usaha maksimal 30 karakter ❌")
+            continue
+        
+        # mencegah nama usaha kurang dari 3 karakter
+        if len(input_nama_usaha) < 3:
+            print("❌ Nama usaha minimal 3 karakter ❌")
             continue
         break
     
@@ -90,11 +100,21 @@ def register_umkm():
         
         # mengecek jika nama hanya mengandung huruf dan angka
         if not input_nama.replace(" ", "").isalnum():
-            print("❌ Nama hanya boleh mengandung huruf dan angka ❌")
+            print("❌ Nama hanya terdiri dari huruf dan angka ❌")
             continue
 
         if '@' in input_nama or '.' in input_nama:
-            print("❌ Format nama keliru ❌")
+            print("❌ Format nama salah ❌")
+            continue
+
+        # mengecek jika nama tidak lebih dari 30 karakter
+        if len(input_nama) > 30:
+            print("❌ Nama maksimal 30 karakter ❌")
+            continue
+
+        # mencegah nama kurang dari 3 karakter
+        if len(input_nama) < 3:
+            print("❌ Nama minimal 3 karakter ❌")
             continue
         break
     
@@ -286,13 +306,23 @@ def register_fv():
             print("❌ Nama tidak boleh kosong ❌")
             continue
         
+        # mencegah nama kurang dari 3 karakter
+        if len(input_nama) < 3:
+            print("❌ Nama minimal 3 karakter ❌")
+            continue
+        
+        # mengecek jika nama tidak lebih dari 30 karakter
+        if len(input_nama) > 30:
+            print("❌ Nama maksimal 30 karakter ❌")
+            continue
+        
         # mengecek jika nama hanya mengandung huruf dan angka
         if not input_nama.replace(" ", "").isalnum():
-            print("❌ Nama hanya boleh mengandung huruf dan angka ❌")
+            print("❌ Nama hanya terdiri dari huruf dan angka ❌")
             continue
         
         if '@' in input_nama or '.' in input_nama:
-            print("❌ Format nama keliru ❌")
+            print("❌ Format nama salah ❌")
             continue
         break
     

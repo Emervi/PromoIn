@@ -6,11 +6,11 @@ import data.session
 
 def lowongan_berlangsung():
     clear_screen()
-    print("\n====== Lowongan Berlangsung ======")
+    print("\n====== LOWONGAN BERLANGSUNG ======")
 
     if not os.path.exists(DATA_LAMARAN) or not os.path.exists(DATA_LOWONGAN):
-        print("❌ Data tidak ditemukan.")
-        input("Tekan ENTER untuk kembali...")
+        print("\n❌ Data tidak ditemukan.")
+        input("\nTekan ENTER untuk kembali...")
         return
 
     map_produk = {}
@@ -42,7 +42,7 @@ def lowongan_berlangsung():
         nama_produk = map_produk.get(id_low_lamaran, "Produk Tidak Diketahui")
 
         if item["status"] == "Pending" and vlogger_id_item == vlogger_id_login:
-            print(f"✅ Lowongan '{nama_produk}' sedang berlangsung")
+            print(f"\n✅ Lowongan '{nama_produk}' sedang berlangsung")
             ada = True
             
     if not ada:

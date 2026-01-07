@@ -30,6 +30,13 @@ def simpan_lowongan(data_baru):
 
         writer.writerow(data_baru)
 
+def update_lowongan(lowongans):
+    with open(DATA_LOWONGAN, mode="w", encoding="utf-8", newline="") as file:
+        fieldnames = lowongans[0].keys()
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(lowongans)
+    
 
 def daftar_lowongan():
     clear_screen()
@@ -50,7 +57,7 @@ def daftar_lowongan():
     ada = False
     for i in range(0, len(lowongans)):
             
-        if lowongans[i]["status_lowongan"] == "belum diambil":
+        if lowongans[i]["status_lowongan"] == "Belum Diambil":
             
             # mengubah data yang diterima menjadi integer
             int_budget = int(lowongans[i]['budget'])
@@ -86,7 +93,7 @@ def daftar_lowongan():
         input("\nTekan ENTER untuk kembali...")
         return
 
-    pilihan = input("\nPilih nomor lowongan yang ingin diambil (ENTER untuk kembali): ").strip()
+    pilihan = input("\nMasukan nomor lowongan yang ingin diambil (Tekan ENTER untuk kembali): ").strip()
 
     if pilihan == "":
         return
@@ -100,28 +107,20 @@ def daftar_lowongan():
 
 
 def milih_lowongan(pilihan):
+    
     lowongans = data_lowongan()
     index = pilihan - 1
 
+    if index < 0 or index >= len(lowongans):
+        print("\n❌ Nomor lowongan tidak valid.")
+        input("\nTekan ENTER untuk kembali...")
+        return
+    
     id_lowongan_asli = lowongans[index]["lowongan_id"].strip()
 
-    if index < 0 or index >= len(lowongans):
-        print("❌ Nomor lowongan tidak valid.")
-        input("Tekan ENTER untuk kembali...")
-        return
-
-    if lowongans[index]["status_lowongan"] != "belum diambil":
-        print("Lowongan sudah diambil.")
-        input("Tekan ENTER untuk kembali...")
-        return
-
-    lowongans[index]["status_lowongan"] = "diambil"
+    lowongans[index]["status_lowongan"] = "Diambil"
     
-    with open(DATA_LOWONGAN, mode="w", encoding="utf-8", newline="") as file:
-        fieldnames = lowongans[0].keys()
-        writer = csv.DictWriter(file, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(lowongans)
+    update_lowongan(lowongans)
 
     #id lamaran
     lamarans = data_lamaran()
@@ -164,8 +163,8 @@ def milih_lowongan(pilihan):
 
     simpan_lamaran(data_baru)
 
-    print("✅ Lowongan berhasil diambil, Tunggu persetujuan dari UMKM!")
-    input("Tekan ENTER untuk kembali...")
+    print("\n✅ Lowongan berhasil dilamar, tunggu persetujuan dari UMKM!")
+    input("\nTekan ENTER untuk kembali...")
 
 
 def kolaborasi():
@@ -214,8 +213,8 @@ def kolaborasi():
     print("\n===== KOLABORASI SAYA =====")
 
     if not kolaborasi:
-        print("Belum ada kolaborasi, silakan tunggu persetujuan dari UMKM!")
-        input("\nENTER untuk kembali...")
+        print("\n❌ Belum ada kolaborasi.")
+        input("\nTekan ENTER untuk kembali...")
         return
 
     for item in kolaborasi:
@@ -230,8 +229,8 @@ def kolaborasi():
 ⏳ Deadline     : {lowongan['batas_waktu_pengerjaan']} hari
 """)
 
-        if status_bukti == 'Menunggu Persetujuan':
-            print("Status Bukti : Menunggu Persetujuan 🕛")
+        if status_bukti == 'Menunggu Peninjauan':
+            print("Status Bukti : Menunggu Peninjauan 🕛")
         elif status_bukti == 'Disetujui':
             print("Status Bukti : Disetujui ✅")
         else:
@@ -243,8 +242,8 @@ def kolaborasi():
                 link = input("Masukkan link bukti promosi: ").strip()
                 if link:
                     item['link_bukti'] = link
-                    item['status_bukti'] = 'Menunggu Persetujuan'
-                    print("Bukti berhasil diupload ✅, menunggu persetujuan dari UMKM 🕛.")
+                    item['status_bukti'] = 'Menunggu Peninjauan'
+                    print("✅ Bukti berhasil diupload, menunggu persetujuan dari UMKM 🕛.")
 
     # === SIMPAN CSV ===
     with open(DATA_LAMARAN, 'w', newline='', encoding='utf-8') as file:
@@ -252,7 +251,7 @@ def kolaborasi():
         writer.writeheader()
         writer.writerows(all_rows)
 
-    input("\nENTER untuk kembali...")
+    input("\nTekan ENTER untuk kembali...")
 
 
 

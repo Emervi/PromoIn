@@ -2,6 +2,10 @@ import csv
 import os
 from modules.utils import clear_screen, apakah_int
 from data.config import DATA_LOWONGAN, DATA_FOOD_VLOGGER, DATA_LAMARAN
+from modules.umkm.lamaran import data_lamaran, update_lamaran
+from modules.food_vlogger.food_vlogger import data_fv
+from modules.bukti_promosi import data_bukti_promosi, tampilkan_bukti
+from modules.pembayaran import data_pembayaran
 import data.session
 
 def data_lowongan():
@@ -25,13 +29,14 @@ def simpan_lowongan(data_baru):
         writer.writerow(data_baru)
 
 def daftar_lowongan():
+    
     clear_screen()
     print("\n====== DAFTAR LOWONGAN SAYA ======")
 
     lowongans = data_lowongan()
-    
 
     user_session = data.session.USER_LOGIN
+    
     if not user_session:
         print("❌ Anda belum login!")
         input("\nTekan ENTER untuk kembali ↩")
@@ -68,7 +73,7 @@ def daftar_lowongan():
                 print(f"Minimal Followers : {formatted_min_followers} Followers")
                 
                 status_low = lowongans[i]['status_lowongan']
-                emoji = "✅" if status_low == "diambil" else "❌"
+                emoji = "✅" if status_low == "Diambil" else "❌"
                 print(f"Status            : {status_low} {emoji}")
                 
                 ada = True
@@ -79,7 +84,7 @@ def daftar_lowongan():
         print("\nKamu belum memiliki lowongan.")
         print(f"(ID Anda: {umkm_id_login}, Data diperiksa: {len(lowongans)} baris)")
 
-    input("\nTekan ENTER untuk kembali ↩")
+    input("\nTekan ENTER untuk kembali...")
 
 
 def buat_lowongan():
@@ -97,7 +102,7 @@ def buat_lowongan():
             lowongan_id = int(lowongans[-1]["lowongan_id"]) + 1        
             
         umkm_id = data.session.USER_LOGIN["umkm_id"]
-        status_lowongan = "belum diambil"
+        status_lowongan = "Belum Diambil"
         
         while True:
             nama_produk = input("Nama Produk: ").capitalize().strip()
@@ -261,7 +266,7 @@ def buat_lowongan():
                 simpan_lowongan(data_baru)
 
                 print("\n✅ Lowongan berhasil disimpan ✅")
-                input("Tekan ENTER untuk kembali ke beranda...")
+                input("\nTekan ENTER untuk kembali ke beranda...")
                 break
 
             if konfirmasi == 2:
@@ -274,66 +279,69 @@ def buat_lowongan():
 
 def lamaran_masuk():
     umkm_id = data.session.USER_LOGIN['umkm_id']
-
+    
+    # mengambil sumber data
+    lowongans = data_lowongan()
+    fvs = data_fv()
+    lamarans = data_lamaran()
+    
+    # untuk menyimpan data berdasarkan idnya sendiri
     lowongan_umkm = {}
     vlogger_list = {}
     lamaran_rows = []
 
     # === LOWONGAN ===
-    with open(DATA_LOWONGAN, newline='', encoding='utf-8') as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            if row['umkm_id'] == str(umkm_id):
-                lowongan_umkm[row['lowongan_id']] = row
+    for lowongan in lowongans:
+        if lowongan['umkm_id'] == str(umkm_id):
+            lowongan_umkm[lowongan['lowongan_id']] = lowongan
 
     # === VLOGGER ===
-    with open(DATA_FOOD_VLOGGER, newline='', encoding='utf-8') as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            vlogger_list[row['vlogger_id']] = row
-
+    for fv in fvs:
+        vlogger_list[fv['vlogger_id']] = fv
+    
     # === LAMARAN ===
-    with open(DATA_LAMARAN, newline='', encoding='utf-8') as file:
-        reader = csv.DictReader(file)
-        fieldnames = reader.fieldnames
+    for lamaran in lamarans:
+        if lamaran['lowongan_id'] in lowongan_umkm:
+            lamaran_rows.append(lamaran)
+    
+    print("\n===== LAMARAN MASUK =====")    
 
-        for row in reader:
-            if row['lowongan_id'] in lowongan_umkm:
-                lamaran_rows.append(row)
-
-    print("\n===== LAMARAN MASUK =====")
-
+    print("lamaran_rows", lamaran_rows)
+    # jika tidak ada data lamaran untuk umkm ini
     if not lamaran_rows:
-        print("Belum ada lamaran masuk.")
+        print("\nBelum ada lamaran masuk.")
         input("\nTekan ENTER untuk kembali ↩")
         return
-
+    
     for lamaran in lamaran_rows:
         lowongan = lowongan_umkm[lamaran['lowongan_id']]
-        vlogger = vlogger_list.get(lamaran['vlogger_id'], {})
+        vlogger = vlogger_list[lamaran['vlogger_id']]
 
+        status_lamaran = lamaran['status']
+        emoji = "✅" if status_lamaran == "Disetujui" else "❌"
+        
         print(f"""
 Lamaran ID : {lamaran['lamaran_id']}
-Vlogger    : {vlogger.get('nama', '-')}
+Vlogger    : {vlogger['nama']}
 Produk     : {lowongan['nama_produk']}
 Tanggal    : {lamaran['tanggal_lamar']}
-Status     : {lamaran['status']}
+Status     : {lamaran['status']} {emoji}
 ------------------------------
 """)
 
-    lamaran_id = input("Masukkan ID Lamaran untuk disetujui (ENTER untuk batal): ").strip()
+    input_lamaran_id = input("Masukkan Lamaran ID untuk disetujui (ENTER untuk batal): ").strip()
 
-    if not lamaran_id:
+    if not input_lamaran_id:
         return
 
     ditemukan = False
 
-    for row in lamaran_rows:
-        if row['lamaran_id'] == lamaran_id:
-            if row['status'] != 'Pending':
+    for lamaran in lamaran_rows:
+        if lamaran['lamaran_id'] == input_lamaran_id:
+            if lamaran['status'] != 'Pending':
                 print("Lamaran ini sudah diproses.")
                 return
-            row['status'] = 'Disetujui'
+            lamaran['status'] = 'Disetujui'
             ditemukan = True
             break
 
@@ -342,94 +350,186 @@ Status     : {lamaran['status']}
         return
 
     # === SIMPAN ULANG CSV ===
-    with open(DATA_LAMARAN, 'w', newline='', encoding='utf-8') as file:
-        writer = csv.DictWriter(file, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(lamaran_rows)
-
-    print("Lamaran berhasil disetujui ✅")
-    input("\nTekan ENTER untuk kembali ↩")
+    update_lamaran(lamaran_rows)
+    
+    print("\n✅ Lamaran berhasil disetujui.")
+    input("\nTekan ENTER untuk kembali...")
 
 
 
 def kolaborasi():
+    
     umkm_id = data.session.USER_LOGIN['umkm_id']
 
+    # mengambil sumber data
+    lowongans = data_lowongan()
+    fvs = data_fv()
+    lamarans = data_lamaran()
+    bukproms = data_bukti_promosi()
+    pembayarans = data_pembayaran()
+    
+    # variable untuk menyimpan data yang sesuai
     lowongan_umkm = {}
     vlogger_list = {}
-    kolaborasi = []
+    bukti_list = {}
+    pembayaran_list = {}
+    kolaborasis = []
 
     # === LOWONGAN UMKM ===
-    with open(DATA_LOWONGAN, newline='', encoding='utf-8') as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            if row['umkm_id'] == str(umkm_id):
-                lowongan_umkm[row['lowongan_id']] = row
-
+    for lowongan in lowongans:
+        if lowongan['umkm_id'] == str(umkm_id):
+            lowongan_umkm[lowongan['lowongan_id']] = lowongan
+    
     # === FOOD VLOGGER ===
-    with open(DATA_FOOD_VLOGGER, newline='', encoding='utf-8') as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            vlogger_list[row['vlogger_id']] = row['nama']
-
+    for fv in fvs:
+        vlogger_list[fv['vlogger_id']] = fv['nama']
+    
+    # === BUKTI PROMOSI ===
+    for bukprom in bukproms:
+        
+        if bukprom['lowongan_id'] in lowongan_umkm:
+            bukti_list[bukprom['lowongan_id']] = bukprom
+    
+    # === PEMBAYARAN ===
+    for pembayaran in pembayarans:
+        
+        if pembayaran['lowongan_id'] in lowongan_umkm:
+            pembayaran_list[pembayaran['lowongan_id']] = pembayaran
+    
     # === LAMARAN ===
-    with open(DATA_LAMARAN, newline='', encoding='utf-8') as file:
-        reader = csv.DictReader(file)
-        fieldnames = reader.fieldnames
-        all_rows = list(reader)
-
-    for row in all_rows:
+    for lamaran in lamarans:
         if (
-            row['status'] == 'Disetujui' and
-            row['lowongan_id'] in lowongan_umkm
+            lamaran['status'] == 'Disetujui' and
+            lamaran['lowongan_id'] in lowongan_umkm
         ):
-            kolaborasi.append(row)
+            # kolaborasis berisi data lamaran yang memiliki status = "Disetujui" dan lowongannya milik umkm ini
+            kolaborasis.append(lamaran)
 
-    print("\n===== KOLABORASI UMKM =====")
+    while True:
+        clear_screen()
+        print("\n===== KOLABORASI SAYA =====")
+            
+        if not kolaborasis:
+            print("\n❌ Belum ada kolaborasi.")
+            input("\nTekan ENTER untuk kembali...")
+            return
 
-    if not kolaborasi:
-        print("Belum ada kolaborasi.")
-        input("\nENTER untuk kembali ↩")
-        return
+        for kolab in kolaborasis:
+            lowongan = lowongan_umkm[kolab['lowongan_id']]
+            nama_vlogger = vlogger_list.get(kolab['vlogger_id'], '-')
+            
+            # penetapan status bukti
+            cek_bukti = bukti_list.get(kolab['lowongan_id'], '-')
+            if cek_bukti == '-':
+                status_bukti = "Belum Ada ❌"
+            else:
+                status_verifikasi = bukti_list[kolab['lowongan_id']]['status_verifikasi']
+                
+                if status_verifikasi == 'Menunggu Peninjauan':
+                    emoji = "🕛"
+                elif status_verifikasi == 'Disetujui':
+                    emoji = "✅"
+                elif status_verifikasi == 'Ditolak':
+                    emoji = "❌"
+                    
+                status_bukti = f"{status_verifikasi} {emoji}"
+            
+            # penetapan status pembayaran
+            cek_pembayaran = pembayaran_list.get(kolab['lowongan_id'], '-')
+            if cek_pembayaran == '-':
+                status_pembayaran = 'Belum Lunas ❌'
+            else:
+                status_pembayaran = 'Lunas ✅'
 
-    for item in kolaborasi:
-        lowongan = lowongan_umkm[item['lowongan_id']]
-        nama_vlogger = vlogger_list.get(item['vlogger_id'], '-')
-        status_bukti = item.get('status_bukti', '')
+            print(f"\nId Lowongan #{lowongan['lowongan_id']}")
+            print(f"Produk            : {lowongan['nama_produk']}")
+            print(f"Vlogger           : {nama_vlogger}")
+            print(f"Anggaran          : Rp {lowongan['budget']}")
+            print(f"Deadline          : {lowongan['batas_waktu_pengerjaan']} hari")
+            print(f"Status Bukti      : {status_bukti}")
+            print(f"Status Pembayaran : {status_pembayaran}")
+            print("------------------------------")
 
-        print(f"""
-Produk   : {lowongan['nama_produk']}
-Vlogger  : {nama_vlogger}
-Anggaran : Rp {lowongan['budget']}
-Deadline : {lowongan['batas_waktu_pengerjaan']} hari
-""")
+            # if not kolab.get('link_bukti'):
+            #     print("Status Bukti : Menunggu Bukti Promosi")
 
-        if not item.get('link_bukti'):
-            print("Status Bukti : Menunggu Bukti Promosi")
+            # elif status_bukti == 'Menunggu Peninjauan':
+            #     print("[1] Lihat Bukti")
+            #     print("[0] Lewati")
 
-        elif status_bukti == 'Menunggu Persetujuan':
-            print("[1] Lihat Bukti")
-            print("[0] Lewati")
+            #     pilih = input("> ")
+            #     if pilih == '1':
+            #         print(f"Link Bukti: {kolab['link_bukti']}")
+            #         print("[1] Setujui Bukti")
+            #         print("[0] Batal")
 
-            pilih = input("> ")
-            if pilih == '1':
-                print(f"Link Bukti: {item['link_bukti']}")
-                print("[1] Setujui Bukti")
-                print("[0] Batal")
+            #         konfirmasi = input("> ")
+            #         if konfirmasi == '1':
+            #             kolab['status_bukti'] = 'Disetujui'
+            #             print("Bukti berhasil disetujui ✅")
 
-                konfirmasi = input("> ")
-                if konfirmasi == '1':
-                    item['status_bukti'] = 'Disetujui'
-                    print("Bukti berhasil disetujui ✅")
-
-        else:
-            print("Status Bukti : Sudah disetujui")
-
-    # === SIMPAN CSV ===
-    with open(DATA_LAMARAN, 'w', newline='', encoding='utf-8') as file:
-        writer = csv.DictWriter(file, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(all_rows)
-
-    input("\nENTER untuk kembali ↩")
-
+            # else:
+            #     print("Status Bukti : Sudah disetujui")
+        
+        print("\nPerintah yang tersedia: ")
+        print("- bukti <spasi> <id lowongan> -> Melihat bukti")
+        print("- bayar <spasi> <id lowongan> -> Membayar lowongan")
+        print("- exit                        -> Kembali ke beranda")
+        
+        while True:
+            perintah = input("> ").strip().split()
+                    
+            if not perintah:
+                print("❌ Perintah tidak boleh kosong ❌")
+                continue
+            
+            if not perintah[0].isalpha():
+                print("❌ Perintah tidak valid ❌")
+                continue
+            
+            if perintah[0] == "exit":
+                break
+            
+            if len(perintah) == 1:
+                print("❌ Id tidak ada ❌")
+                continue
+            
+            if not perintah[1].isdigit():
+                print("❌ Id hanya boleh angka ❌")
+                continue
+            
+            if len(perintah) > 2:
+                print("❌ Perintah terlalu panjang ❌")
+                continue
+            
+            if perintah[1] not in lowongan_umkm:
+                print("❌ Id tidak ditemukan ❌")
+                continue
+            
+            if perintah[0] not in ('bayar', 'bukti'):
+                print("❌ Perintah tidak ditemukan ❌")
+                continue
+            
+            break
+        
+        if perintah[0] == 'bukti':
+            input_lowongan_id = perintah[1]
+            
+            hasil_bukti = tampilkan_bukti(input_lowongan_id)
+            
+            if hasil_bukti == "setuju":
+                print("\n✅ Bukti berhasil disetujui ✅")
+                
+            elif hasil_bukti == "tolak":
+                print("\n✅ Bukti berhasil ditolak ✅")
+            
+            input("\nTekan ENTER untuk kembali...")
+                    
+        if perintah[0] == 'bayar':
+            print(f"BAYAR COK untuk id {perintah[1]}")
+            
+            input("\nTekan ENTER untuk kembali...")
+            break
+        
+        if perintah[0] == "exit":
+            break

@@ -13,18 +13,15 @@ def beranda_fv():
         print("\n===== BERANDA FOOD VLOGGER =====")
         print(f"Selamat datang {nama_fv}!")
         print("[1] 📢 Lihat lowongan ")
-        print("[2] 🕛 Lowongan Berlangsung ")
-        print("[3] 🤝 Kolaborasi ")
+        # print("[2] 🕛 Lowongan Berlangsung ")
+        print("[2] 🤝 Kolaborasi ")
         print("[0] Logout")
         pilihan_user = int(input("> "))
         
         if pilihan_user == 1:
             daftar_lowongan()
-
-        elif pilihan_user == 2:
-            lowongan_berlangsung()
         
-        elif pilihan_user == 3:
+        elif pilihan_user == 2:
             kolaborasi()
         
         elif pilihan_user == 0:

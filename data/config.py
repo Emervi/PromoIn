@@ -20,7 +20,7 @@ Status lamaran:
 - ditolak (pada saat lamaran FV ditolak)
 
 Status bukti:
-- menunggu (pada saat FV dapet lowongan hingga FV menunggu verifikasi)
-- disetujui (pada saat disetujui)
-- ditolak (pada saat ditolak)
+- Menunggu Persetujuan (pada saat FV dapet lowongan hingga FV menunggu verifikasi)
+- Disetujui (pada saat disetujui)
+- Ditolak (pada saat ditolak)
 """

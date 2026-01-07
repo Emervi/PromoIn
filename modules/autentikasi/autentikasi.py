@@ -61,7 +61,7 @@ def register_umkm():
     
     # meminta input nama usaha
     while True:
-        input_nama_usaha = input("Nama Usaha (maks. 20 karakter): ").capitalize().strip()
+        input_nama_usaha = input("Nama Usaha: ").capitalize().strip()
         
         # mengecek jika nama usaha kosong
         if not input_nama_usaha:
@@ -78,15 +78,20 @@ def register_umkm():
             print("❌ Format nama usaha salah ❌")
             continue
 
-        # mengecek jika nama usaha tidak lebih dari 20 karakter
-        if len(input_nama_usaha) > 20:
-            print("❌ Panjang nama usaha maksimal 20 karakter ❌")
+        # mengecek jika nama usaha tidak lebih dari 30 karakter
+        if len(input_nama_usaha) > 30:
+            print("❌ Nama usaha maksimal 30 karakter ❌")
+            continue
+        
+        # mencegah nama usaha kurang dari 3 karakter
+        if len(input_nama_usaha) < 3:
+            print("❌ Nama usaha minimal 3 karakter ❌")
             continue
         break
     
     # meminta input nama
     while True:
-        input_nama = input("Nama (maks. 20 karakter): ").capitalize().strip()
+        input_nama = input("Nama: ").capitalize().strip()
         
         # mengecek jika nama kosong
         if not input_nama:
@@ -102,9 +107,14 @@ def register_umkm():
             print("❌ Format nama salah ❌")
             continue
 
-        # mengecek jika nama tidak lebih dari 20 karakter
-        if len(input_nama) > 20:
-            print("❌ Panjang nama maksimal 20 karakter ❌")
+        # mengecek jika nama tidak lebih dari 30 karakter
+        if len(input_nama) > 30:
+            print("❌ Nama maksimal 30 karakter ❌")
+            continue
+
+        # mencegah nama kurang dari 3 karakter
+        if len(input_nama) < 3:
+            print("❌ Nama minimal 3 karakter ❌")
             continue
         break
     

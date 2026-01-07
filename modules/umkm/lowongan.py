@@ -100,10 +100,15 @@ def buat_lowongan():
         status_lowongan = "belum diambil"
         
         while True:
-            nama_produk = input("Nama Produk: ").capitalize().strip()
+            nama_produk = input("Nama Produk (maks. 10 kata): ").capitalize().strip()
             
             if not nama_produk:
-                print("❌ Nama Produk tidak boleh kosong ❌")
+                print("❌ Nama produk tidak boleh kosong ❌")
+                continue
+
+            # membatasi nama produk maksimal 10 kata
+            if len(nama_produk.split()) > 10:
+                print("❌ Nama produk maksimal 10 kata ❌")
                 continue
             break
         
@@ -120,6 +125,11 @@ def buat_lowongan():
             
             if not deskripsi:
                 print("❌ Deskripsi tidak boleh kosong ❌")
+                continue
+
+            # membatasi deskripsi maksimal 255 kata
+            if len(deskripsi.split()) > 255:
+                print("❌ Deskripsi maksimal 255 kata ❌")
                 continue
             break
         

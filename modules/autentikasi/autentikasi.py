@@ -77,6 +77,16 @@ def register_umkm():
         if '@' in input_nama_usaha or '.' in input_nama_usaha:
             print("❌ Format nama usaha salah ❌")
             continue
+
+        # mengecek jika nama usaha tidak lebih dari 30 karakter
+        if len(input_nama_usaha) > 30:
+            print("❌ Nama usaha maksimal 30 karakter ❌")
+            continue
+        
+        # mencegah nama usaha kurang dari 3 karakter
+        if len(input_nama_usaha) < 3:
+            print("❌ Nama usaha minimal 3 karakter ❌")
+            continue
         break
     
     # meminta input nama
@@ -95,6 +105,16 @@ def register_umkm():
 
         if '@' in input_nama or '.' in input_nama:
             print("❌ Format nama salah ❌")
+            continue
+
+        # mengecek jika nama tidak lebih dari 30 karakter
+        if len(input_nama) > 30:
+            print("❌ Nama maksimal 30 karakter ❌")
+            continue
+
+        # mencegah nama kurang dari 3 karakter
+        if len(input_nama) < 3:
+            print("❌ Nama minimal 3 karakter ❌")
             continue
         break
     

@@ -103,7 +103,17 @@ def buat_lowongan():
             nama_produk = input("Nama Produk: ").capitalize().strip()
             
             if not nama_produk:
-                print("❌ Nama Produk tidak boleh kosong ❌")
+                print("❌ Nama produk tidak boleh kosong ❌")
+                continue
+
+            # membatasi nama produk maksimal 10 kata
+            if len(nama_produk.split()) > 10:
+                print("❌ Nama produk maksimal 10 kata ❌")
+                continue
+
+            # membatasi nama produk minimum 3 karakter
+            if len(nama_produk) < 3:
+                print("❌ Nama produk minimal 3 karakter ❌")
                 continue
             break
         
@@ -113,6 +123,16 @@ def buat_lowongan():
             if not kategori:
                 print("❌ Kategori tidak boleh kosong ❌")
                 continue
+                
+            # membatasi kategori maksimal 10 kata
+            if len(kategori.split()) > 10:
+                print("❌ Kategori maksimal 10 kata ❌")
+                continue
+
+            # mencegah kategori kurang dari 3 karakter
+            if len(kategori) < 3:
+                print("❌ Kategori minimal 3 karakter ❌")
+                continue
             break
         
         while True:
@@ -120,6 +140,11 @@ def buat_lowongan():
             
             if not deskripsi:
                 print("❌ Deskripsi tidak boleh kosong ❌")
+                continue
+
+            # membatasi deskripsi maksimal 255 kata
+            if len(deskripsi.split()) > 255:
+                print("❌ Deskripsi maksimal 255 kata ❌")
                 continue
             break
         

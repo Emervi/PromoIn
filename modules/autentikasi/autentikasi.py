@@ -306,6 +306,16 @@ def register_fv():
             print("❌ Nama tidak boleh kosong ❌")
             continue
         
+        # mencegah nama kurang dari 3 karakter
+        if len(input_nama) < 3:
+            print("❌ Nama minimal 3 karakter ❌")
+            continue
+        
+        # mengecek jika nama tidak lebih dari 30 karakter
+        if len(input_nama) > 30:
+            print("❌ Nama maksimal 30 karakter ❌")
+            continue
+        
         # mengecek jika nama hanya mengandung huruf dan angka
         if not input_nama.replace(" ", "").isalnum():
             print("❌ Nama hanya terdiri dari huruf dan angka ❌")

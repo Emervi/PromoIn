@@ -1,2 +1,4 @@
 lamaran_id,lowongan_id,vlogger_id,tanggal_lamar,status,status_bukti,link_bukti
-2,2,4,06-01-2026,Disetujui,Menunggu Persetujuan,https:\\arfagaming.edu\index.php
+3,4,5,06-01-2026,Disetujui,,
+4,3,6,07-01-2026,Disetujui,,
+5,5,6,07-01-2026,Disetujui,,

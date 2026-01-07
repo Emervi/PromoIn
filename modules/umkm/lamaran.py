@@ -25,3 +25,12 @@ def simpan_lamaran(data_baru):
             writer.writeheader()
             
         writer.writerow(data_baru)
+
+# procedure untuk mengupdate data lamaran
+def update_lamaran(data_baru):
+
+    with open(DATA_LAMARAN, mode="w", newline='') as file:
+        nama_kolom = data_baru[0].keys()
+        writer = csv.DictWriter(file, fieldnames=nama_kolom)        
+        writer.writeheader()
+        writer.writerows(data_baru)

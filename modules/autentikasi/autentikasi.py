@@ -61,7 +61,7 @@ def register_umkm():
     
     # meminta input nama usaha
     while True:
-        input_nama_usaha = input("Nama Usaha: ").capitalize().strip()
+        input_nama_usaha = input("Nama Usaha: ").title().strip()
         
         # mengecek jika nama usaha kosong
         if not input_nama_usaha:
@@ -81,7 +81,7 @@ def register_umkm():
     
     # meminta input nama
     while True:
-        input_nama = input("Nama: ").capitalize().strip()
+        input_nama = input("Nama: ").title().strip()
         
         # mengecek jika nama kosong
         if not input_nama:
@@ -279,7 +279,7 @@ def register_fv():
         
     # meminta input nama
     while True:
-        input_nama = input("Nama: ").capitalize().strip()
+        input_nama = input("Nama: ").title().strip()
         
         # mengecek jika nama kosong
         if not input_nama:

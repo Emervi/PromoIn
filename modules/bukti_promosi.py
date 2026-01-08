@@ -42,46 +42,72 @@ def update_bukti_promosi(data_baru):
 def tampilkan_bukti(lowongan_id):
     
     bukproms = data_bukti_promosi()
+    lowongan_id_bukproms = []
     
     clear_screen()
     print(f"\n===== LIHAT BUKTI LOWONGAN #{lowongan_id} =====\n")
         
     for bukprom in bukproms:
+        
+        lowongan_id_bukproms.append(bukprom["lowongan_id"])
+        
         if bukprom["lowongan_id"] == str(lowongan_id):
             print(f"Link Bukti Konten: {bukprom["link_konten"]}\n")
     
-    print("[1] Setujui")
-    print("[2] Tolak")
-    print("[0] Kembali")
-    
-    while True:
-        pilihan = input("> ").strip()
+    if lowongan_id not in lowongan_id_bukproms:
+        print("Link Bukti Konten: Belum ada ❌\n")
         
-        if not pilihan:
-            print("❌ Perintah tidak boleh kosong ❌")
-            continue
+        print("[0] Kembali")
+        
+        while True:
+            pilihan = input("> ").strip()
             
-        if pilihan not in ("1", "2", "0"):
-            print("❌ Inputan tidak valid ❌")
-            continue
+            if not pilihan:
+                print("❌ Perintah tidak boleh kosong ❌")
+                continue
+                
+            if pilihan not in ("0"):
+                print("❌ Inputan tidak valid ❌")
+                continue
+            
+            break
+                    
+        if pilihan == "0":
+            return ""
         
-        break
-    
-    if pilihan == "1":
-        for bukprom in bukproms:
-            if bukprom["lowongan_id"] == str(lowongan_id):
-                bukprom["status_verifikasi"] = "Disetujui"
+    else:
+        print("[1] Setujui")
+        print("[2] Tolak")
+        print("[0] Kembali")
         
-        update_bukti_promosi(bukproms)
-        return "setuju"
-    
-    if pilihan == "2":
-        for bukprom in bukproms:
-            if bukprom["lowongan_id"] == str(lowongan_id):
-                bukprom["status_verifikasi"] = "Ditolak"
+        while True:
+            pilihan = input("> ").strip()
+            
+            if not pilihan:
+                print("❌ Perintah tidak boleh kosong ❌")
+                continue
+                
+            if pilihan not in ("1", "2", "0"):
+                print("❌ Inputan tidak valid ❌")
+                continue
+            
+            break
         
-        update_bukti_promosi(bukproms)
-        return "tolak"
+        if pilihan == "1":
+            for bukprom in bukproms:
+                if bukprom["lowongan_id"] == str(lowongan_id):
+                    bukprom["status_verifikasi"] = "Disetujui"
+            
+            update_bukti_promosi(bukproms)
+            return "setuju"
         
-    if pilihan == "0":
-        return ""
+        if pilihan == "2":
+            for bukprom in bukproms:
+                if bukprom["lowongan_id"] == str(lowongan_id):
+                    bukprom["status_verifikasi"] = "Ditolak"
+            
+            update_bukti_promosi(bukproms)
+            return "tolak"
+            
+        if pilihan == "0":
+            return ""

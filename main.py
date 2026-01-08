@@ -24,7 +24,7 @@ while True:
     if pilihan_user == "2":
         if autentikasi_fv() == "kill system":
             break
-        
+    
     if pilihan_user == "0":
         print("\nTerima Kasih Telah Menggunakan Aplikasi PromoIn! 🥰😘😍")
         break

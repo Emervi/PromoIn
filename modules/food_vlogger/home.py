@@ -13,7 +13,6 @@ def beranda_fv():
         print("\n===== BERANDA FOOD VLOGGER =====")
         print(f"Selamat datang {nama_fv}!")
         print("[1] 📢 Lihat lowongan ")
-        # print("[2] 🕛 Lowongan Berlangsung ")
         print("[2] 🤝 Kolaborasi ")
         print("[0] Logout")
         pilihan_user = input("> ")

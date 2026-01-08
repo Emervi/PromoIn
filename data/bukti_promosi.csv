@@ -1,3 +1,4 @@
 bukti_id,lowongan_id,link_konten,tanggal_upload,status_verifikasi
 1,2,INI BUKTI KONTEN,07-01-2026,Menunggu Peninjauan
-1,4,INI BUKTI KONTEN,07-01-2026,Ditolak
+2,4,INI BUKTI KONTEN,07-01-2026,Ditolak
+3,5,ini buktinya valid banget,08-01-2026,Ditolak

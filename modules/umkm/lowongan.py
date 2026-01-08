@@ -101,7 +101,7 @@ def buat_lowongan():
         else:
             lowongan_id = int(lowongans[-1]["lowongan_id"]) + 1        
             
-        # umkm_id = data.session.USER_LOGIN["umkm_id"]
+        umkm_id = data.session.USER_LOGIN["umkm_id"]
         status_lowongan = "Belum Diambil"
         
         while True:

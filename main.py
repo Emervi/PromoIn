@@ -26,7 +26,7 @@ while True:
             break
         
     if pilihan_user == "0":
-        print("Terima Kasih Telah Menggunakan Aplikasi PromoIn! 🥰😘😍")
+        print("\nTerima Kasih Telah Menggunakan Aplikasi PromoIn! 🥰😘😍")
         break
     
     if pilihan_user not in ("0", "1", "2"):

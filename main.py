@@ -15,7 +15,17 @@ while True:
     print("[2] 📸 Food Vlogger")
     print("[0] Keluar Sistem")
     
-    pilihan_user = (input("> "))
+    while True:
+        pilihan_user = input("> ")
+        
+        if not pilihan_user:
+            print("❌ Input tidak boleh kosong ❌")
+            continue
+        
+        if pilihan_user not in ("1", "2", "0"):
+            print("❌ Input tidak valid ❌")
+            continue
+        break
     
     if pilihan_user == "1":
         if autentikasi_umkm() == "kill system":

@@ -3,6 +3,7 @@ import csv
 
 # mengimport library os yang dapat menjalankan fungsi yang berhubungan dengan operating system
 import os
+from datetime import datetime
 
 # mengambil path data di dalam folder data/config
 from data.config import DATA_PEMBAYARAN
@@ -42,8 +43,19 @@ def update_pembayaran(data_baru):
 
 def lakukan_pembayaran(lowongan_id):
     
-    bukproms = data_bukti_promosi()
+    from modules.umkm.lowongan import data_lowongan
     
+    bukproms = data_bukti_promosi()
+    pembayarans = data_pembayaran()
+    lowongans = data_lowongan()
+    
+    clear_screen()
+    print(f"\n===== PEMBAYARAN LOWONGAN #{lowongan_id} =====\n")
+    for lowongan in lowongans:
+        
+        if lowongan_id == lowongan["lowongan_id"]:
+            total_bayar = lowongan["budget"]
+            
     for bukprom in bukproms:
         
         if lowongan_id == bukprom["lowongan_id"]:
@@ -87,4 +99,23 @@ def lakukan_pembayaran(lowongan_id):
               """)
             
             input("\nTekan ENTER untuk konfirmasi...")
+            
+            # generate id baru untuk data yang baru
+            if len(pembayarans) == 0:
+                id_baru = 1
+            else:
+                id_baru = int(pembayarans[-1]["pembayaran_id"]) + 1
+            
+            #tanggal bayar lowongan
+            tanggal_bayar = datetime.now().strftime("%d-%m-%Y")
+            
+            pembayaran_baru = {
+                "pembayaran_id": id_baru,
+                "lowongan_id": lowongan_id,
+                "jumlah_bayar": total_bayar,
+                "tanggal_bayar": tanggal_bayar,
+                "bukti_bayar": "-"
+            }
+            
+            simpan_pembayaran(pembayaran_baru)
             return "dibayar"

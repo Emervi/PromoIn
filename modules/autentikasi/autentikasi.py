@@ -25,7 +25,7 @@ def autentikasi_umkm():
             if akun_umkm:
                 beranda_umkm()
             else:
-                register_umkm()
+                continue
             
         elif pilihan_user == 2:
             akun_umkm = login_umkm()
@@ -33,7 +33,7 @@ def autentikasi_umkm():
             if akun_umkm:
                 beranda_umkm()
             else:
-                autentikasi_umkm()
+                continue
                 
         elif pilihan_user == 9:
             break
@@ -98,9 +98,9 @@ def register_umkm():
             print("❌ Nama tidak boleh kosong ❌")
             continue
         
-        # mengecek jika nama hanya mengandung huruf dan angka
-        if not input_nama.replace(" ", "").isalnum():
-            print("❌ Nama hanya terdiri dari huruf dan angka ❌")
+        # mengecek jika nama hanya mengandung huruf
+        if not input_nama.replace(" ", "").isalpha():
+            print("❌ Nama hanya terdiri dari huruf ❌")
             continue
 
         if '@' in input_nama or '.' in input_nama:
@@ -263,7 +263,7 @@ def autentikasi_fv():
             if akun_fv:
                 beranda_fv()
             else:
-                register_fv()
+                continue
             
         elif pilihan_user == 2:
             akun_fv = login_fv()
@@ -271,7 +271,7 @@ def autentikasi_fv():
             if akun_fv:
                 beranda_fv()
             else:
-                autentikasi_fv()
+                continue
                 
         elif pilihan_user == 9:
             break
@@ -316,9 +316,9 @@ def register_fv():
             print("❌ Nama maksimal 30 karakter ❌")
             continue
         
-        # mengecek jika nama hanya mengandung huruf dan angka
-        if not input_nama.replace(" ", "").isalnum():
-            print("❌ Nama hanya terdiri dari huruf dan angka ❌")
+        # mengecek jika nama hanya mengandung huruf
+        if not input_nama.replace(" ", "").isalpha():
+            print("❌ Nama hanya terdiri dari huruf ❌")
             continue
         
         if '@' in input_nama or '.' in input_nama:

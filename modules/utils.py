@@ -74,3 +74,9 @@ def format_email(email):
     if not (bagian[0][-1].isalnum()):
         print("❌ Maaf, Karakter akhir alamat email harus berupa alfabet (a-z) atau angka (0-9) ❌")
         return False
+
+def ada_huruf(text):
+    for char in text:
+        if char.isalpha():
+            return True
+    return False

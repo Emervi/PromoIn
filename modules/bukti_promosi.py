@@ -42,14 +42,14 @@ def update_bukti_promosi(data_baru):
 def tampilkan_bukti(lowongan_id):
     
     bukproms = data_bukti_promosi()
-    lowongan_id_bukproms = []
+    lowongan_id_bukproms = {}
     
     clear_screen()
     print(f"\n===== LIHAT BUKTI LOWONGAN #{lowongan_id} =====\n")
         
     for bukprom in bukproms:
         
-        lowongan_id_bukproms.append(bukprom["lowongan_id"])
+        lowongan_id_bukproms[bukprom["lowongan_id"]] = bukprom
         
         if bukprom["lowongan_id"] == str(lowongan_id):
             print(f"Link Bukti Konten: {bukprom["link_konten"]}\n")
@@ -60,7 +60,26 @@ def tampilkan_bukti(lowongan_id):
         print("[0] Kembali")
         
         while True:
-            pilihan = input("> ").strip()
+            pilihan = input("\n> ").strip()
+            
+            if not pilihan:
+                print("❌ Perintah tidak boleh kosong ❌")
+                continue
+                
+            if pilihan not in ("0"):
+                print("❌ Inputan tidak valid ❌")
+                continue
+            
+            break
+                    
+        if pilihan == "0":
+            return ""
+        
+    elif lowongan_id_bukproms[lowongan_id]["status_verifikasi"] == "Disetujui":
+        print("[0] Kembali")
+        
+        while True:
+            pilihan = input("\n> ").strip()
             
             if not pilihan:
                 print("❌ Perintah tidak boleh kosong ❌")
@@ -81,7 +100,7 @@ def tampilkan_bukti(lowongan_id):
         print("[0] Kembali")
         
         while True:
-            pilihan = input("> ").strip()
+            pilihan = input("\n> ").strip()
             
             if not pilihan:
                 print("❌ Perintah tidak boleh kosong ❌")

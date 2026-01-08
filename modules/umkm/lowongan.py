@@ -513,12 +513,29 @@ def kolaborasi():
                     
         if perintah[0] == 'bayar':
             input_lowongan_id = perintah[1]
+            hasil_bayar = ""
             
-            hasil_bayar = lakukan_pembayaran(input_lowongan_id)
+            if input_lowongan_id in pembayaran_list:
+                hasil_bayar = "pembayaran sudah lunas"
+            else:
+                for bukprom in bukproms:
+                    
+                    if input_lowongan_id == bukprom["lowongan_id"]:
+                        
+                        if bukprom["status_verifikasi"] != "Disetujui":
+                            hasil_bayar = "bukti belum disetujui"
+                            
+                        else:
+                            hasil_bayar = lakukan_pembayaran(input_lowongan_id)
+                    else:
+                        hasil_bayar = "bukti belum ada"
             
-            if hasil_bayar == "bukti belum disetujui":
+            if hasil_bayar == "bukti belum disetujui" or hasil_bayar == "bukti belum ada":
                 print("\n❌ Bukti belum disetujui ❌")
             
+            if hasil_bayar == "pembayaran sudah lunas":
+                print("\n✅ Pembayaran sudah lunas ✅")
+                
             if hasil_bayar == "dibayar":
                 print("\n✅ Pembayaran berhasil ✅")
             

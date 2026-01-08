@@ -13,11 +13,21 @@ def autentikasi_umkm():
     while True:
         clear_screen()
         print("\n===== LOGIN & REGISTER UMKM =====")
-        print("[1] Register UMKM")
-        print("[2] Login UMKM")
-        print("[9] Kembali")
-        print("[0] Keluar Sistem")
-        pilihan_user = int(input("> "))
+        print("[1] 📝 Register UMKM")
+        print("[2] 🔓 Login UMKM")
+        print("[0] 🚪 Kembali")
+        
+        while True:
+            pilihan_user = input("> ")
+            
+            if not pilihan_user:
+                print("❌ Input tidak boleh kosong ❌")
+                continue
+            
+            if pilihan_user not in ("1", "2", "0"):
+                print("❌ Input tidak valid ❌")
+                continue
+            break
         
         if pilihan_user == 1:
             akun_umkm = register_umkm()
@@ -27,7 +37,7 @@ def autentikasi_umkm():
             else:
                 continue
             
-        elif pilihan_user == 2:
+        if pilihan_user == 2:
             akun_umkm = login_umkm()
             
             if akun_umkm:
@@ -35,15 +45,9 @@ def autentikasi_umkm():
             else:
                 continue
                 
-        elif pilihan_user == 9:
+        if pilihan_user == 0:
             break
-        
-        elif pilihan_user == 0:
-            return "kill system"
-        
-        else:
-            print("❌ Pilihan tidak valid ❌")
-
+        break
 
 
 def register_umkm():
@@ -251,11 +255,21 @@ def autentikasi_fv():
     while True:
         clear_screen()
         print("\n===== LOGIN & REGISTER FOOD VLOGGER =====")
-        print("[1] Register Food Vlogger")
-        print("[2] Login Food Vlogger")
-        print("[9] Kembali")
-        print("[0] Keluar Sistem")
-        pilihan_user = int(input("> "))
+        print("[1] 📝 Register Food Vlogger")
+        print("[2] 🔓 Login Food Vlogger")
+        print("[0] 🚪 Kembali")
+        
+        while True:
+            pilihan_user = input("> ")
+            
+            if not pilihan_user:
+                print("❌ Input tidak boleh kosong ❌")
+                continue
+            
+            if pilihan_user not in ("1", "2", "0"):
+                print("❌ Input tidak valid ❌")
+                continue
+            break
         
         if pilihan_user == 1:
             akun_fv = register_fv()
@@ -273,15 +287,9 @@ def autentikasi_fv():
             else:
                 continue
                 
-        elif pilihan_user == 9:
-            break
-        
         elif pilihan_user == 0:
-            return "kill system"
-        
-        else:
-            print("❌ Pilihan tidak valid ❌")
-
+            break
+        break
 
 
 def register_fv():

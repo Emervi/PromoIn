@@ -13,7 +13,7 @@ while True:
     print("Silakan memilih peran yang sesuai dengan anda.")
     print("[1] 🏪 UMKM")
     print("[2] 📸 Food Vlogger")
-    print("[0] Keluar Sistem")
+    print("[0] 🚪 Keluar Sistem")
     
     while True:
         pilihan_user = input("> ")

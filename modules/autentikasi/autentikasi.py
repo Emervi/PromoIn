@@ -158,7 +158,7 @@ def register_umkm():
     if len(umkms) == 0:
         id_baru = 1
     else:
-        id_baru = int(umkms[-1]["umkm_id"]) + 1        
+        id_baru = int(umkms[-1]["umkm_id"]) + 1
                                 
     # memuat data akun
     data_baru = {

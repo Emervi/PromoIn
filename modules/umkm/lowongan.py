@@ -306,7 +306,6 @@ def lamaran_masuk():
     
     print("\n===== LAMARAN MASUK =====")    
 
-    print("lamaran_rows", lamaran_rows)
     # jika tidak ada data lamaran untuk umkm ini
     if not lamaran_rows:
         print("\nBelum ada lamaran masuk.")
@@ -321,7 +320,7 @@ def lamaran_masuk():
         emoji = "✅" if status_lamaran == "Disetujui" else "❌"
         
         print(f"""
-Lamaran ID : {lamaran['lamaran_id']}
+Id Lamaran #{lamaran['lamaran_id']}
 Vlogger    : {vlogger['nama']}
 Produk     : {lowongan['nama_produk']}
 Tanggal    : {lamaran['tanggal_lamar']}
@@ -354,7 +353,6 @@ Status     : {lamaran['status']} {emoji}
     
     print("\n✅ Lamaran berhasil disetujui.")
     input("\nTekan ENTER untuk kembali...")
-
 
 
 def kolaborasi():
@@ -449,27 +447,6 @@ def kolaborasi():
             print(f"Status Bukti      : {status_bukti}")
             print(f"Status Pembayaran : {status_pembayaran}")
             print("------------------------------")
-
-            # if not kolab.get('link_bukti'):
-            #     print("Status Bukti : Menunggu Bukti Promosi")
-
-            # elif status_bukti == 'Menunggu Peninjauan':
-            #     print("[1] Lihat Bukti")
-            #     print("[0] Lewati")
-
-            #     pilih = input("> ")
-            #     if pilih == '1':
-            #         print(f"Link Bukti: {kolab['link_bukti']}")
-            #         print("[1] Setujui Bukti")
-            #         print("[0] Batal")
-
-            #         konfirmasi = input("> ")
-            #         if konfirmasi == '1':
-            #             kolab['status_bukti'] = 'Disetujui'
-            #             print("Bukti berhasil disetujui ✅")
-
-            # else:
-            #     print("Status Bukti : Sudah disetujui")
         
         print("\nPerintah yang tersedia: ")
         print("- bukti <spasi> <id lowongan> -> Melihat bukti")

@@ -6,6 +6,8 @@ import os
 
 # mengambil path data di dalam folder data/config
 from data.config import DATA_PEMBAYARAN
+from modules.bukti_promosi import data_bukti_promosi
+from modules.utils import clear_screen
 
 # function untuk mengambil data pembayaran
 def data_pembayaran():
@@ -37,3 +39,52 @@ def update_pembayaran(data_baru):
         writer = csv.DictWriter(file, fieldnames=nama_kolom)        
         writer.writeheader()
         writer.writerows(data_baru)
+
+def lakukan_pembayaran(lowongan_id):
+    
+    bukproms = data_bukti_promosi()
+    
+    for bukprom in bukproms:
+        
+        if lowongan_id == bukprom["lowongan_id"]:
+            
+            if bukprom["status_verifikasi"] != "Disetujui" or not bukprom["status_verifikasi"]:
+                return "bukti belum disetujui"
+            
+            else:
+                print("""
+                               SCAN QR CODE BERIKUT
+                                      
+            ⬛⬛⬛⬛⬛⬛⬛⬜⬜⬜⬛⬜⬛⬜⬛⬜⬜⬜⬛⬛⬛⬜⬛⬛⬛⬛⬛⬛⬛
+            ⬛⬜⬜⬜⬜⬜⬛⬜⬛⬜⬛⬜⬜⬜⬜⬛⬜⬛⬛⬜⬛⬜⬛⬜⬜⬜⬜⬜⬛
+            ⬛⬜⬛⬛⬛⬜⬛⬜⬜⬜⬜⬜⬛⬜⬜⬛⬛⬜⬜⬛⬜⬜⬛⬜⬛⬛⬛⬜⬛
+            ⬛⬜⬛⬛⬛⬜⬛⬜⬛⬛⬛⬜⬛⬛⬛⬛⬛⬛⬛⬜⬛⬜⬛⬜⬛⬛⬛⬜⬛
+            ⬛⬜⬛⬛⬛⬜⬛⬜⬜⬛⬜⬜⬜⬜⬜⬜⬜⬜⬛⬛⬛⬜⬛⬜⬛⬛⬛⬜⬛
+            ⬛⬜⬜⬜⬜⬜⬛⬜⬛⬛⬜⬛⬛⬜⬛⬛⬜⬜⬜⬜⬜⬜⬛⬜⬜⬜⬜⬜⬛
+            ⬛⬛⬛⬛⬛⬛⬛⬜⬛⬜⬛⬜⬛⬜⬛⬜⬛⬜⬛⬜⬛⬜⬛⬛⬛⬛⬛⬛⬛
+            ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬛⬛⬛⬜⬜⬜⬜⬛⬜⬜⬛⬛⬜⬜⬜⬜⬜⬜⬜⬜
+            ⬛⬛⬛⬛⬛⬜⬛⬛⬛⬛⬜⬛⬛⬛⬜⬛⬛⬛⬛⬜⬜⬛⬜⬛⬜⬛⬜⬛⬜
+            ⬜⬛⬛⬜⬜⬜⬜⬜⬛⬜⬛⬜⬛⬜⬛⬜⬜⬜⬜⬛⬛⬜⬛⬜⬛⬜⬜⬜⬛
+            ⬜⬛⬛⬛⬜⬛⬛⬛⬛⬜⬛⬜⬜⬛⬜⬛⬛⬜⬜⬜⬛⬛⬜⬛⬜⬜⬛⬜⬜
+            ⬜⬜⬜⬛⬜⬛⬜⬜⬛⬜⬜⬜⬜⬜⬜⬛⬛⬜⬛⬜⬜⬛⬜⬜⬛⬛⬜⬜⬜
+            ⬛⬛⬜⬜⬛⬜⬛⬛⬜⬛⬛⬛🟦🟦🟦🟦🟦⬛⬜⬜⬛⬛⬜⬛⬜⬛⬜⬛⬜
+            ⬜⬛⬛⬜⬛⬜⬜⬜⬜⬜⬜⬛🟦🟦🟦🟦🟦⬜⬛⬛⬜⬜⬛⬜⬛⬛⬛⬜⬛
+            ⬜⬜⬛⬛⬛⬛⬛⬛⬜⬜⬜⬜🟦🟦🟦🟦🟦⬛⬛⬜⬛⬜⬜⬜⬛⬛⬛⬜⬜
+            ⬜⬛⬜⬛⬛⬜⬜⬜⬜⬛⬛⬛🟦🟦🟦🟦🟦⬜⬜⬜⬛⬛⬛⬛⬛⬛⬜⬛⬛
+            ⬜⬛⬛⬜⬛⬜⬛⬜⬜⬛⬛⬜🟦🟦🟦🟦🟦⬛⬜⬛⬜⬛⬜⬛⬜⬜⬛⬛⬜
+            ⬛⬜⬜⬛⬜⬜⬜⬜⬛⬜⬛⬛⬛⬜⬛⬜⬜⬜⬛⬛⬜⬜⬛⬜⬛⬜⬛⬛⬛
+            ⬛⬜⬛⬛⬛⬛⬛⬛⬜⬜⬛⬜⬜⬛⬛⬛⬜⬜⬜⬜⬛⬛⬜⬜⬜⬛⬜⬛⬜
+            ⬛⬜⬜⬛⬜⬛⬜⬜⬜⬛⬛⬛⬛⬜⬛⬛⬜⬜⬜⬜⬜⬜⬛⬜⬛⬛⬜⬜⬛
+            ⬛⬜⬛⬜⬜⬜⬛⬛⬜⬜⬜⬜⬛⬛⬛⬛⬛⬛⬛⬜⬛⬛⬛⬛⬛⬜⬛⬛⬛
+            ⬜⬜⬜⬜⬜⬜⬜⬜⬛⬜⬜⬛⬜⬜⬜⬜⬜⬜⬜⬛⬛⬜⬜⬜⬛⬛⬜⬜⬛
+            ⬛⬛⬛⬛⬛⬛⬛⬜⬛⬜⬛⬜⬛⬜⬛⬛⬜⬛⬛⬛⬛⬜⬛⬜⬛⬜⬜⬜⬜
+            ⬛⬜⬜⬜⬜⬜⬛⬜⬜⬛⬜⬜⬛⬜⬜⬛⬜⬜⬜⬜⬛⬜⬜⬜⬛⬜⬜⬛⬜
+            ⬛⬜⬛⬛⬛⬜⬛⬜⬛⬜⬜⬛⬜⬛⬛⬛⬛⬛⬛⬜⬛⬛⬛⬛⬛⬜⬛⬛⬜
+            ⬛⬜⬛⬛⬛⬜⬛⬜⬛⬜⬛⬛⬛⬜⬜⬜⬜⬛⬛⬜⬜⬛⬜⬜⬜⬜⬜⬜⬛
+            ⬛⬜⬛⬛⬛⬜⬛⬜⬛⬛⬜⬜⬛⬜⬜⬛⬛⬜⬜⬜⬜⬜⬛⬜⬛⬜⬛⬛⬜
+            ⬛⬜⬜⬜⬜⬜⬛⬜⬛⬛⬛⬜⬜⬜⬛⬛⬜⬜⬜⬛⬛⬛⬛⬜⬜⬜⬜⬛⬜
+            ⬛⬛⬛⬛⬛⬛⬛⬜⬛⬜⬛⬜⬛⬛⬛⬛⬜⬛⬜⬜⬜⬛⬜⬜⬜⬛⬛⬜⬜
+              """)
+            
+            input("\nTekan ENTER untuk konfirmasi...")
+            return "dibayar"

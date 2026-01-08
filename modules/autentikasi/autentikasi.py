@@ -158,7 +158,7 @@ def register_umkm():
     if len(umkms) == 0:
         id_baru = 1
     else:
-        id_baru = int(umkms[-1]["umkm_id"]) + 1        
+        id_baru = int(umkms[-1]["umkm_id"]) + 1
                                 
     # memuat data akun
     data_baru = {
@@ -326,6 +326,25 @@ def register_fv():
             continue
         break
     
+    # meminta input jumlah followers
+    while True:
+        input_jumlah_followers = input("Jumlah Followers: ").strip()
+        
+        # mengecek jika jumlah followers kosong
+        if not input_jumlah_followers:
+            print("❌ Jumlah followers tidak boleh kosong ❌")
+            continue
+        
+        # mengecek jika jumlah followers berupa angka
+        if not input_jumlah_followers.isdigit():
+            print("❌ Jumlah followers harus berupa angka ❌")
+            continue
+        
+        # mengecek jika jumlah followers lebih dari 0
+        if int(input_jumlah_followers) < 1000:
+            print("❌ Jumlah followers harus lebih dari 1000 ❌")
+            continue
+        break
     # meminta input email
     while True:
         input_email = input("Email: ").lower().strip()
@@ -373,7 +392,8 @@ def register_fv():
         "vlogger_id": id_baru,
         "nama": input_nama,
         "email": input_email,
-        "password": input_password_user
+        "password": input_password_user,
+        "jumlah_followers": input_jumlah_followers
     }
     
     # menyimpan data akun

@@ -5,6 +5,7 @@ from modules.utils import clear_screen
 from data.config import DATA_LOWONGAN
 from modules.umkm.umkm import data_umkm
 from modules.food_vlogger.lamaran import data_lamaran,simpan_lamaran
+from modules.bukti_promosi import data_bukti_promosi, simpan_bukti_promosi
 from datetime import datetime
 import data.session
 
@@ -77,7 +78,7 @@ def daftar_lowongan():
             else:
                 nama_usaha = "-"
             
-            print(f"\nLowongan #{lowongans[i]['lowongan_id']}")
+            print(f"\nLowongan Id #{lowongans[i]['lowongan_id']}")
             print(f"😋 Nama Produk                   : {lowongans[i]['nama_produk']}")
             print(f"🍴 Nama Usaha                    : {nama_usaha}")
             print(f"🔖 Kategori                      : {lowongans[i]['kategori']}")
@@ -166,6 +167,132 @@ def milih_lowongan(pilihan):
     print("\n✅ Lowongan berhasil dilamar, tunggu persetujuan dari UMKM!")
     input("\nTekan ENTER untuk kembali...")
 
+def kolab():
+
+    vlogger_id = data.session.USER_LOGIN["vlogger_id"]
+    
+    umkms = data_umkm()
+    lamarans = data_lamaran()
+    lowongans = data_lowongan()
+    bukproms = data_bukti_promosi()
+    lowongan_vlogger = []
+    bukprom_vlogger = {}
+    nama_usaha_umkm = {}
+    
+    # mengambil umkm_id dan memasangkannya dengan nama_usaha
+    for umkm in umkms:
+        nama_usaha_umkm[umkm["umkm_id"]] = umkm["nama_usaha"]
+    
+    for lamaran in lamarans:
+        
+        if lamaran["vlogger_id"] == vlogger_id and lamaran["status"] == "Disetujui":
+            lowongan_vlogger.append(lamaran["lowongan_id"])
+    
+    for bukprom in bukproms:
+        bukprom_vlogger[bukprom["lowongan_id"]] = bukprom
+    
+    while True:
+        clear_screen()
+        print("\n===== KOLABORASI SAYA =====")
+        
+        for lowongan in lowongans:
+            
+            # mengubah data yang diterima menjadi integer
+            int_budget = int(lowongan['budget'])
+            
+            # melakukan format angka menjadi ribuan
+            formatted_budget = f"{int_budget:,}".replace(",", ".")
+            
+            # variable untuk menyimpan status dari bukti promosi
+            status_bukti = ""
+            
+            if lowongan["lowongan_id"] in lowongan_vlogger:
+                
+                lowongan_id = lowongan["lowongan_id"]
+                umkm_id = lowongan["umkm_id"]
+            
+                # mengecek apakah ada umkm_id di dalam data umkm
+                if umkm_id in nama_usaha_umkm.keys():
+                    # jika ada maka nama_usaha akan sesuai dengan umkm_id yang ada di dalam data umkm
+                    nama_usaha = nama_usaha_umkm[umkm_id]
+                else:
+                    nama_usaha = "-"
+                
+                # mengecek apakah suatu lowongan sudah memiliki bukti promosi
+                if lowongan_id in bukprom_vlogger:
+                    
+                    # jika sudah ada maka isi variable status_bukti dengan data bukti promosi
+                    for bukprom in bukproms:
+                        status_bukti = bukprom["status_verifikasi"]
+                
+                if status_bukti == "Menunggu Peninjauan":
+                    emoji = " 🕛"
+                
+                elif status_bukti == "Disetujui":
+                    emoji = " ✅"
+                    
+                elif status_bukti == "Ditolak":
+                    emoji = " ❌ (mohon perbaiki dan kirim ulang)"
+                
+                else:
+                    emoji = "Belum Ada ❌"
+                
+                print(f"\nId Lowongan #{lowongan_id}")
+                print(f"😋 Produk                   : {lowongan['nama_produk']}")
+                print(f"🍴 UMKM                     : {nama_usaha}")
+                print(f"💲 Anggaran                 : Rp {formatted_budget}")
+                print(f"⏳ Deadline                 : {lowongan['batas_waktu_pengerjaan']} hari")
+                print(f"📷 Bukti Promosi            : {status_bukti}{emoji}")
+        
+        while True:
+            input_lowongan_id = input("\nMasukan id lowongan untuk mengirim bukti (Tekan ENTER untuk kembali): ")
+            
+            if not input_lowongan_id:
+                break
+            
+            if not input_lowongan_id.isdigit():
+                print("❌ Id hanya boleh angka ❌")
+                continue
+            
+            if input_lowongan_id not in lowongan_vlogger:
+                print("❌ Id tidak ditemukan ❌")
+                continue
+            break
+        
+        if not input_lowongan_id:
+            break
+        
+        while True:
+            link_bukti_promosi = input("Masukan link bukti promosi: ")
+            
+            if not link_bukti_promosi:
+                print("❌ Bukti promosi tidak boleh kosong ❌")
+                continue
+            break
+        
+        # generate id baru untuk data yang baru
+        if len(bukproms) == 0:
+            id_baru = 1
+        else:
+            id_baru = int(bukproms[-1]["bukti_id"]) + 1
+        
+        #tanggal upload bukti
+        tanggal_upload = datetime.now().strftime("%d-%m-%Y")
+        status_verifikasi = "Menunggu Peninjauan"
+        
+        data_bukti = {
+            "bukti_id": id_baru,
+            "lowongan_id": input_lowongan_id,
+            "link_konten": link_bukti_promosi,
+            "tanggal_upload": tanggal_upload,
+            "status_verifikasi": status_verifikasi
+        }
+        
+        simpan_bukti_promosi(data_bukti)
+        
+        print("\n✅ Bukti berhasil diupload ✅")
+        input("\nTekan ENTER untuk kembali...")
+        break
 
 def kolaborasi():
     vlogger_id = data.session.USER_LOGIN['vlogger_id']

@@ -1,6 +1,6 @@
 import csv
 import os
-from modules.utils import clear_screen, apakah_int
+from modules.utils import clear_screen, apakah_int, ada_huruf
 from data.config import DATA_LOWONGAN, DATA_FOOD_VLOGGER, DATA_LAMARAN
 from modules.umkm.lamaran import data_lamaran, update_lamaran
 from modules.food_vlogger.food_vlogger import data_fv
@@ -101,7 +101,7 @@ def buat_lowongan():
         else:
             lowongan_id = int(lowongans[-1]["lowongan_id"]) + 1        
             
-        umkm_id = data.session.USER_LOGIN["umkm_id"]
+        # umkm_id = data.session.USER_LOGIN["umkm_id"]
         status_lowongan = "Belum Diambil"
         
         while True:
@@ -112,7 +112,7 @@ def buat_lowongan():
                 continue
 
             # membatasi nama produk maksimal 10 kata
-            if len(nama_produk.split()) > 10:
+            if len(nama_produk.split()) > 1:
                 print("❌ Nama produk maksimal 10 kata ❌")
                 continue
 
@@ -120,23 +120,26 @@ def buat_lowongan():
             if len(nama_produk) < 3:
                 print("❌ Nama produk minimal 3 karakter ❌")
                 continue
+            
+            if not ada_huruf(nama_produk):
+                print("❌ Nama produk harus mengandung huruf ❌")
+                continue
+            
+            # mencegah nama produk mengandung karakter selain huruf, spasi, dan tanda hubung (-)
+            if not nama_produk.replace(" ", "").replace("-", "").isalpha():
+                print("❌ Nama produk tidak boleh mengandung karakter selain huruf, spasi, dan tanda hubung (-) ❌")
+                continue
             break
         
+        print("Silakan pilih salah satu kategori produk.")
+        print("- 🍗 Makanan")
+        print("- 🍺 Minuman")
+        print("- 🍿 Jajanan")
         while True:
             kategori = input("Kategori: ").capitalize().strip()
             
-            if not kategori:
-                print("❌ Kategori tidak boleh kosong ❌")
-                continue
-                
-            # membatasi kategori maksimal 10 kata
-            if len(kategori.split()) > 10:
-                print("❌ Kategori maksimal 10 kata ❌")
-                continue
-
-            # mencegah kategori kurang dari 3 karakter
-            if len(kategori) < 3:
-                print("❌ Kategori minimal 3 karakter ❌")
+            if kategori not in ["Makanan", "Minuman", "Jajanan"]:
+                print("❌ Kategori tidak valid ❌")
                 continue
             break
         
@@ -147,9 +150,14 @@ def buat_lowongan():
                 print("❌ Deskripsi tidak boleh kosong ❌")
                 continue
 
-            # membatasi deskripsi maksimal 255 kata
-            if len(deskripsi.split()) > 255:
-                print("❌ Deskripsi maksimal 255 kata ❌")
+            # membatasi deskripsi maksimal 255 huruf
+            if len(deskripsi) > 255:
+                print("❌ Deskripsi maksimal 255 huruf ❌")
+                continue
+            
+            # mencegah deskripsi mengandung karakter selain huruf, angka, dan spasi.
+            if not deskripsi.replace(" ", "").isalnum():
+                print("❌ Deskripsi hanya boleh mengandung huruf, angka, dan spasi ❌")
                 continue
             break
         
@@ -204,10 +212,13 @@ def buat_lowongan():
             
             batas_waktu_lowongan = int(batas_waktu_lowongan)
             
-            if batas_waktu_lowongan <= 0 or batas_waktu_lowongan > 30:
+            if batas_waktu_lowongan > 30:
                 print("❌ Lama Lowongan Tayang tidak boleh lebih dari 30 hari ❌")
                 continue
             
+            if batas_waktu_lowongan <= 0:
+                print("❌ Lama Lowongan Tayang tidak valid ❌")
+                continue
             break
         
         while True:
@@ -223,30 +234,33 @@ def buat_lowongan():
             
             batas_waktu_pengerjaan = int(batas_waktu_pengerjaan)
             
-            if batas_waktu_pengerjaan <= 0 or batas_waktu_pengerjaan > 30:
-                print("❌ Lama Waktu Pengerjaan tidak boleh lebih dari 30 hari ❌")
+            if batas_waktu_pengerjaan > 30:
+                print("❌ Lama Batas Waktu Pengerjaan tidak boleh lebih dari 30 hari ❌")
                 continue
             
+            if batas_waktu_pengerjaan <= 0:
+                print("❌ Lama Batas Waktu Pengerjaan tidak valid ❌")
+                continue
             break
         
+        print("Apakah data lowongan yang dimasukan sudah benar?")
+        print("[1] Ya")
+        print("[2] Buat ulang lowongan")
         while True:
-            print("Apakah data lowongan yang dimasukan sudah benar?")
-            print("[1] Ya")
-            print("[2] Buat ulang lowongan")
             konfirmasi = input("> ").strip()
             
             if not konfirmasi:
-                print("❌ Inputan tidak boleh kosong ❌")
+                print("❌ Pilihan tidak boleh kosong ❌")
                 continue
             
             if not apakah_int(konfirmasi):
-                print("❌ Inputan harus berupa angka ❌")
+                print("❌ Pilihan tidak valid ❌")
                 continue
             
             konfirmasi = int(konfirmasi)
             
             if konfirmasi not in [1, 2]:
-                print("❌ Pilihan hanya 1 atau 2 ❌")
+                print("❌ Pilihan tidak valid ❌")
                 continue
                             
             if konfirmasi == 1:
@@ -271,12 +285,7 @@ def buat_lowongan():
 
             if konfirmasi == 2:
                 break
-            
-        if konfirmasi == 1:
-            break
-        elif konfirmasi == 2:
-            pass
-
+    
 def lamaran_masuk():
     umkm_id = data.session.USER_LOGIN['umkm_id']
     

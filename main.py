@@ -4,7 +4,7 @@ from modules.utils import clear_screen
 # DEBUG BROK
 from modules.umkm.umkm import data_umkm
 from modules.food_vlogger.food_vlogger import data_fv
-from modules.umkm.lowongan import data_lowongan, lamaran_masuk
+from modules.umkm.lowongan import data_lowongan, lamaran_masuk, buat_lowongan
 from modules.umkm.lamaran import data_lamaran
 
 while True:
@@ -24,7 +24,7 @@ while True:
     if pilihan_user == "2":
         if autentikasi_fv() == "kill system":
             break
-        
+    
     if pilihan_user == "0":
         print("Terima Kasih Telah Menggunakan Aplikasi PromoIn! 🥰😘😍")
         break

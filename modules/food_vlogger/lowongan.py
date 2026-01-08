@@ -5,7 +5,7 @@ from modules.utils import clear_screen
 from data.config import DATA_LOWONGAN
 from modules.umkm.umkm import data_umkm
 from modules.food_vlogger.lamaran import data_lamaran,simpan_lamaran
-from modules.bukti_promosi import data_bukti_promosi, simpan_bukti_promosi
+from modules.bukti_promosi import data_bukti_promosi, simpan_bukti_promosi, update_bukti_promosi
 from datetime import datetime
 import data.session
 
@@ -167,6 +167,7 @@ def milih_lowongan(pilihan):
     print("\n✅ Lowongan berhasil dilamar, tunggu persetujuan dari UMKM!")
     input("\nTekan ENTER untuk kembali...")
 
+
 def kolab():
 
     vlogger_id = data.session.USER_LOGIN["vlogger_id"]
@@ -204,13 +205,13 @@ def kolab():
             formatted_budget = f"{int_budget:,}".replace(",", ".")
             
             # variable untuk menyimpan status dari bukti promosi
-            status_bukti = ""
+            status_bukti = "Belum Ada"
             
-            if lowongan["lowongan_id"] in lowongan_vlogger:
+            lowongan_id = lowongan["lowongan_id"]
+            umkm_id = lowongan["umkm_id"]
+            
+            if lowongan_id in lowongan_vlogger:
                 
-                lowongan_id = lowongan["lowongan_id"]
-                umkm_id = lowongan["umkm_id"]
-            
                 # mengecek apakah ada umkm_id di dalam data umkm
                 if umkm_id in nama_usaha_umkm.keys():
                     # jika ada maka nama_usaha akan sesuai dengan umkm_id yang ada di dalam data umkm
@@ -218,13 +219,11 @@ def kolab():
                 else:
                     nama_usaha = "-"
                 
-                # mengecek apakah suatu lowongan sudah memiliki bukti promosi
-                if lowongan_id in bukprom_vlogger:
+                for bukprom in bukproms:
                     
-                    # jika sudah ada maka isi variable status_bukti dengan data bukti promosi
-                    for bukprom in bukproms:
+                    if lowongan_id == bukprom["lowongan_id"]:
                         status_bukti = bukprom["status_verifikasi"]
-                
+                                
                 if status_bukti == "Menunggu Peninjauan":
                     emoji = " 🕛"
                 
@@ -235,7 +234,7 @@ def kolab():
                     emoji = " ❌ (mohon perbaiki dan kirim ulang)"
                 
                 else:
-                    emoji = "Belum Ada ❌"
+                    emoji = " ❌"
                 
                 print(f"\nId Lowongan #{lowongan_id}")
                 print(f"😋 Produk                   : {lowongan['nama_produk']}")
@@ -270,119 +269,50 @@ def kolab():
                 continue
             break
         
-        # generate id baru untuk data yang baru
-        if len(bukproms) == 0:
-            id_baru = 1
+        if input_lowongan_id in bukprom_vlogger:
+            
+            for bukprom in bukproms:
+                
+                if input_lowongan_id == bukprom["lowongan_id"]:
+                    
+                    if bukprom["status_verifikasi"] == "Disetujui":
+                        
+                        print("\n❌ Bukti sudah disetujui, tidak dapat diubah ❌")
+                        input("\nTekan ENTER untuk kembali...")
+                        break
+                        
+                    else:
+                        bukprom["status_verifikasi"] = "Menunggu Peninjauan"
+                        bukprom["link_konten"] = link_bukti_promosi
+            
+                        update_bukti_promosi(bukproms)
+                        
+                        print("\n✅ Bukti berhasil di-update ✅")
+                        input("\nTekan ENTER untuk kembali...")
+                        break
+            
         else:
-            id_baru = int(bukproms[-1]["bukti_id"]) + 1
-        
-        #tanggal upload bukti
-        tanggal_upload = datetime.now().strftime("%d-%m-%Y")
-        status_verifikasi = "Menunggu Peninjauan"
-        
-        data_bukti = {
-            "bukti_id": id_baru,
-            "lowongan_id": input_lowongan_id,
-            "link_konten": link_bukti_promosi,
-            "tanggal_upload": tanggal_upload,
-            "status_verifikasi": status_verifikasi
-        }
-        
-        simpan_bukti_promosi(data_bukti)
-        
-        print("\n✅ Bukti berhasil diupload ✅")
-        input("\nTekan ENTER untuk kembali...")
-        break
-
-def kolaborasi():
-    vlogger_id = data.session.USER_LOGIN['vlogger_id']
-
-    lowongan_list = {}
-    vlogger_list = {}
-    umkm_list = {}
-    kolaborasi = []
-
-    # === LOWONGAN ===
-    with open(DATA_LOWONGAN, newline='', encoding='utf-8') as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            lowongan_list[row['lowongan_id']] = row
-
-    # === FOOD VLOGGER ===
-    with open(DATA_FOOD_VLOGGER, newline='', encoding='utf-8') as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            vlogger_list[row['vlogger_id']] = row['nama']
-
-    # === UMKM ===
-    with open(DATA_UMKM, newline='', encoding='utf-8') as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            umkm_list[row['umkm_id']] = row['nama_usaha']
-
-    # === LAMARAN ===
-    with open(DATA_LAMARAN, newline='', encoding='utf-8') as file:
-        reader = csv.DictReader(file)
-        fieldnames = reader.fieldnames
-        all_rows = list(reader)
-
-    if 'status_bukti' not in fieldnames:
-        fieldnames.append('status_bukti')
-
-    if 'link_bukti' not in fieldnames:
-        fieldnames.append('link_bukti')
-
-    for row in all_rows:
-        if row['status'] == 'Disetujui' and row['vlogger_id'] == str(vlogger_id):
-            kolaborasi.append(row)
-
-    clear_screen()
-    print("\n===== KOLABORASI SAYA =====")
-
-    if not kolaborasi:
-        print("\n❌ Belum ada kolaborasi.")
-        input("\nTekan ENTER untuk kembali...")
-        return
-
-    for item in kolaborasi:
-        lowongan = lowongan_list[item['lowongan_id']]
-        umkm_nama = umkm_list.get(lowongan['umkm_id'], '-')
-        status_bukti = item.get('status_bukti', '')
-
-        print(f"""
-😋 Produk       : {lowongan['nama_produk']}
-🍴 UMKM         : {umkm_nama}
-💲 Anggaran     : Rp{lowongan['budget']}
-⏳ Deadline     : {lowongan['batas_waktu_pengerjaan']} hari
-""")
-
-        if status_bukti == 'Menunggu Peninjauan':
-            print("Status Bukti : Menunggu Peninjauan 🕛")
-        elif status_bukti == 'Disetujui':
-            print("Status Bukti : Disetujui ✅")
-        else:
-            print("[1] Upload Bukti")
-            print("[0] Lewati")
-
-            pilihan = input("> ")
-            if pilihan == '1':
-                link = input("Masukkan link bukti promosi: ").strip()
-                if link:
-                    item['link_bukti'] = link
-                    item['status_bukti'] = 'Menunggu Peninjauan'
-                    print("✅ Bukti berhasil diupload, menunggu persetujuan dari UMKM 🕛.")
-
-    # === SIMPAN CSV ===
-    with open(DATA_LAMARAN, 'w', newline='', encoding='utf-8') as file:
-        writer = csv.DictWriter(file, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(all_rows)
-
-    input("\nTekan ENTER untuk kembali...")
-
-
-
-
-    
-    
-
+            
+            # generate id baru untuk data yang baru
+            if len(bukproms) == 0:
+                id_baru = 1
+            else:
+                id_baru = int(bukproms[-1]["bukti_id"]) + 1
+            
+            #tanggal upload bukti
+            tanggal_upload = datetime.now().strftime("%d-%m-%Y")
+            status_verifikasi = "Menunggu Peninjauan"
+            
+            data_bukti = {
+                "bukti_id": id_baru,
+                "lowongan_id": input_lowongan_id,
+                "link_konten": link_bukti_promosi,
+                "tanggal_upload": tanggal_upload,
+                "status_verifikasi": status_verifikasi
+            }
+            
+            simpan_bukti_promosi(data_bukti)
+            
+            print("\n✅ Bukti berhasil di-upload ✅")
+            input("\nTekan ENTER untuk kembali...")
+            break

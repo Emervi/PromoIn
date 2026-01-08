@@ -70,19 +70,19 @@ def beranda_umkm():
         print(f"[3] 📩 Lamaran Masuk ({jumlah_lamaran(umkm_id)})")
         print("[4] 🤝 Kolaborasi")
         print("[0] Logout")
-        pilihan_user = int(input("> "))
+        pilihan_user = input("> ")
         
-        if pilihan_user == 1:
+        if pilihan_user == "1":
             buat_lowongan()
 
-        elif pilihan_user == 2:
+        elif pilihan_user == "2":
             daftar_lowongan()
 
-        elif pilihan_user == 3:
+        elif pilihan_user == "3":
             lamaran_masuk()
 
-        elif pilihan_user == 4:
+        elif pilihan_user == "4":
             kolaborasi()
         
-        elif pilihan_user == 0:
+        elif pilihan_user == "0":
             break    

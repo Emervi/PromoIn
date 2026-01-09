@@ -281,7 +281,7 @@ def buat_lowongan():
 
                 print("\n✅ Lowongan berhasil disimpan ✅")
                 input("\nTekan ENTER untuk kembali ke beranda...")
-                break
+                return
 
             if konfirmasi == 2:
                 break

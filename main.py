@@ -10,7 +10,7 @@ from modules.umkm.lamaran import data_lamaran
 while True:
     clear_screen()
     print("\n========== BERANDA ==========")
-    print("Silakan memilih peran yang sesuai dengan anda.")
+    print("Silakan memilih peran yang sesuai dengan Anda.")
     print("[1] 🏪 UMKM")
     print("[2] 📸 Food Vlogger")
     print("[0] 🚪 Keluar Sistem")

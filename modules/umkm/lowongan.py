@@ -5,7 +5,7 @@ from data.config import DATA_LOWONGAN, DATA_FOOD_VLOGGER, DATA_LAMARAN
 from modules.umkm.lamaran import data_lamaran, update_lamaran
 from modules.food_vlogger.food_vlogger import data_fv
 from modules.bukti_promosi import data_bukti_promosi, tampilkan_bukti
-from modules.pembayaran import data_pembayaran
+from modules.pembayaran import data_pembayaran, lakukan_pembayaran
 import data.session
 
 def data_lowongan():
@@ -281,7 +281,7 @@ def buat_lowongan():
 
                 print("\n✅ Lowongan berhasil disimpan ✅")
                 input("\nTekan ENTER untuk kembali ke beranda...")
-                break
+                return
 
             if konfirmasi == 2:
                 break
@@ -512,10 +512,34 @@ def kolaborasi():
             input("\nTekan ENTER untuk kembali...")
                     
         if perintah[0] == 'bayar':
-            print(f"BAYAR COK untuk id {perintah[1]}")
+            input_lowongan_id = perintah[1]
+            hasil_bayar = ""
+            
+            if input_lowongan_id in pembayaran_list:
+                hasil_bayar = "pembayaran sudah lunas"
+            else:
+                for bukprom in bukproms:
+                    
+                    if input_lowongan_id == bukprom["lowongan_id"]:
+                        
+                        if bukprom["status_verifikasi"] != "Disetujui":
+                            hasil_bayar = "bukti belum disetujui"
+                            
+                        else:
+                            hasil_bayar = lakukan_pembayaran(input_lowongan_id)
+                    else:
+                        hasil_bayar = "bukti belum ada"
+            
+            if hasil_bayar == "bukti belum disetujui" or hasil_bayar == "bukti belum ada":
+                print("\n❌ Bukti belum disetujui ❌")
+            
+            if hasil_bayar == "pembayaran sudah lunas":
+                print("\n✅ Pembayaran sudah lunas ✅")
+                
+            if hasil_bayar == "dibayar":
+                print("\n✅ Pembayaran berhasil ✅")
             
             input("\nTekan ENTER untuk kembali...")
-            break
         
         if perintah[0] == "exit":
             break

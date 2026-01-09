@@ -90,7 +90,7 @@ def daftar_lowongan():
 
     # jika tidak ada lowongan maka ini akan dijalankan
     if not ada:
-        print("\n❌ Tidak ada lowongan tersedia.")
+        print("\n❌ Tidak ada lowongan tersedia ❌")
         input("\nTekan ENTER untuk kembali...")
         return
 
@@ -196,6 +196,9 @@ def kolab():
         clear_screen()
         print("\n===== KOLABORASI SAYA =====")
         
+        if not lowongan_vlogger:
+            print("\n❌ Belum ada kolaborasi ❌")
+
         for lowongan in lowongans:
             
             # mengubah data yang diterima menjadi integer

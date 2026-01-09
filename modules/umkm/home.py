@@ -16,8 +16,9 @@ def jumlah_lowongan(umkm_id):
         # mencari lowongan berdasarkan umkm yang sedang login
         if lowongan["umkm_id"] == str(umkm_id):
             
-            # memasukan lowongan yang ada ke dalam variable
-            lowongan_saya.append(lowongan)
+            if lowongan["status_lowongan"] != "Diambil":
+                # memasukan lowongan yang ada ke dalam variable
+                lowongan_saya.append(lowongan)
     
     # mengembalikan total lowongan saya
     return len(lowongan_saya)
@@ -47,8 +48,9 @@ def jumlah_lamaran(umkm_id):
         # pengecekan kecocokan lowongan_id pada lamaran dengan lowongan_ids
         if lamaran["lowongan_id"] in lowongan_ids:
             
-            # mengambil lamaran_id jika lowongan_id cocok dengan lowongan_ids
-            lamaran_ids.append(lamaran["lamaran_id"])
+            if lamaran["status"] != "Disetujui":
+                # mengambil lamaran_id jika lowongan_id cocok dengan lowongan_ids
+                lamaran_ids.append(lamaran["lamaran_id"])
             
     # mengembalikan total lamaran
     return len(lamaran_ids)

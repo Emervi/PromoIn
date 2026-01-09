@@ -1,0 +1,9 @@
+lowongan_id,umkm_id,nama_produk,deskripsi,budget,minimal_followers,status_lowongan,kategori,batas_waktu_lowongan,batas_waktu_pengerjaan
+1,1,Nasi goreng special,Enak Banget,1000000,1000,Diambil,Makanan,20,10
+2,2,Matcha latte,Mantap,2000000,2000,Diambil,Minuman,30,20
+3,3,Ayam balado,Ayam dengan sambel balado khas padang,50000,5000,Diambil,Makanan,7,3
+4,3,Telor barendo,Telor yang digoreng pada minyak panas berisi daun bawang,50000,3000,Diambil,Lauk,7,3
+5,3,Dasda,asdsa,1232312,12312312,Diambil,Dsada,2,2
+6,2,Matcha,deskripsi,100000,1000,Diambil,Minuman,7,7
+7,5,Cimol,pedes,50000,1000,Diambil,Jajanan,7,4
+8,6,Bakwan,enak,50000,1000,Diambil,Makanan,7,4

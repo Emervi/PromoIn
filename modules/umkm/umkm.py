@@ -9,20 +9,22 @@ from data.config import DATA_UMKM
 
 # function untuk mengambil data UMKM
 def data_umkm():
-    data = []
-    
     if not os.path.exists(DATA_UMKM):
         return []
     
-    with open(DATA_UMKM, mode="r", newline='') as f:
-        reader = csv.reader(f)
-        for baris in reader:
-            data.append(baris)
-            
-    return data
+    with open(DATA_UMKM, mode="r", newline='') as file:
+        reader = csv.DictReader(file)
+        return list(reader)
 
 # procedure untuk menyimpan data ke dalam file data UMKM
-def simpan_umkm(data_user):
-    with open(DATA_UMKM, mode="a", newline='') as f:
-        writer = csv.writer(f)
-        writer.writerow(data_user)
+def simpan_umkm(data_baru):
+    file_ada = os.path.exists(DATA_UMKM)
+        
+    with open(DATA_UMKM, mode="a", newline='') as file:
+        nama_kolom = data_baru.keys()
+        writer = csv.DictWriter(file, fieldnames=nama_kolom)
+        
+        if not file_ada:
+            writer.writeheader()
+            
+        writer.writerow(data_baru)

@@ -51,12 +51,16 @@ def format_email(email):
         return False
 
     # mengecek bagian sebelum dan sesudah '@' tidak kosong
-    if len(bagian[0]) == 0 or len(bagian[1]) == 0:
+    if len(bagian[0]) < 6 or len(bagian[0]) > 30:
+        print("❌ Maaf, panjang username email Anda harus antara 6 karakter dan 30 karakter ❌")
+        return False
+    
+    if len(bagian[1]) == 0:
         print("❌ Format email salah ❌")
         return False
     
     # mengecek hanya ada satu titik pada bagian domain email (bagian setelah '@')
-    if bagian[1].count('.') != 1:
+    if bagian[1].count('.') > 3:
         print("❌ Format email salah ❌") 
         return False
     
@@ -67,12 +71,12 @@ def format_email(email):
     
     # mengecek bagian sebelum domain email berawalan karakter ASCII atau angka
     if not (bagian[0][0].isalnum()):
-        print("❌ Maaf, Karakter awal alamat email harus berupa alfabet (a-z) atau angka (0-9) ❌")
+        print("❌ Maaf, Karakter awal username email harus berupa alfabet (a-z) atau angka (0-9) ❌")
         return False
     
     # mengecek bagian sebelum domain email berakhiran karakter ASCII atau angka
     if not (bagian[0][-1].isalnum()):
-        print("❌ Maaf, Karakter akhir alamat email harus berupa alfabet (a-z) atau angka (0-9) ❌")
+        print("❌ Maaf, Karakter akhir username email harus berupa alfabet (a-z) atau angka (0-9) ❌")
         return False
 
 def ada_huruf(text):

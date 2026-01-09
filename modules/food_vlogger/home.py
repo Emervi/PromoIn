@@ -26,5 +26,5 @@ def beranda_fv():
         elif pilihan_user == "3":
             kolab()
         
-        elif pilihan_user == 0:
+        elif pilihan_user == "0":
             break

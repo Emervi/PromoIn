@@ -18,7 +18,7 @@ def autentikasi_umkm():
         print("[0] 🚪 Kembali")
         
         while True:
-            pilihan_user = input("> ")
+            pilihan_user = (input("> "))
             
             if not pilihan_user:
                 print("❌ Input tidak boleh kosong ❌")
@@ -29,7 +29,7 @@ def autentikasi_umkm():
                 continue
             break
         
-        if pilihan_user == 1:
+        if pilihan_user == "1":
             akun_umkm = register_umkm()
             
             if akun_umkm:
@@ -37,7 +37,7 @@ def autentikasi_umkm():
             else:
                 continue
             
-        if pilihan_user == 2:
+        if pilihan_user == "2":
             akun_umkm = login_umkm()
             
             if akun_umkm:
@@ -45,7 +45,7 @@ def autentikasi_umkm():
             else:
                 continue
                 
-        if pilihan_user == 0:
+        if pilihan_user == "0":
             break
         break
 
@@ -271,7 +271,7 @@ def autentikasi_fv():
                 continue
             break
         
-        if pilihan_user == 1:
+        if pilihan_user == "1":
             akun_fv = register_fv()
             
             if akun_fv:
@@ -279,7 +279,7 @@ def autentikasi_fv():
             else:
                 continue
             
-        elif pilihan_user == 2:
+        elif pilihan_user == "2":
             akun_fv = login_fv()
             
             if akun_fv:
@@ -287,7 +287,7 @@ def autentikasi_fv():
             else:
                 continue
                 
-        elif pilihan_user == 0:
+        elif pilihan_user == "0":
             break
         break
 

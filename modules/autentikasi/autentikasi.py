@@ -326,11 +326,7 @@ def register_fv():
         
         # mengecek jika nama hanya mengandung huruf
         if not input_nama.replace(" ", "").isalpha():
-            print("❌ Nama hanya terdiri dari huruf ❌")
-            continue
-        
-        if '@' in input_nama or '.' in input_nama:
-            print("❌ Format nama salah ❌")
+            print("❌ Nama harus terdiri dari huruf ❌")
             continue
         break
     
@@ -350,9 +346,10 @@ def register_fv():
         
         # mengecek jika jumlah followers lebih dari 0
         if int(input_jumlah_followers) < 1000:
-            print("❌ Jumlah followers harus lebih dari 1000 ❌")
+            print("❌ Jumlah followers minimal adalah 1000 ❌")
             continue
         break
+    
     # meminta input email
     while True:
         input_email = input("Email: ").lower().strip()

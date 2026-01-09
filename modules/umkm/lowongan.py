@@ -81,8 +81,7 @@ def daftar_lowongan():
                 continue
 
     if not ada:
-        print("\nKamu belum memiliki lowongan.")
-        print(f"(ID Anda: {umkm_id_login}, Data diperiksa: {len(lowongans)} baris)")
+        print("\n❌ Kamu belum memiliki lowongan ❌")
 
     input("\nTekan ENTER untuk kembali...")
 
@@ -112,7 +111,7 @@ def buat_lowongan():
                 continue
 
             # membatasi nama produk maksimal 10 kata
-            if len(nama_produk.split()) > 1:
+            if len(nama_produk.split()) > 10:
                 print("❌ Nama produk maksimal 10 kata ❌")
                 continue
 
@@ -131,7 +130,7 @@ def buat_lowongan():
                 continue
             break
         
-        print("Silakan pilih salah satu kategori produk.")
+        print("Silakan masukkan salah satu kategori produk berikut: ")
         print("- 🍗 Makanan")
         print("- 🍺 Minuman")
         print("- 🍿 Jajanan")
@@ -313,12 +312,13 @@ def lamaran_masuk():
         if lamaran['lowongan_id'] in lowongan_umkm:
             lamaran_rows.append(lamaran)
     
+    clear_screen()
     print("\n===== LAMARAN MASUK =====")    
 
     # jika tidak ada data lamaran untuk umkm ini
     if not lamaran_rows:
-        print("\nBelum ada lamaran masuk.")
-        input("\nTekan ENTER untuk kembali ↩")
+        print("\n❌ Belum ada lamaran masuk ❌")
+        input("\nTekan ENTER untuk kembali...")
         return
     
     for lamaran in lamaran_rows:
@@ -337,30 +337,36 @@ Status     : {lamaran['status']} {emoji}
 ------------------------------
 """)
 
-    input_lamaran_id = input("Masukkan Lamaran ID untuk disetujui (ENTER untuk batal): ").strip()
+    input_lamaran_id = input("Masukkan id lamaran untuk disetujui (ENTER untuk batal): ").strip()
 
     if not input_lamaran_id:
         return
 
-    ditemukan = False
+    ditemukan = "tidak ada"
 
     for lamaran in lamaran_rows:
         if lamaran['lamaran_id'] == input_lamaran_id:
             if lamaran['status'] != 'Pending':
-                print("Lamaran ini sudah diproses.")
-                return
-            lamaran['status'] = 'Disetujui'
-            ditemukan = True
-            break
+                ditemukan = "sedang diproses"
 
-    if not ditemukan:
-        print("Lamaran ID tidak ditemukan ❌")
-        return
+            else:
+                lamaran['status'] = 'Disetujui'
+                ditemukan = "ada"
+            break
+        break
+
+    if ditemukan == "tidak ada":
+        print("\n❌ Id lamaran tidak ditemukan ❌")
+
+    elif ditemukan == "sedang diproses":
+        print("\n❌ Lamaran ini sudah diproses ❌")
+
+    elif ditemukan == "ada":
+        print("\n✅ Lamaran berhasil disetujui ✅")
 
     # === SIMPAN ULANG CSV ===
     update_lamaran(lamaran_rows)
     
-    print("\n✅ Lamaran berhasil disetujui.")
     input("\nTekan ENTER untuk kembali...")
 
 
@@ -417,7 +423,7 @@ def kolaborasi():
         print("\n===== KOLABORASI SAYA =====")
             
         if not kolaborasis:
-            print("\n❌ Belum ada kolaborasi.")
+            print("\n❌ Belum ada kolaborasi ❌")
             input("\nTekan ENTER untuk kembali...")
             return
 
@@ -460,7 +466,7 @@ def kolaborasi():
         print("\nPerintah yang tersedia: ")
         print("- bukti <spasi> <id lowongan> -> Melihat bukti")
         print("- bayar <spasi> <id lowongan> -> Membayar lowongan")
-        print("- exit                        -> Kembali ke beranda")
+        print("[0] Kembali ke beranda")
         
         while True:
             perintah = input("> ").strip().split()
@@ -469,11 +475,11 @@ def kolaborasi():
                 print("❌ Perintah tidak boleh kosong ❌")
                 continue
             
-            if not perintah[0].isalpha():
+            if not perintah[0].isalnum():
                 print("❌ Perintah tidak valid ❌")
                 continue
             
-            if perintah[0] == "exit":
+            if perintah[0] == "0":
                 break
             
             if len(perintah) == 1:
@@ -492,7 +498,7 @@ def kolaborasi():
                 print("❌ Id tidak ditemukan ❌")
                 continue
             
-            if perintah[0] not in ('bayar', 'bukti'):
+            if perintah[0] not in ('bayar', 'bukti', '0'):
                 print("❌ Perintah tidak ditemukan ❌")
                 continue
             
@@ -541,5 +547,5 @@ def kolaborasi():
             
             input("\nTekan ENTER untuk kembali...")
         
-        if perintah[0] == "exit":
+        if perintah[0] == "0":
             break
